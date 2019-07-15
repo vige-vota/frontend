@@ -1,6 +1,8 @@
 {
     "app.powered": "Sviluppato da ",
     "app.confirm": "Conferma",
+    "app.admin": "Amministrazione",
+    "app.vota": "Vota",
     "app.cancel": "Annulla",
     "app.delete": "Rimuovi",
     "app.insert": "Inserisci",

@@ -12,6 +12,7 @@ import background from './images/background.png'
 import logo from './images/logo.ico'
 import {Panel} from 'primereact/panel';
 import {colorTabs, getVotingPaperById} from './Utilities'
+import { DemoSwitch } from './admin/DemoSwitch'
 
 export var config
 
@@ -99,6 +100,7 @@ class App extends Component {
 					{confirm}
 
                     <p className='powered'>
+						<DemoSwitch parent={this}/>
                         <img alt='logo' className='logo' src={logo} />
                         <FormattedMessage
                             id='app.powered'

@@ -32,14 +32,11 @@ COPY / /workspace/project
 # If you are building your code for production
 RUN sudo chown -R votinguser:users /workspace && \
     cd /workspace/project && npm install && \
-    sudo npm install -g https-serve && \
+    sudo npm install -g serve && \
     npm run build && \
     npm ci --only=production && \
-    sudo mkdir -p /root/.https-serve/ && \
-    sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=GB/ST=London/L=London/O=Global Security/OU=IT Department/CN=Vige" && \
-    sudo mv server.key server.crt /root/.https-serve && \
     mv /workspace/project/build /workspace && \
     rm -Rf /workspace/project
 
-EXPOSE 443
-CMD sudo https-serve -s build && tail -f /dev/null
+EXPOSE 80
+CMD sudo serve -s build && tail -f /dev/null

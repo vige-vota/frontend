@@ -1,0 +1,19 @@
+body .demo-switch.p-button {
+	border: none;
+	background-color: initial;
+	color: black;
+	position: absolute;
+    top: 3%;
+    right: 0%;
+}
+
+body .demo-switch.p-button:hover {
+	border: none;
+	background-color: initial;
+	color: red;
+}
+
+body .powered {
+	top: -2%;
+	height: 80%;
+}
