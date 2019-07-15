@@ -14,9 +14,12 @@ FROM node:10
 
 # Install app dependencies
 
+ENV DEBIAN_FRONTEND noninteractive
+ENV TERM xterm
+
 RUN apt-get upgrade -y && \
 	apt-get update && \
-	apt-get install apt-utils -y && \
+	apt-get install dialog apt-utils -y && \
 	apt-get install sudo && \
 	echo "%adm ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
 	useradd -u 1001 -G users,adm -d /home/votinguser --shell /bin/bash -m votinguser && \
@@ -24,17 +27,15 @@ RUN apt-get upgrade -y && \
 
 USER votinguser
 
-ENV TERM xterm
-
 # Create app directory
 WORKDIR /workspace
 COPY / /workspace/project
 # If you are building your code for production
 RUN sudo chown -R votinguser:users /workspace && \
     cd /workspace/project && npm install && \
-    sudo npm install -g https-serve && \
     npm run build && \
     npm ci --only=production && \
+    sudo npm install -g https-serve && \
     sudo mkdir -p /root/.https-serve/ && \
     sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=GB/ST=London/L=London/O=Global Security/OU=IT Department/CN=Vige" && \
     sudo mv server.key server.crt /root/.https-serve && \
