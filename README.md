@@ -39,11 +39,11 @@ Then open `https://localhost` to connect to the vote application
 
 If you need a complete environment you can download docker and import the application through the command:
 ```
-docker pull vige/vota:demo
+docker pull vige/vota
 ```
 To run the image use the command:
 ```
-docker run -d --name vota -p80:5000 vige/vota:demo
+docker run -d --name vota -p443:443 vige/vota:demo
 ```
 
-Then open `http://localhost` to connect to the vote application
+Then open `https://localhost` to connect to the vote application
