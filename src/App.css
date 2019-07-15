@@ -1,0 +1,65 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
+.App-header {
+  min-height: 94.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 10px solid #000;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
+    float: none;
+}
+
+body .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link .p-menuitem-text {
+    color: #333333;
+}
+
+body .p-tabmenu .p-tabmenu-nav {
+    padding-right: 28%;
+}
+
+body .powered {
+    position: absolute;
+    top: 0%;
+    right: 1%;
+    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+    font-size: 14px;
+}
+
+body .logo {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 100%;
+}
+
+body .p-dialog-content .p-datatable-wrapper .p-datatable-thead {
+    display: none;
+}
+
+body .p-tabmenu.p-component.disabled {
+    pointer-events: none;
+    cursor: default;
+}

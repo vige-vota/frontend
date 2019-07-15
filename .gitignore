@@ -1,0 +1,5 @@
+build
+build_packageNpmApp
+node_modules
+.project
+.settings

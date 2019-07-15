@@ -1,0 +1,44 @@
+body .admin-buttons {
+	height: 0px;
+}
+
+body .content-party .p-button.admin-button {
+	width: 30px;
+	height: 30px;
+	left: 31%;
+	border-style: none;
+}
+
+body .content-party .p-button.admin-button:hover {
+   background-color: white
+}
+
+body .p-button.voting-paper-admin {
+	background-color: initial !important;
+	width: 3% !important;
+	border-color: transparent;
+}
+
+body .p-button.voting-paper-admin .pi {
+    top: 50% !important;
+}
+
+body .p-button.voting-paper-admin:hover {
+	border-color: transparent !important;
+}
+
+body .content-party .p-button.admin-button .pi {
+	top: 50%;
+}
+
+body .admin-buttons .p-button {
+    min-width: 2px !important;
+}
+
+body .admin-buttons .p-button-icon-only .p-button-icon-left {
+    left: 50% !important;
+}
+
+body .admin-buttons .p-button-text {
+    left: 0% !important;
+}

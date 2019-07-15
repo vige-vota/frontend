@@ -1,0 +1,19 @@
+body .page {
+    width: 100%;
+}
+
+body .content-party.resize-0 {
+    min-width: 21.5em;
+    max-width: 80em;
+    float: left;
+}
+
+body .content-party.resize-1 {
+    min-width: 21em;
+    max-width: 80em;
+    float: right;
+}
+
+body .pi {
+    font-size: 1em;
+}

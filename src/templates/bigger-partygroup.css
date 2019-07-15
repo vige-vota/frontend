@@ -1,0 +1,55 @@
+body .bigger-partygroup .p-button, body .bigger-partygroup .p-buttonset.p-button-secondary > .p-button {
+    font-size: 15px;
+    width: 100%;
+    background-color: white;
+}
+
+body .bigger-partygroup .p-button.p-button-text-icon-left .p-button-text {
+    top: 32%;
+    left: 25%;
+}
+
+body .bigger-partygroup .p-button.p-button-text-icon-left .p-button-subtext {
+    left: 23%;
+    top: 75%;
+    right: 12%;
+}
+
+body .bigger-partygroup .content-party {
+    display: grid;
+    grid-gap: 1px;
+    padding: 10px;
+    grid-template-columns: 49% 49%;
+    width: 47.5%;
+}
+
+body .bigger-partygroup .first-row {
+    grid-column: 2;
+    height: 100%;
+	min-height: 118px;
+}
+
+body .bigger-partygroup .p-button.first-row.p-button-text-icon-left .p-button-text {
+    left: -35px;
+    width: 86%;
+    padding: 6px 16px 14px 30px;
+}
+
+body .bigger-partygroup .first-row .pi.p-c.p-button-icon-left {
+    left: 56%;
+}
+
+body .bigger-partygroup .p-button-text-icon-left .p-button-icon-left {
+    top: 25%;
+}
+
+body .bigger-partygroup .pi {
+    font-size: 1em;
+    left: 0%;
+}
+
+body .bigger-partygroup .candidates {
+    position: absolute;
+    bottom: 21%;
+    left: 35%;
+}

@@ -1,0 +1,9 @@
+.modal-voting-paper .p-dialog-content {
+	text-align: left;
+}
+
+.modal-voting-paper .p-inputtext {
+	width: 100%;
+	max-height: 322px;
+    max-width: 335px;
+}

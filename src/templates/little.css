@@ -1,0 +1,37 @@
+body .little .p-button, body .little .p-buttonset.p-button-secondary > .p-button {
+    font-size: 15px;
+    width: 100%;
+    background-color: white;
+}
+
+body .little .p-button .pi {
+    top: 10%;
+}
+
+body .little .p-button.p-button-text-icon-left .p-button-text {
+    top: 10%;
+    left: 35%;
+    font-size: 91%;
+}
+
+body .little .content-party {
+    display: grid;
+    grid-gap: 1px;
+    padding: 11px;
+    grid-template-columns: 49% 49%;
+    width: 50%;
+}
+
+body .little .first-row {
+    grid-column: 1 / 3;
+    width: 100%;
+    height: 100%;
+}
+
+body .little .first-row .button-selected {
+    width: 32%;
+    height: 90%;
+    left: 35%;
+    bottom: 1%;
+    position: absolute;
+}
