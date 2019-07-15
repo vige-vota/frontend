@@ -35,23 +35,20 @@ nodeclipse -p
 
 If you need a complete environment you can download docker and import the application through the command:
 ```
-docker pull vige/vota
+docker pull vige/vota-frontend
 ```
 To run the image use the command:
 ```
-docker run -d --name vota -p443:8443 vige/vota
+docker run -d --name vota-frontend -p443:8443 vige/vota-frontend
 ```
-Then open `https://localhost` to connect to the vote application
+Then open `https://localhost` to connect to the vote application.
 
-## Docker
-
-If you need a complete environment you can download docker and import the application through the command:
+If you need only to start a demo execute:
 ```
-docker pull vige/vota
+docker pull vige/vota-frontend:demo
 ```
-To run the image use the command:
+and then:
 ```
-docker run -d --name vota -p443:443 vige/vota:demo
+docker run -d --name vota-frontend -p80:5000 vige/vota-frontend:demo
 ```
-
-Then open `https://localhost` to connect to the vote application
+Then open `http://localhost` to connect to the vote application
