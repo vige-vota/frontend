@@ -35,7 +35,7 @@ RUN sudo chown -R votinguser:users /workspace && \
     sudo npm install -g serve && \
     npm run build && \
     npm ci --only=production && \
-    mv /workspace/project/build /workspace && \
+    mv /workspace/project/build/* /workspace && \
     rm -Rf /workspace/project
 
 EXPOSE 80
