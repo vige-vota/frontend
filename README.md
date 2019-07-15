@@ -23,6 +23,8 @@ https-serve -s build
 ```
 Now you can connect in the application going to: open `https://localhost`
 
+#Eclipse
+
 To make the project as an Eclipse project go in the root folder of the project and run the following commands:
 ```
 npm install nodeclipse
