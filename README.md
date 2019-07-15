@@ -7,7 +7,7 @@ npm install
 npm run build
 npm ci --only=production
 ```
-Then create a SSL ceetificate for the https. Here a sample:
+Then create a SSL certificate for the https. Here a sample:
 ```
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=GB/ST=London/L=London/O=Global Security/OU=IT Department/CN=Vige"
 ```
@@ -22,6 +22,12 @@ Then go in the build folder and start with the command:
 https-serve -s build
 ```
 Now you can connect in the application going to: open `https://localhost`
+
+To make the project as an Eclipse project go in the root folder of the project and run the following commands:
+```
+npm install nodeclipse
+nodeclipse -p
+```
 
 ## Docker
 
