@@ -22,3 +22,15 @@ Then go in the build folder and start with the command:
 https-serve -s build
 ```
 Now you can connect in the application going to: open `https://localhost`
+
+## Docker
+
+If you need a complete environment you can download docker and import the application through the command:
+```
+docker pull vige/vota
+```
+To run the image use the command:
+```
+docker run -d --name vota -p443:8443 vige/vota
+```
+Then open `https://localhost` to connect to the vote application
