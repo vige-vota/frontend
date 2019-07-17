@@ -1,4 +1,4 @@
-#frontend
+# frontend
 the react application to vote and manage the voting paper
 
 Go in the frontend folder and run npm through the following commands:
@@ -23,7 +23,7 @@ https-serve -s build
 ```
 Now you can connect in the application going to: open `https://localhost`
 
-##Eclipse
+## Eclipse
 
 To make the project as an Eclipse project go in the root folder of the project and run the following commands:
 ```
@@ -31,7 +31,7 @@ npm install nodeclipse
 nodeclipse -p
 ```
 
-##Docker
+## Docker
 
 If you need a complete environment you can download docker and import the application through the command:
 ```
