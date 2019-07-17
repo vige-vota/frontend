@@ -1,4 +1,4 @@
-# frontend
+#frontend
 the react application to vote and manage the voting paper
 
 Go in the frontend folder and run npm through the following commands:
@@ -9,7 +9,7 @@ npm ci --only=production
 ```
 Then create a SSL certificate for the https. Here a sample:
 ```
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=GB/ST=London/L=London/O=Global Security/OU=IT Department/CN=Vige"
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=GB/ST=London/L=London/O=Global Security/OU=IT Department/CN=localhost"
 ```
 and copy it in the home directory under the .http-serve folder.
 
@@ -23,7 +23,7 @@ https-serve -s build
 ```
 Now you can connect in the application going to: open `https://localhost`
 
-#Eclipse
+##Eclipse
 
 To make the project as an Eclipse project go in the root folder of the project and run the following commands:
 ```
@@ -31,7 +31,7 @@ npm install nodeclipse
 nodeclipse -p
 ```
 
-## Docker
+##Docker
 
 If you need a complete environment you can download docker and import the application through the command:
 ```
