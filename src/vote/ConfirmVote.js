@@ -8,6 +8,7 @@ import { selections } from './Validator'
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import { config } from '../App'
+import axios from 'axios'
 
 const ASC = 'ascending'
 const DSC = 'descending'
@@ -37,8 +38,16 @@ export class ConfirmVote extends Component {
     }
 
     confirm() {
-        this.setState({ visible: false })
-        this.props.window.setState({ visible: false })
+    	
+    	axios
+    		.post(process.env.REACT_APP_VOTE_URL, selections)
+    		.then(function(response) {
+    			this.setState({ visible: false })
+    			this.props.window.setState({ visible: false })
+    		})
+    		.catch(function(error) {
+    			console.log(error)
+    		});
     }
 
     onHide() {

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
+import { config } from '../App'
+import axios from 'axios'
 
 export class ConfirmCreate extends Component {
 
@@ -28,7 +30,15 @@ export class ConfirmCreate extends Component {
     }
 
     confirm() {
-        this.setState({ visible: false })
+    	axios
+		.post(process.env.REACT_APP_VOTING_PAPERS_URL, config)
+		.then(function(response) {
+	    	console.log(this)
+	        this.setState({ visible: false })
+		})
+		.catch(function(error) {
+			console.log(error)
+		});
     }
 
     onHide() {
