@@ -33,8 +33,8 @@ COPY / /workspace/project
 # If you are building your code for production
 RUN sudo chown -R votinguser:users /workspace && \
     cd /workspace/project && npm install && \
-    npm run build && \
     npm ci --only=production && \
+    npm run build && \
     sudo npm install -g https-serve && \
     sudo mkdir -p /root/.https-serve/ && \
     sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=GB/ST=London/L=London/O=Global Security/OU=IT Department/CN=Vige" && \

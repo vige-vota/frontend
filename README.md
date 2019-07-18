@@ -4,8 +4,8 @@ the react application to vote and manage the voting paper
 Go in the frontend folder and run npm through the following commands:
 ```
 npm install
-npm run build
 npm ci --only=production
+npm run build
 ```
 Then create a SSL certificate for the https. Here a sample:
 ```
