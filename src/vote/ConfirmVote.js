@@ -9,6 +9,8 @@ import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import { config } from '../App'
 import axios from 'axios'
+import { party, group } from './Party'
+import { candidate } from './Candidates'
 
 const ASC = 'ascending'
 const DSC = 'descending'
@@ -36,15 +38,43 @@ export class ConfirmVote extends Component {
     open() {
         this.setState({ visible: true })
     }
+    
+    createVote() {
+    	let vote = {}
+    	vote.votingPapers = []
+    	selections.forEach(e => {
+    		let votingPaper = e.votingPaper
+    		let value = {}
+    		for (let i = 0; i< vote.votingPapers.length;i++)
+    			if (vote.votingPapers[i].id === votingPaper.id)
+    				value = vote.votingPapers[i]
+    			
+    		if (!value.id && value.id !== 0) {
+    			value.id = votingPaper.id
+    			vote.votingPapers.push(value)
+    		}
+    			
+    		if (e.type === group)
+    			value.group = { id: e.id }
+    		else if (e.type === party)
+    			value.party = { id: e.id }
+    		else if (e.type === candidate) {
+    			if (!value.party.candidates)
+    				value.party.candidates = []
+    			value.party.candidates.push({ id: e.id })
+    		}
+    	})
+    	return vote
+    }
 
     confirm() {
-    	
     	axios
-    		.post(process.env.REACT_APP_VOTE_URL, selections)
-    		.then(function(response) {
+    		.post(process.env.REACT_APP_BACKEND_URL, this.createVote())
+    		.then(response => {
     			this.setState({ visible: false })
     			this.props.window.setState({ visible: false })
-    		})
+    			return response
+		      })
     		.catch(function(error) {
     			console.log(error)
     		});

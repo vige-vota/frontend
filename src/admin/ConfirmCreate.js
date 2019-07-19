@@ -4,6 +4,7 @@ import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import { config } from '../App'
 import axios from 'axios'
+import stringify from 'json-stringify-safe'
 
 export class ConfirmCreate extends Component {
 
@@ -30,12 +31,13 @@ export class ConfirmCreate extends Component {
     }
 
     confirm() {
+    	let json = JSON.parse(stringify(config))
     	axios
-		.post(process.env.REACT_APP_VOTING_PAPERS_URL, config)
-		.then(function(response) {
-	    	console.log(this)
-	        this.setState({ visible: false })
-		})
+		.post(process.env.REACT_APP_VOTING_PAPERS_URL, json)
+		.then(response => {
+			  this.setState({ visible: false })
+		      return response
+		      })
 		.catch(function(error) {
 			console.log(error)
 		});
