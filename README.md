@@ -39,7 +39,7 @@ docker pull vige/vota-frontend
 ```
 To run the image use the command:
 ```
-docker run -d --name vota-frontend -p443:443 vige/vota-frontend
+docker run -d --name vota-frontend -p443:443 -e VOTINGPAPER_URL=https://localhost:8543/votingPapers -e BACKEND_URL=https://localhost:8443/vote vige/vota-frontend
 ```
 Then open `https://localhost` to connect to the vote application.
 

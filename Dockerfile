@@ -17,6 +17,9 @@ FROM node:10
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM xterm
 
+ENV VOTINGPAPER_URL https://localhost:8543/votingPapers
+ENV BACKEND_URL https://localhost:8443/vote
+
 RUN apt-get upgrade -y && \
 	apt-get update && \
 	apt-get install dialog apt-utils -y && \
@@ -43,4 +46,4 @@ RUN sudo chown -R votinguser:users /workspace && \
     rm -Rf /workspace/project
 
 EXPOSE 443
-CMD sudo https-serve -s build && tail -f /dev/null
+CMD sudo REACT_APP_VOTING_PAPERS_URL=$VOTINGPAPER_URL REACT_APP_BACKEND_URL=$BACKEND_URL https-serve -s build && tail -f /dev/null
