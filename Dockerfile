@@ -17,8 +17,8 @@ FROM node:10
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM xterm
 
-ENV VOTINGPAPER_URL https://localhost:8543/votingPapers
-ENV BACKEND_URL https://localhost:8443/vote
+ENV VOTINGPAPER_URL https://votingpaper.vota.vige.it:8543/votingPapers
+ENV BACKEND_URL https://backend.vota.vige.it:8443/vote
 
 RUN apt-get upgrade -y && \
 	apt-get update && \
@@ -40,7 +40,7 @@ RUN sudo chown -R votinguser:users /workspace && \
     npm run build && \
     sudo npm install -g https-serve && \
     sudo mkdir -p /root/.https-serve/ && \
-    sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=GB/ST=London/L=London/O=Global Security/OU=IT Department/CN=Vige" && \
+    sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=GB/ST=London/L=London/O=Global Security/OU=IT Department/CN=frontend.vota.vige.it" && \
     sudo mv server.key server.crt /root/.https-serve && \
     mv /workspace/project/build/* /workspace && \
     rm -Rf /workspace/project
