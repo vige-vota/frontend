@@ -20,7 +20,7 @@ const messages = {
     'it': messages_it
 }
 const language = navigator.language.split(/[-_]/)[0]  // language without region code
-
+console.log(process.env.REACT_APP_VOTING_PAPERS_URL)
 axios
 	.get(process.env.REACT_APP_VOTING_PAPERS_URL)
 	.then(function(response) {
