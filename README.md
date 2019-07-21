@@ -4,6 +4,14 @@ the react application to vote and manage the voting paper
 Go in the frontend folder and run npm through the following commands:
 ```
 npm install
+npm start
+```
+
+And connect to http://localhost:3000
+
+If you need a production environment go in the frontend folder and run npm through the following commands:
+```
+npm install
 npm ci --only=production
 npm run build
 ```
@@ -21,7 +29,16 @@ Then go in the build folder and start with the command:
 ```
 https-serve -s build
 ```
-Now you can connect in the application going to: open `https://localhost`
+
+Add the following DNS in your /etc/hosts file:
+```
+$IP_ADDRESS  votingpaper.vota.vige.it
+$IP_ADDRESS  backend.vota.vige.it
+```
+
+where in $IP_ADDRESS you must choose the ip address where is located the server
+
+Now you can connect in the application going to: open `https://frontend.vota.vige.it`
 
 ## Eclipse
 
