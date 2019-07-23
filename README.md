@@ -32,7 +32,7 @@ https-serve -s build
 
 Add the following DNS in your /etc/hosts file:
 ```
-$IP_ADDRESS  votingpaper.vota.vige.it
+$IP_ADDRESS  votingpapers.vota.vige.it
 $IP_ADDRESS  backend.vota.vige.it
 ```
 
