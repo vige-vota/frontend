@@ -70,7 +70,7 @@ class App extends Component {
 								disjointed: currentVotingPaper.disjointed,
 								maxCandidates: currentVotingPaper.maxCandidates,
 								color: currentVotingPaper.color,
-								cssStyle: currentVotingPaper.cssStyle
+								type: currentVotingPaper.type
 							})
 							this.refs.modalVotingPaper.open()
 						} else if (this.state.visible) {
@@ -85,7 +85,7 @@ class App extends Component {
 										disjointed: false,
 										maxCandidates: 0,
 										color: '1976D2',
-										cssStyle: 'bigger'
+										type: 'bigger'
 									})
                                 	this.refs.modalVotingPaper.open()
                              	} else 
@@ -116,7 +116,7 @@ class App extends Component {
                             <FormattedMessage id='app.confirm.confirmedbody'
                                 defaultMessage='Your vote has been sent successfully. The results will be shown shortly. We thank you for your participation'>
                             </FormattedMessage>
-						let header = <header key={'header-' + votingPaper.id} className={'App-header '+votingPaper.cssStyle} ref={'header-' + votingPaper.id} style={ votingPaper.name !== this.state.activeItem['label'] ? { display: 'none' } : {backgroundImage: `url(${background})`, backgroundColor: '#'+votingPaper.color, borderColor: '#'+votingPaper.color}}>
+						let header = <header key={'header-' + votingPaper.id} className={'App-header '+votingPaper.type} ref={'header-' + votingPaper.id} style={ votingPaper.name !== this.state.activeItem['label'] ? { display: 'none' } : {backgroundImage: `url(${background})`, backgroundColor: '#'+votingPaper.color, borderColor: '#'+votingPaper.color}}>
                             	<VotingPaper config={votingPaper} visible={this.state.visible} ref={'votingpaper-'+votingPaper.id} />
                                 <Panel header={confirmedHeader} style={!this.state.visible ? {} : {display: 'none'}}>
                                     {confirmedBody}

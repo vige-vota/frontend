@@ -106,8 +106,8 @@ export const getTabs = (component) => {
 export const colorTabs = (component) => {
     const tabs = getTabs(component)
     config.votingPapers.forEach((votingPaper, i) => {
-		if (!tabs[i].className.includes(votingPaper.cssStyle))
-			tabs[i].className = tabs[i].className + ' App-' + votingPaper.id+' ' + votingPaper.cssStyle
+		if (!tabs[i].className.includes(votingPaper.type))
+			tabs[i].className = tabs[i].className + ' App-' + votingPaper.id+' ' + votingPaper.type
 		tabs[i].style.setProperty('background-color', '#'+votingPaper.color)
 		tabs[i].style.setProperty('border-color', '#'+votingPaper.color)
     })

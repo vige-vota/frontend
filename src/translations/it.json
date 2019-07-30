@@ -29,7 +29,7 @@
 	"app.configuration.disjointed": "Voto disgiunto",
 	"app.configuration.maxcandidates": "Numero di candidati",
 	"app.configuration.color": "Colore della scheda",
-	"app.configuration.templateslabel": "Stile della scheda",
+	"app.configuration.templateslabel": "Tipo di scheda",
 	"app.configuration.insert.header": "Aggiungi la scheda",
 	"app.configuration.error.summarysize": "{0}: Dimensione non valida, ",
 	"app.configuration.error.detailsize": "la dimensione massima è {0}.",

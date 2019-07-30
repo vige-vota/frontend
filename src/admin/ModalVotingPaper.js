@@ -13,7 +13,7 @@ import { validateVotingPaper, validateDisjointed } from './Ruler'
 import { config } from '../App'
 import './ModalVotingPaper.css'
 
-const cssStyles = [
+const types = [
     {label: 'Bigger', value: 'bigger'},
     {label: 'Bigger party groups', value: 'bigger-partygroup'},
     {label: 'Little', value: 'little'},
@@ -31,7 +31,7 @@ export class ModalVotingPaper extends Component {
 			disjointed: false,
 			maxCandidates: 0,
 			color: '',
-			cssStyle: ''
+			type: ''
         }
         this.state.configurationHeader = <FormattedMessage
             id='app.configuration.header'
@@ -60,7 +60,7 @@ export class ModalVotingPaper extends Component {
 
         this.state.templatesLabel = <FormattedMessage
             id='app.configuration.templateslabel'
-            defaultMessage='Template Style'
+            defaultMessage='Template Type'
         />
 
         this.state.colorLabel = <FormattedMessage
@@ -107,7 +107,7 @@ export class ModalVotingPaper extends Component {
 						votingPaper.disjointed = this.state.disjointed
 						votingPaper.maxCandidates = this.state.maxCandidates
 						votingPaper.color = this.state.color
-						votingPaper.cssStyle = this.state.cssStyle
+						votingPaper.type = this.state.type
 					}
 				})
 				this.state.app.state.items.forEach((item) => {
@@ -124,7 +124,7 @@ export class ModalVotingPaper extends Component {
 					  groups: [] , 
 					  disjointed: this.state.disjointed, 
 					  color: this.state.color, 
-					  cssStyle: this.state.cssStyle
+					  type: this.state.type
 					})
 				const length = this.state.app.state.items.length-2
 				this.state.app.setState({ items: addToList({ id: generatedId, label: this.state.votingPaper.value.label, icon: 'pi pi-fw pi-briefcase' }, length, this.state.app.state.items) })
@@ -227,9 +227,9 @@ export class ModalVotingPaper extends Component {
 				</div>
 				<div className='p-grid'>
     				<div className='p-col'>
-							<ListBox value={this.state.cssStyle} filter={true} options={cssStyles} onChange={(e) => {
+							<ListBox value={this.state.type} filter={true} options={types} onChange={(e) => {
 								if (e.value)
-									this.setState({cssStyle: e.value})
+									this.setState({type: e.value})
 							}} itemTemplate={this.imgTemplate} 
                                     style={{width: '105em'}} listStyle={{maxHeight: '250px'}} />
 					</div>
