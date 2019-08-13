@@ -118,10 +118,18 @@ export class ModalVotingPaper extends Component {
 				this.setState({ visible: false, operation: 'confirmed_update' })
 			} else {
 				let generatedId = generateId()
+				let groupsAr
+				let partiesAr
+				if (this.state.type === 'little-nogroup') {
+					partiesAr = []
+				} else {
+					groupsAr = []
+				}
 				config.votingPapers.push(
 					{ id: generatedId, 
 					  name: this.state.votingPaper.value.label, 
-					  groups: [] , 
+					  groups: groupsAr,
+					  parties: partiesAr,
 					  disjointed: this.state.disjointed, 
 					  color: this.state.color, 
 					  type: this.state.type

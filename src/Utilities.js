@@ -164,6 +164,17 @@ export const getParent = (value) =>  {
                              })
                      }})
              }})
+             else if (votingPaper.parties)
+            	 votingPaper.parties.forEach((party) => {
+                     if (party === value)
+                         parent = votingPaper
+                     else {
+                         if (party.candidates)
+                             party.candidates.forEach((candidate) => {
+                                 if (candidate === value)
+                                     parent = party
+                 })
+         }})
      }})
      return parent
 }

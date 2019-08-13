@@ -96,15 +96,8 @@ export class ModalParty extends Component {
 						value
 					)
 				else {
-					if (this.props.party.votingPaper.type === 'little-nogroup') {
-						if (this.props.party.votingPaper.groups.length === 0) {
-							this.props.party.votingPaper.groups = []
-							this.props.party.votingPaper.groups.push({
-								id: generateId(),
-								parties: []
-							})
-						}
-						this.props.party.votingPaper.groups[0].parties.push(
+					if (!this.props.party.votingPaper.groups) {
+						this.props.party.votingPaper.parties.push(
 							value
 						)
 					} else {

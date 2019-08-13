@@ -42,6 +42,7 @@ export class ConfirmVote extends Component {
     createVote() {
     	let vote = {}
     	vote.votingPapers = []
+    	config.votingPapers.forEach( e => vote.votingPapers.push({ id: e.id }) )
     	selections.forEach(e => {
     		let votingPaper = e.votingPaper
     		let value = {}

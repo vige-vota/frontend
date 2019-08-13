@@ -15,24 +15,34 @@ export class VotingPaper extends Component {
         this.jsonData = data
     }
 
-    renderParties(group) {
+    renderPartiesByGroup(group) {
         return group.parties.map((party) => {
-            let buttonProps = Object.assign({})
-            buttonProps.key = 'party-' + group.id + '-' + party.id
-            buttonProps.icon = 'pi'
-            buttonProps.className = 'p-button-secondary'
-            buttonProps.party = party
-            buttonProps.ref = buttonProps.key
-            buttonProps.id = buttonProps.key
-			buttonProps.votingPaper = this
-            return (
-                <Party {...buttonProps} onClick={(e) => {
-                    let button = this.refs[buttonProps.ref]
-                    button.putX(e)
-                }}>
-                </Party>
-            )
+        	return this.renderParty(group, party)
         })
+    }
+
+    renderParties(parties) {
+        return parties.map((party) => {
+        	return this.renderParty({ id: 0 }, party)
+        })
+    }
+    
+    renderParty(group, party) {
+        let buttonProps = Object.assign({})
+        buttonProps.key = 'party-' + group.id + '-' + party.id
+        buttonProps.icon = 'pi'
+        buttonProps.className = 'p-button-secondary'
+        buttonProps.party = party
+        buttonProps.ref = buttonProps.key
+        buttonProps.id = buttonProps.key
+		buttonProps.votingPaper = this
+        return (
+            <Party {...buttonProps} onClick={(e) => {
+                let button = this.refs[buttonProps.ref]
+                button.putX(e)
+            }}>
+            </Party>
+        )
     }
 
     renderGroup(group) {
@@ -65,20 +75,30 @@ export class VotingPaper extends Component {
 
     render() {
         if (this.props.visible) {
-        return (
-            <div className='page'>
-                {this.jsonData.config.groups.map((group, j) => {
-                    let party, candidate;
-                    party = this.renderParties(group)
-                    candidate = this.renderGroup(group)
-                    return <div key={'parties-' + j} className={'content-party resize-'+(j%2)}>
-                        {candidate}
-                        {party}
-                    </div>
-                })}
-				<AdminButtons party={{ votingPaper: this.props.config}} votingPaper={this} ref='vt-admin-buttons' />
-            </div>
-        ) } else return (
+        	if (this.jsonData.config.groups)
+        		return (
+        				<div className='page'>
+        				{this.jsonData.config.groups.map((group, j) => {
+        					let party, candidate;
+        					party = this.renderPartiesByGroup(group)
+        					candidate = this.renderGroup(group)
+        					return <div key={'parties-' + j} className={'content-party resize-'+(j%2)}>
+                        			  {candidate}
+                        			  {party}
+                        		   </div>
+        				})}
+        				<AdminButtons party={{ votingPaper: this.props.config}} votingPaper={this} ref='vt-admin-buttons' />
+        				</div>
+        		)
+        		else return (
+        			<div className='page'>
+        			     <div key={'parties-0'} className={'content-party resize-0'}>
+                        	{this.renderParties(this.jsonData.config.parties)}
+                         </div>
+                         <AdminButtons party={{ votingPaper: this.props.config}} votingPaper={this} ref='vt-admin-buttons' />
+        			</div>
+        		)
+        } else return (
                 <div className='page'>
                 </div>
             )
