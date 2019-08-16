@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { AutoComplete } from 'primereact/autocomplete'
 import { validate, selections } from './Validator'
 import { getVotingPaper, add, remove } from '../Utilities'
-import { config } from '../App'
 import './Candidates.css'
 
 const placeHolderChars = ' _________________________'
@@ -10,11 +9,6 @@ const placeHolderChars = ' _________________________'
 var candidateToRemove
 
 export const candidate = 'candidate'
-
-function update(component) {
-	component.candidates = component.props.config
-    component.maxCandidates = component.props.maxcandidates
-}
 
 export class Candidates extends Component {
 
@@ -28,28 +22,18 @@ export class Candidates extends Component {
         this.chosenCandidates = []
     }
 
-    componentDidUpdate() {
-		if (config.admin) {
-			update(this)
-		}
-    }
-
-    componentDidMount() {
-		update(this)
-    }
-
     filterCandidates(event) {
         setTimeout(() => {
 
             let results
 
             if (event.query.length === 0) {
-                results = this.candidates.filter((candidate) => {
+                results = this.props.config.filter((candidate) => {
                     return !this.chosenCandidates.find(el => el === candidate.name)
                 })
             }
             else {
-                results = this.candidates.filter((candidate) => {
+                results = this.props.config.filter((candidate) => {
                     return !this.chosenCandidates.find(el => el === candidate.name) && candidate.name.toLowerCase().startsWith(event.query.toLowerCase())
                 })
             }
@@ -110,11 +94,11 @@ export class Candidates extends Component {
         }
         let person = this.state[candidate + i]
         if (person) {
-            candidateToRemove = this.candidates.filter(e=> e.name === person)[0]
+            candidateToRemove = this.props.config.filter(e=> e.name === person)[0]
             if (candidateToRemove && validate({ value: candidateToRemove })) {
                 let index = this.chosenCandidates.indexOf(person)
                 this.chosenCandidates.splice(index, 1)
-                this.candidates.forEach((e) => {
+                this.props.config.forEach((e) => {
                     if (e.name === person) {
                         e.selected = false
                         remove(e, selections)
@@ -127,11 +111,12 @@ export class Candidates extends Component {
 
     render() {
         let candidates = []
-        for (let i = 0; i < this.maxCandidates; i++) {
-            candidates.push(<AutoComplete className='excludeSelect' key={'autocomplete-'+candidate+'-' + i} ref={'autocomplete-'+candidate+'-' + i} onClick={(e) => { this.onDropdownClick(e, i) }} value={this.state[candidate + i]} suggestions={this.state.filteredCandidates} completeMethod={this.filterCandidates} size={30} minLength={1}
-                placeholder={(i + 1) + placeHolderChars} itemTemplate={this.itemTemplate.bind(this)} selectedItemTemplate={(e) => (i + 1) + ' ' + e} onChange={(e) => this.onAutocompleteChange(e, i)} onKeyUp={(e) => this.onUnselect(e, i, e.name)}>
-            </AutoComplete>)
-        }
+        if (this.props.config.length > 0)
+        	for (let i = 0; i < this.props.maxcandidates; i++) {
+        		candidates.push(<AutoComplete className='excludeSelect' key={'autocomplete-'+candidate+'-' + i} ref={'autocomplete-'+candidate+'-' + i} onClick={(e) => { this.onDropdownClick(e, i) }} value={this.state[candidate + i]} suggestions={this.state.filteredCandidates} completeMethod={this.filterCandidates} size={30} minLength={1}
+                	placeholder={(i + 1) + placeHolderChars} itemTemplate={this.itemTemplate.bind(this)} selectedItemTemplate={(e) => (i + 1) + ' ' + e} onChange={(e) => this.onAutocompleteChange(e, i)} onKeyUp={(e) => this.onUnselect(e, i, e.name)}>
+        		</AutoComplete>)
+        	}
         return (
             <div className='candidates'>
                 {candidates}

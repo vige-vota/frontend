@@ -130,7 +130,8 @@ export class ModalVotingPaper extends Component {
 					  name: this.state.votingPaper.value.label, 
 					  groups: groupsAr,
 					  parties: partiesAr,
-					  disjointed: this.state.disjointed, 
+					  disjointed: this.state.disjointed,
+					  maxCandidates: this.state.maxCandidates,
 					  color: this.state.color, 
 					  type: this.state.type
 					})

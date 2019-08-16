@@ -64,7 +64,7 @@ export class Party extends Button {
     }
 
     renderLabel() {
-        if (this.props.party.name && !this.props.party.candidates) {
+        if (this.props.party.name && (!this.props.party.candidates || this.props.party.candidates.length === 0)) {
             const buttonLabel = this.props.party.name || 'p-btn'
             let buttonSublabel = ''
             if (this.props.party.subtitle !== 'undefined')
