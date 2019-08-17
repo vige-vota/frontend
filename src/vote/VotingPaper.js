@@ -77,7 +77,7 @@ export class VotingPaper extends Component {
         if (this.props.visible) {
         	if (this.jsonData.config.groups)
         		return (
-        				<div className='page'>
+        			<div className='page'>
         				{this.jsonData.config.groups.map((group, j) => {
         					let party, candidate;
         					party = this.renderPartiesByGroup(group)
@@ -88,7 +88,7 @@ export class VotingPaper extends Component {
                         		   </div>
         				})}
         				<AdminButtons party={{ votingPaper: this.props.config}} votingPaper={this} ref='vt-admin-buttons' />
-        				</div>
+        			</div>
         		)
         		else return (
         			<div className='page'>

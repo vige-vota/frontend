@@ -95,6 +95,16 @@ export const generateId = () => {
 							})
 					})
 			})
+			if (votingPaper.parties)
+				votingPaper.parties.forEach((party) => {
+					if (party.id > id)
+						id = party.id
+			    	if (party.candidates)
+						party.candidates.forEach((candidate) => {
+							if (candidate.id > id)
+								id = candidate.id
+						})
+				})
 	})
 	return id + 1
 }
