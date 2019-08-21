@@ -70,7 +70,7 @@ export class ConfirmVote extends Component {
 
     confirm() {
     	axios
-    		.post(process.env.REACT_APP_BACKEND_URL, this.createVote())
+    		.post(process.env.REACT_APP_VOTING_URL, this.createVote())
     		.then(response => {
     			this.setState({ visible: false })
     			this.props.window.setState({ visible: false })

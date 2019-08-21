@@ -17,7 +17,7 @@ npm run build
 ```
 Then create a SSL certificate for the https. Here a sample:
 ```
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=GB/ST=London/L=London/O=Global Security/OU=IT Department/CN=frontend.vota.vige.it"
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=GB/ST=London/L=London/O=Global Security/OU=IT Department/CN=vota-frontend.vige.it"
 ```
 and copy it in the home directory under the .http-serve folder.
 
@@ -32,13 +32,13 @@ https-serve -s build
 
 Add the following DNS in your /etc/hosts file:
 ```
-$IP_ADDRESS  votingpapers.vota.vige.it
-$IP_ADDRESS  backend.vota.vige.it
+$IP_ADDRESS  vota-votingpapers.vige.it
+$IP_ADDRESS  vota-voting.vige.it
 ```
 
 where in $IP_ADDRESS you must choose the ip address where is located the server
 
-Now you can connect in the application going to: open `https://frontend.vota.vige.it`
+Now you can connect in the application going to: open `https://vota-frontend.vige.it`
 
 ## Eclipse
 
@@ -56,9 +56,9 @@ docker pull vige/vota-frontend
 ```
 To run the image use the command:
 ```
-docker run -d --name vota-frontend -p443:443 -e VOTINGPAPER_URL=https://localhost:8543/votingPapers -e BACKEND_URL=https://localhost:8443/vote vige/vota-frontend
+docker run -d --name vota-frontend -p443:443 vige/vota-frontend
 ```
-Then open `https://frontend.vota.vige.it` to connect to the vote application.
+Then open `https://vota-frontend.vige.it` to connect to the vote application.
 
 If you need only to start a demo execute:
 ```
