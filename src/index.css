@@ -10,3 +10,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.p-progress-spinner {
+	position: initial !important;
+}
+
+.p-progress-spinner-svg {
+	width: 20% !important;
+}

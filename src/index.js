@@ -13,6 +13,8 @@ import locale_en from 'react-intl/locale-data/en'
 import locale_it from 'react-intl/locale-data/it'
 import messages_it from './translations/it.json'
 import axios from 'axios'
+import {ProgressSpinner} from 'primereact/progressspinner';
+import ErrorBoundary from './ErrorBoundary';
 
 addLocaleData([...locale_en, ...locale_it])
 
@@ -21,6 +23,7 @@ const messages = {
 }
 const language = navigator.language.split(/[-_]/)[0]  // language without region code
 
+ReactDOM.render(<ProgressSpinner/>, document.getElementById('root'))
 axios
 	.get(process.env.REACT_APP_VOTING_PAPERS_URL)
 	.then(function(response) {
@@ -31,5 +34,6 @@ axios
 	    serviceWorker.register()
 	})
 	.catch(function(error) {
+		ReactDOM.render(<IntlProvider locale={language} messages={messages[language]}><ErrorBoundary error={error} errorInfo={error}/></IntlProvider>, document.getElementById('root'))
 	    console.log(error)
 	});
