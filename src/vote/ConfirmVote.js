@@ -31,12 +31,18 @@ export class ConfirmVote extends Component {
             defaultMessage='By clicking on (Yes) you will confirm the sending of the data. Once confirmed you will not be able to go back. Confirm the rescue?'
         />
         this.open = this.open.bind(this)
+        this.errors = this.errors.bind(this)
         this.confirm = this.confirm.bind(this)
         this.onHide = this.onHide.bind(this)
     }
 
     open() {
         this.setState({ visible: true })
+    }
+
+    errors(errors) {
+        let summary = <FormattedMessage id='app.error' defaultMessage='Error'/>
+        this.props.window.refs.validator.growl.show({severity: 'error', summary: summary, detail: errors.message})
     }
     
     createVote() {
@@ -76,7 +82,8 @@ export class ConfirmVote extends Component {
     			this.props.window.setState({ visible: false })
     			return response
 		      })
-    		.catch(function(error) {
+    		.catch(error => {
+    			this.errors(error)
     			console.log(error)
     		});
     }

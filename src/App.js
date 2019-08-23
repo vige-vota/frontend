@@ -53,12 +53,12 @@ class App extends Component {
 		if (config.admin) {
 			confirm = <ConfirmCreate ref='confirm' window={this}/>
 			modalVotingPaper = <ModalVotingPaper ref='modalVotingPaper' />
-			ruler = <Ruler />
+			ruler = <Ruler ref='ruler' />
 		}
         return (
             <div className='App'>
                 <div className='content-section implementation'>
-                    <Validator />
+                    <Validator ref='validator' />
 					{ruler}
                     <TabMenu ref='tabMenu' className={this.state.visible ? '' : 'disabled'}  model={this.state.items} activeItem={this.state.activeItem} onTabChange={(e) => {
                     	if (config.admin && e.originalEvent.target.className.startsWith('pi')) {

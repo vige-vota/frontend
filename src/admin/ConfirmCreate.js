@@ -22,12 +22,17 @@ export class ConfirmCreate extends Component {
             defaultMessage='By clicking on (Yes) you will confirm the sending of the data. Confirm the rescue?'
         />
         this.open = this.open.bind(this)
+        this.errors = this.errors.bind(this)
         this.confirm = this.confirm.bind(this)
         this.onHide = this.onHide.bind(this)
     }
 
     open() {
         this.setState({ visible: true })
+    }
+
+    errors(errors) {
+        this.props.window.refs.ruler.errors({message: errors.message})
     }
 
     confirm() {
@@ -38,7 +43,8 @@ export class ConfirmCreate extends Component {
 			  this.setState({ visible: false })
 		      return response
 		      })
-		.catch(function(error) {
+		.catch(error => {
+			this.errors(error)
 			console.log(error)
 		});
     }
@@ -75,7 +81,7 @@ export class ConfirmCreate extends Component {
         )
         return (
             <Dialog contentStyle={{'maxHeight': '500px'}} header={this.state.confirmHeader} visible={this.state.visible} footer={footer} onHide={this.onHide}>
-                {this.state.confirmBody}<br/><br/>
+        		{this.state.confirmBody}<br/><br/>
             </Dialog>)
     }
 }

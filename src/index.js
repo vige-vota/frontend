@@ -14,7 +14,7 @@ import locale_it from 'react-intl/locale-data/it'
 import messages_it from './translations/it.json'
 import axios from 'axios'
 import {ProgressSpinner} from 'primereact/progressspinner';
-import ErrorBoundary from './ErrorBoundary';
+import ErrorBoundary from './errors/ErrorBoundary';
 
 addLocaleData([...locale_en, ...locale_it])
 
