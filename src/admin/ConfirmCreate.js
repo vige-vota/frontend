@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom';
 import { FormattedMessage } from 'react-intl'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
@@ -37,13 +38,17 @@ export class ConfirmCreate extends Component {
 
     confirm() {
     	let json = JSON.parse(stringify(config))
+    	let button = ReactDOM.findDOMNode(this).querySelectorAll('.pi-check')[0]
+    	button.className = 'pi pi-spin pi-spinner p-c p-button-icon-left'
     	axios
 		.post(process.env.REACT_APP_VOTING_PAPERS_URL, json)
 		.then(response => {
+	    	  button.className = 'pi pi-check p-c p-button-icon-left'
 			  this.setState({ visible: false })
 		      return response
 		      })
 		.catch(error => {
+	    	button.className = 'pi pi-check p-c p-button-icon-left'
 			this.errors(error)
 			console.log(error)
 		});

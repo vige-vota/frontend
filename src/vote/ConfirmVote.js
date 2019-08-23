@@ -75,14 +75,18 @@ export class ConfirmVote extends Component {
     }
 
     confirm() {
+    	let button = ReactDOM.findDOMNode(this).querySelectorAll('.pi-check')[0]
+    	button.className = 'pi pi-spin pi-spinner p-c p-button-icon-left'
     	axios
     		.post(process.env.REACT_APP_VOTING_URL, this.createVote())
     		.then(response => {
+    	    	button.className = 'pi pi-check p-c p-button-icon-left'
     			this.setState({ visible: false })
     			this.props.window.setState({ visible: false })
     			return response
 		      })
     		.catch(error => {
+    	    	button.className = 'pi pi-check p-c p-button-icon-left'
     			this.errors(error)
     			console.log(error)
     		});
