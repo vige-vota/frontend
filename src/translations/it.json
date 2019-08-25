@@ -31,8 +31,6 @@
 	"app.configuration.color": "Colore della scheda",
 	"app.configuration.templateslabel": "Tipo di scheda",
 	"app.configuration.insert.header": "Aggiungi la scheda",
-	"app.configuration.error.summarysize": "{0}: Dimensione non valida, ",
-	"app.configuration.error.detailsize": "la dimensione massima è {0}.",
     "app.yes": "Si",
     "app.no": "No",
     "app.error": "Errore",
@@ -52,5 +50,7 @@
 	"app.admin.error.candidate.casename": "Il nome e cognome del candidato devono iniziare con la lettera maiuscola e terminare con le lettere minuscole",
 	"app.admin.error.candidate.surname": "Inserire sia nome che cognome",
     "app.admin.error.style": "Lo stile della scheda è obbligatorio",
-    "app.admin.error.disjointed": "Prima di modificare il voto disgiunto devi rimuovere tutte le selezioni effettuate sulla scheda '{name}'"
+    "app.admin.error.disjointed": "Prima di modificare il voto disgiunto devi rimuovere tutte le selezioni effettuate sulla scheda '{name}'",
+    "app.admin.error.file.summary": "{0}: Dimensione non valida, ",
+    "app.admin.error.file.detail": "la dimensione massima è {0}."
 }

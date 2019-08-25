@@ -199,7 +199,7 @@ export class ModalParty extends Component {
     				<div className='p-col'>
 						<FormattedMessage id='app.configuration.chooseimage'
             					defaultMessage='Choose Image'>
-								{(chooseImage) => <PartyUpload accept='image/*' maxFileSize={1000000} 
+								{(chooseImage) => <PartyUpload accept='image/*' maxFileSize={60000} 
 													onSelect={this.onSelect}
 													chooseLabel={chooseImage} 
 													party={this} previewWidth={150} />}

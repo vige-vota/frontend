@@ -145,7 +145,7 @@ export class ModalCandidates extends Component {
     				<div className='p-col'>
 						<FormattedMessage ref='upload' id='app.configuration.chooseimage'
             					defaultMessage='Choose Image'>
-								{(chooseImage) => <CandidateUpload ref='candidateUpload' accept='image/*' maxFileSize={1000000} 
+								{(chooseImage) => <CandidateUpload ref='candidateUpload' accept='image/*' maxFileSize={60000} 
 													onSelect={this.onSelect}
 													chooseLabel={chooseImage} 
 													party={this} candidate={selectedCandidate} 
