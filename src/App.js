@@ -12,6 +12,7 @@ import background from './images/background.png'
 import logo from './images/logo.ico'
 import {Panel} from 'primereact/panel';
 import {colorTabs, getVotingPaperById} from './Utilities'
+import SockJsClient from './SockJsClient'
 
 export var config
 
@@ -50,13 +51,21 @@ class App extends Component {
 		let confirm = <ConfirmVote ref='confirm' window={this}/>
 		let modalVotingPaper = ''
 		let ruler = ''
+		let realTimeVotes = ''
 		if (config.admin) {
 			confirm = <ConfirmCreate ref='confirm' window={this}/>
 			modalVotingPaper = <ModalVotingPaper ref='modalVotingPaper' />
 			ruler = <Ruler ref='ruler' />
+			realTimeVotes = <SockJsClient url={process.env.REACT_APP_VOTING_PAPERS_REALTIME_URL} topics={['/topic/votingpaper']}
+						onMessage={(msg) => {
+							console.log(config)
+							console.log(msg)
+							config = msg
+					 }} />
 		}
         return (
             <div className='App'>
+            	{realTimeVotes}
                 <div className='content-section implementation'>
                     <Validator ref='validator' />
 					{ruler}
