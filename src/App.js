@@ -11,7 +11,7 @@ import { Ruler } from './admin/Ruler'
 import background from './images/background.png'
 import logo from './images/logo.ico'
 import {Panel} from 'primereact/panel';
-import {colorTabs, getVotingPaperById} from './Utilities'
+import {getTabs, colorTabs, getVotingPaperById} from './Utilities'
 import SockJsClient from './SockJsClient'
 
 export var config
@@ -58,9 +58,21 @@ class App extends Component {
 			ruler = <Ruler ref='ruler' />
 			realTimeVotes = <SockJsClient url={process.env.REACT_APP_VOTING_PAPERS_REALTIME_URL} topics={['/topic/votingpaper']}
 						onMessage={(msg) => {
-							console.log(config)
-							console.log(msg)
-							config = msg
+							msg.votingPapers.forEach((votingPaper, i) => {
+								let currentVotingPaper = config.votingPapers[i]
+								if (currentVotingPaper) {
+									currentVotingPaper.type = votingPaper.type
+									currentVotingPaper.disjointed = votingPaper.disjointed
+									currentVotingPaper.color = votingPaper.color
+									currentVotingPaper.maxCandidates = votingPaper.maxCandidates
+									currentVotingPaper.id = votingPaper.id
+									currentVotingPaper.groups = votingPaper.groups
+									currentVotingPaper.parties = votingPaper.parties
+								}
+							})
+							const tabs = getTabs(this)
+							let index = this.state.items.map((e) => e.id).indexOf(this.state.activeItem.id)
+					        tabs[index].click()
 					 }} />
 		}
         return (
