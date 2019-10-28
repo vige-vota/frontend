@@ -59,6 +59,11 @@ class App extends Component {
 			realTimeVotes = <SockJsClient url={process.env.REACT_APP_VOTING_PAPERS_REALTIME_URL} topics={['/topic/votingpaper']}
 						onMessage={(msg) => {
 							msg.votingPapers.forEach((votingPaper, i) => {
+								let currentItem = this.state.items[i]
+								if (currentItem) {
+									currentItem.id = votingPaper.id
+									currentItem.label = votingPaper.name
+								}
 								let currentVotingPaper = config.votingPapers[i]
 								if (currentVotingPaper) {
 									currentVotingPaper.type = votingPaper.type
@@ -66,6 +71,7 @@ class App extends Component {
 									currentVotingPaper.color = votingPaper.color
 									currentVotingPaper.maxCandidates = votingPaper.maxCandidates
 									currentVotingPaper.id = votingPaper.id
+									currentVotingPaper.name = votingPaper.name
 									currentVotingPaper.groups = votingPaper.groups
 									currentVotingPaper.parties = votingPaper.parties
 								}
