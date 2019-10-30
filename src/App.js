@@ -47,6 +47,13 @@ class App extends Component {
         tabs[0].click()
     }
 
+	componentDidUpdate() {
+		if (this.state.operation === 'websocket') {
+			colorTabs(this)
+			this.setState({operation: undefined})
+		}
+	}
+
     render() {
 		let confirm = <ConfirmVote ref='confirm' window={this}/>
 		let modalVotingPaper = ''
@@ -78,7 +85,8 @@ class App extends Component {
 							})
 							const tabs = getTabs(this)
 							let index = this.state.items.map((e) => e.id).indexOf(this.state.activeItem.id)
-					        tabs[index].click()
+							tabs[index].click()
+							this.setState({operation: 'websocket'})
 					 }} />
 		}
         return (
