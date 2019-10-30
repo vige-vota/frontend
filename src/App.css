@@ -29,7 +29,8 @@
 }
 
 body .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
-    float: none;
+    float: left;
+    margin: 0;
 }
 
 body .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link .p-menuitem-text {
