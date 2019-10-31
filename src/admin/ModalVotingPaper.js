@@ -144,7 +144,7 @@ export class ModalVotingPaper extends Component {
     }
 
     delete() {
-		removeTab(this.state.votingPaper, this.state.app)
+		removeTab(this.state.votingPaper.value, this.state.app)
         this.setState({ visible: false, operation: 'confirmed_delete' })
     }
 

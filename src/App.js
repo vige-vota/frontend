@@ -11,7 +11,7 @@ import { Ruler } from './admin/Ruler'
 import background from './images/background.png'
 import logo from './images/logo.ico'
 import {Panel} from 'primereact/panel';
-import {getTabs, colorTabs, getVotingPaperById} from './Utilities'
+import {getTabs, colorTabs, removeTab, getVotingPaperById, addToList} from './Utilities'
 import SockJsClient from './SockJsClient'
 
 export var config
@@ -67,22 +67,27 @@ class App extends Component {
 						onMessage={(msg) => {
 							msg.votingPapers.forEach((votingPaper, i) => {
 								let currentItem = this.state.items[i]
-								if (currentItem) {
-									currentItem.id = votingPaper.id
-									currentItem.label = votingPaper.name
-								}
-								let currentVotingPaper = config.votingPapers[i]
-								if (currentVotingPaper) {
-									currentVotingPaper.type = votingPaper.type
-									currentVotingPaper.disjointed = votingPaper.disjointed
-									currentVotingPaper.color = votingPaper.color
-									currentVotingPaper.maxCandidates = votingPaper.maxCandidates
-									currentVotingPaper.id = votingPaper.id
-									currentVotingPaper.name = votingPaper.name
-									currentVotingPaper.groups = votingPaper.groups
-									currentVotingPaper.parties = votingPaper.parties
+								if (this.state.items.filter(e => e.id === votingPaper.id).length === 0) {
+									config.votingPapers.push(votingPaper)
+									const length = this.state.items.length-2
+									this.setState({ items: addToList({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' }, length, this.state.items) })
+								} else if (currentItem.id === votingPaper.id) {
+									if (currentItem)
+										currentItem.label = votingPaper.name
+									let currentVotingPaper = config.votingPapers[i]
+									if (currentVotingPaper) {
+										currentVotingPaper.type = votingPaper.type
+										currentVotingPaper.disjointed = votingPaper.disjointed
+										currentVotingPaper.color = votingPaper.color
+										currentVotingPaper.maxCandidates = votingPaper.maxCandidates
+										currentVotingPaper.name = votingPaper.name
+										currentVotingPaper.groups = votingPaper.groups
+										currentVotingPaper.parties = votingPaper.parties
+									}
 								}
 							})
+							let toRemove = config.votingPapers.filter(value => -1 === msg.votingPapers.map(e => e.id).indexOf(value.id))
+							toRemove.forEach(item => removeTab(item, this))
 							const tabs = getTabs(this)
 							let index = this.state.items.map((e) => e.id).indexOf(this.state.activeItem.id)
 							tabs[index].click()

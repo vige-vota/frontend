@@ -125,8 +125,8 @@ export const colorTabs = (component) => {
 }
 
 export const removeTab = (e, component) => {
-	let index = component.state.items.map((e) => e.id).indexOf(e.value.id)
-	if (component.state.activeItem.id === e.value.id) {
+	let index = component.state.items.map((e) => e.id).indexOf(e.id)
+	if (component.state.activeItem.id === e.id) {
 		const tabs = getTabs(component)
 		if (index !== 0)
         	tabs[0].click()
