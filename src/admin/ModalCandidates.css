@@ -141,3 +141,7 @@
 	bottom: 30%;
 	height: 150px;
 }
+
+.p-listbox-list-wrapper {
+	max-height: 190px;
+}
