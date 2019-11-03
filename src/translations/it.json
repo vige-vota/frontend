@@ -19,8 +19,8 @@
 	"app.configuration.headerparty": "Configura il partito",
 	"app.configuration.headergroup": "Configura la coalizione",
 	"app.configuration.headercandidates": "Gestione dei candidati",
-	"app.configuration.headerinsertgroup": "Inserisci il partito",
-	"app.configuration.headerinsertvotingpaper": "Inserisci la coalizione",
+	"app.configuration.headerinsertparty": "Inserisci il partito",
+	"app.configuration.headerinsertgroup": "Inserisci la coalizione",
 	"app.configuration.name": "Nome",
 	"app.configuration.namesurname": "Nome e cognome",
 	"app.configuration.gender": "Sesso",
@@ -52,5 +52,6 @@
     "app.admin.error.style": "Lo stile della scheda è obbligatorio",
     "app.admin.error.disjointed": "Prima di modificare il voto disgiunto devi rimuovere tutte le selezioni effettuate sulla scheda '{name}'",
     "app.admin.error.file.summary": "{0}: Dimensione non valida, ",
-    "app.admin.error.file.detail": "la dimensione massima è {0}."
+    "app.admin.error.file.detail": "la dimensione massima è {0}.",
+    "app.admin.error.littlenogroup": "Non è possibile passare da un tipo di scheda a partito ad un tipo a coalizione o viceversa. Rimuovere e ricreare la scheda"
 }

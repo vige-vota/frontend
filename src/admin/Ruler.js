@@ -14,16 +14,21 @@ export const validateDisjointed = (component) => {
 }
 
 export const validateVotingPaper = (component, list) => {
-	if (!component || !component.label) {
+	let value = component.votingPaper.value
+	if (!value || !value.label) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.name' defaultMessage='The name of the voting paper is mandatory'/>})
     	return false
-	} else if (!component || component.label.length > 50) {
+	} else if (!value || value.label.length > 50) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.maxname' defaultMessage='You can specify a maximum length of {number} characters for the name' values = {{ number: 50 }}/>})
     	return false
-	} else if (!component || list.filter(e => e.name.toUpperCase() === component.label.toUpperCase() && e.id !== component.id).length > 0) {
+	} else if (!value || list.filter(e => e.name.toUpperCase() === value.label.toUpperCase() && e.id !== value.id).length > 0) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.existingname' defaultMessage='The name of the voting paper already exists'/>})
     	return false
-	} return true
+	} else if (!value || list.filter(e => ((component.type === 'little-nogroup' && e.type !== 'little-nogroup') || (component.type !== 'little-nogroup' && e.type === 'little-nogroup')) && e.id === value.id).length > 0) {
+    	errors({name: 'name', message: <FormattedMessage id='app.admin.error.littlenogroup' defaultMessage='You cannot pass from a party voting paper to a group voting paper. Remove and create again the voting paper'/>})
+    	return false
+	}
+    return true
 }
 
 export const validateParty = (component) => {

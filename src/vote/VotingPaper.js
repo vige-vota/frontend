@@ -22,9 +22,10 @@ export class VotingPaper extends Component {
     }
 
     renderParties(parties) {
-        return parties.map((party) => {
-        	return this.renderParty({ id: 0 }, party)
-        })
+    	if (parties)
+    		return parties.map((party) => {
+    			return this.renderParty({ id: 0 }, party)
+    		})
     }
     
     renderParty(group, party) {

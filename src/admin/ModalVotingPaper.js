@@ -99,7 +99,7 @@ export class ModalVotingPaper extends Component {
     }
 
     confirm() {
-		if (validateVotingPaper(this.state.votingPaper.value, config.votingPapers)) {
+		if (validateVotingPaper(this.state, config.votingPapers)) {
 			if (this.state.operation === 'update') {
 				config.votingPapers.forEach((votingPaper) => {
 					if (votingPaper.id === this.state.votingPaper.value.id) {

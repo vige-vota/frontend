@@ -30,13 +30,13 @@ export class ModalParty extends Component {
             defaultMessage='Configure your Group'
         />
 
-        this.state.configurationInsertGroupHeader = <FormattedMessage
-            id='app.configuration.headerinsertgroup'
+        this.state.configurationInsertPartyHeader = <FormattedMessage
+            id='app.configuration.headerinsertparty'
             defaultMessage='Insert your Party'
         />
 
-        this.state.configurationInsertVotingPaperHeader = <FormattedMessage
-            id='app.configuration.headerinsertvotingpaper'
+        this.state.configurationInsertGroupHeader = <FormattedMessage
+            id='app.configuration.headerinsertgroup'
             defaultMessage='Insert your Group'
         />
 
@@ -172,10 +172,10 @@ export class ModalParty extends Component {
 				header = this.state.configurationInsertHeader
 		else if (this.state.operation === 'update')
 				header = this.state.configurationGroupHeader
-			 else if (this.props.party.name)
-				header = this.state.configurationInsertGroupHeader
+			 else if (this.props.party.name || this.props.party.votingPaper.type === 'little-nogroup')
+				header = this.state.configurationInsertPartyHeader
 			 else
-				header = this.state.configurationInsertVotingPaperHeader
+				header = this.state.configurationInsertGroupHeader
         return (
             <Dialog contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-party'>
 				<div className='p-grid'>

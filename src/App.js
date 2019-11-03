@@ -21,10 +21,13 @@ class App extends Component {
     constructor(data) {
         super(data)
         config = data.config
+        let activeItem = {}
+        if (config.votingPapers && config.votingPapers[0])
+        	activeItem = { id: config.votingPapers[0].id, label: config.votingPapers[0].name }
         this.state = {
             items: [
             ],
-            activeItem: { id: config.votingPapers[0].id, label: config.votingPapers[0].name },
+            activeItem: activeItem,
             visible: true
         }
         config.votingPapers.map((votingPaper) => {
@@ -39,12 +42,14 @@ class App extends Component {
         />
 		if (config.admin)
 			 this.state.items.push({ label: '+' })
-        this.state.items.push({ label: this.state.confirmButtonLabel })
+	    if (config.votingPapers.length > 0 || config.admin)
+	    	this.state.items.push({ label: this.state.confirmButtonLabel })
     }
 
     componentDidMount() {
 		const tabs = colorTabs(this)
-        tabs[0].click()
+		if (tabs && tabs[0])
+			tabs[0].click()
     }
 
 	componentDidUpdate() {
@@ -90,7 +95,8 @@ class App extends Component {
 							toRemove.forEach(item => removeTab(item, this))
 							const tabs = getTabs(this)
 							let index = this.state.items.map((e) => e.id).indexOf(this.state.activeItem.id)
-							tabs[index].click()
+							if (index >= 0)
+								tabs[index].click()
 							this.setState({operation: 'websocket'})
 					 }} />
 		}
@@ -116,7 +122,7 @@ class App extends Component {
 						} else if (this.state.visible) {
                             if (e.value.label === this.state.confirmButtonLabel)
                                 this.refs.confirm.open()
-                             else {
+                            else {
 								if (e.value.label === '+') {
 									this.refs.modalVotingPaper.setState({
 										votingPaper: '',
@@ -130,7 +136,7 @@ class App extends Component {
                                 	this.refs.modalVotingPaper.open()
                              	} else 
                                 	this.setState({ activeItem: e.value })
-							 }
+							}
 						}
                     }
                     } />
