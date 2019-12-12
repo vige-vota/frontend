@@ -38,7 +38,7 @@ $IP_ADDRESS  vota-voting.vige.it
 
 where in $IP_ADDRESS you must choose the ip address where is located the server
 
-Now you can connect in the application going to: open `https://vota-frontend.vige.it`
+Now you can connect in the application going to: open https://vota-frontend.vige.it
 
 ## Eclipse
 
@@ -58,7 +58,7 @@ To run the image use the command:
 ```
 docker run -d --name vota-frontend -p443:443 vige/vota-frontend
 ```
-Then open `https://vota-frontend.vige.it` to connect to the vote application.
+Then open https://vota-frontend.vige.it to connect to the vote application.
 
 If you need only to start a demo execute:
 ```
@@ -68,4 +68,4 @@ and then:
 ```
 docker run -d --name vota-frontend -p80:5000 vige/vota-frontend:demo
 ```
-Then open `http://localhost` to connect to the vote application
+Then open http://localhost to connect to the vote application
