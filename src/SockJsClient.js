@@ -116,7 +116,7 @@ class SockJsClient extends React.Component {
     this.disconnect()
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
+  shouldComponentUpdate () {
     return false
   }
 
@@ -250,7 +250,7 @@ class SockJsClient extends React.Component {
     }
     this.setState({ explicitDisconnect: true })
     if (this.state.connected) {
-      this.subscriptions.forEach((subid, topic) => {
+      this.subscriptions.forEach((topic) => {
         this._unsubscribe(topic)
       })
       this.client.disconnect(() => {

@@ -199,7 +199,7 @@ export const addImage = (url, component) => {
 	let xhr = new XMLHttpRequest()
 	xhr.open('GET', url, true)
 	xhr.responseType = 'blob'
-	xhr.onload = function(e) {
+	xhr.onload = function() {
   		if (this.status === 200) {
     		reader.readAsDataURL(this.response)
   		}

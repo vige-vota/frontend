@@ -62,7 +62,7 @@ export class ConfirmCreate extends Component {
         return <span className='voting-paper-field' id={data.votingPaper.id}>{data.votingPaper.name}</span>
     }
 
-    footerTemplate(data, index) {
+    footerTemplate(data) {
         return ([<td key={data.votingPaper.name + '_footerTotalLabel'} colSpan='2'></td>
         ]
         );
