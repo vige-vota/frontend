@@ -30,10 +30,6 @@
     font-size: 90%;
 }
 
-.modal-party .p-dialog-footer .p-button.p-button-text-icon-left .p-button-icon-left {
-    position: relative;
-}
-
 .modal-party .p-button-text {
     left: 0px !important;
 	font-size: 14px !important;
