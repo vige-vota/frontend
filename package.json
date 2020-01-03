@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
+    "gh-pages": "^2.1.1",
     "nodeclipse": "^0.17.2",
     "primeflex": "^1.0.0",
     "primeicons": "^2.0.0",
@@ -23,7 +24,9 @@
     "start": "react-scripts start",
     "build": "react-scripts --max-old-space-size=2048 build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -33,5 +36,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "homepage": "http://vige-vota.github.io/frontend"
 }
