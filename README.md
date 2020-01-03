@@ -17,7 +17,7 @@ npm run build
 ```
 Then create a SSL certificate for the https. Here a sample:
 ```
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=GB/ST=London/L=London/O=Global Security/OU=IT Department/CN=vota-frontend.vige.it"
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=GB/ST=London/L=London/O=Global Security/OU=IT Department/CN=localhost"
 ```
 and copy it in the home directory under the .http-serve folder.
 
@@ -38,7 +38,7 @@ $IP_ADDRESS  vota-voting.vige.it
 
 where in $IP_ADDRESS you must choose the ip address where is located the server
 
-Now you can connect in the application going to: open https://vota-frontend.vige.it
+Now you can connect in the application going to: open https://localhost
 
 ## Eclipse
 
