@@ -115,7 +115,7 @@ export const getTabs = (component) => {
 
 export const colorTabs = (component) => {
     const tabs = getTabs(component)
-    config.votingPapers.forEach((votingPaper, i) => {
+    config && config.votingPapers.forEach((votingPaper, i) => {
 		if (!tabs[i].className.includes(votingPaper.type))
 			tabs[i].className = tabs[i].className + ' App-' + votingPaper.id+' ' + votingPaper.type
 		tabs[i].style.setProperty('background-color', '#'+votingPaper.color)
