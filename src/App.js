@@ -13,37 +13,46 @@ import logo from './images/logo.ico'
 import {Panel} from 'primereact/panel';
 import {getTabs, colorTabs, removeTab, getVotingPaperById, addToList} from './Utilities'
 import SockJsClient from './SockJsClient'
+import UserService from './services/UserService'
 
 export var config
 
 class App extends Component {
 
-    constructor(data) {
-        super(data)
-        config = data.config
-        let activeItem = {}
-        if (config.votingPapers && config.votingPapers[0])
-        	activeItem = { id: config.votingPapers[0].id, label: config.votingPapers[0].name }
-        this.state = {
-            items: [
-            ],
-            activeItem: activeItem,
-            visible: true
-        }
-        config.votingPapers.map((votingPaper) => {
-			if (config.admin)
-            	return this.state.items.push({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' })
-			else 
-				return this.state.items.push({ id: votingPaper.id, label: votingPaper.name })
-        })
-        this.state.confirmButtonLabel = <FormattedMessage
-            id='app.confirm'
-            defaultMessage='Confirm'
-        />
-		if (config.admin)
-			 this.state.items.push({ label: '+' })
-	    if (config.votingPapers.length > 0 || config.admin)
-	    	this.state.items.push({ label: this.state.confirmButtonLabel })
+    constructor() {
+       super()
+       this.state = {
+          items: [
+          ],
+          visible: true
+       }
+       UserService.axiosInstance.get(process.env.REACT_APP_VOTING_PAPERS_URL)
+        	.then(function(response) {
+        		config = response.data.config
+        		let activeItem = {}
+        		if (config.votingPapers && config.votingPapers[0])
+        			activeItem = { id: config.votingPapers[0].id, label: config.votingPapers[0].name }
+        		this.setState({
+          		    activeItem: activeItem
+        		})
+        		config.votingPapers.map((votingPaper) => {
+					if (config.admin)
+            			return this.getState().items.push({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' })
+					else 
+						return this.getState().items.push({ id: votingPaper.id, label: votingPaper.name })
+        		})
+        		this.setState({confirmButtonLabel : <FormattedMessage
+            		id='app.confirm'
+            		defaultMessage='Confirm'
+        			/>})
+				if (config.admin)
+			 		this.getState().items.push({ label: '+' })
+	    		if (config.votingPapers.length > 0 || config.admin)
+	    			this.getState().items.push({ label: this.state.confirmButtonLabel })
+	    	})
+			.catch(function(error) {
+				console.log(error)
+			});
     }
 
     componentDidMount() {
@@ -64,7 +73,7 @@ class App extends Component {
 		let modalVotingPaper = ''
 		let ruler = ''
 		let realTimeVotes = ''
-		if (config.admin) {
+		if (config && config.admin) {
 			confirm = <ConfirmCreate ref='confirm' window={this}/>
 			modalVotingPaper = <ModalVotingPaper ref='modalVotingPaper' />
 			ruler = <Ruler ref='ruler' />
@@ -153,7 +162,7 @@ class App extends Component {
                         <a href='http://www.vige.it'>Vige</a>
                     </p>
                 </div>
-                {config.votingPapers.map((votingPaper) => {
+                {config && config.votingPapers.map((votingPaper) => {
                         let confirmedHeader =
                             <FormattedMessage id='app.confirm.confirmedheader'
                                 defaultMessage='Your vote was sent!'>
