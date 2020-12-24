@@ -49,7 +49,7 @@ Now you can connect in the application going to: open https://localhost
 
 To make the project as an Eclipse project go in the root folder of the project and run the following commands:
 ```
-npm install nodeclipse
+sudo npm install -g nodeclipse
 nodeclipse -p
 ```
 
