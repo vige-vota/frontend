@@ -104,6 +104,10 @@
     width: 0%;
 }
 
+.modal-party .p-fileupload-row {
+	height: 280px;
+}
+
 .modal-party .p-fileupload-row>div:nth-child(2) {
     display: none;
 }

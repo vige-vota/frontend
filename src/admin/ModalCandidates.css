@@ -121,6 +121,10 @@
     width: 0%;
 }
 
+.modal-candidates .p-fileupload-row {
+	height: 280px;
+}
+
 .modal-candidates .p-fileupload-row>div:nth-child(2) {
     display: none;
 }

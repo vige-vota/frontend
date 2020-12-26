@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
@@ -12,8 +12,10 @@ import {addImage, generateId} from '../Utilities'
 import {M, F} from '../vote/Validator'
 import { validateCandidate } from './Ruler'
 
+const candidateUpload = createRef('candidateUpload');
+	
 export class ModalCandidates extends Component {
-
+        
     constructor(data) {
         super(data)
         this.state = {
@@ -145,7 +147,7 @@ export class ModalCandidates extends Component {
     				<div className='p-col'>
 						<FormattedMessage ref='upload' id='app.configuration.chooseimage'
             					defaultMessage='Choose Image'>
-								{(chooseImage) => <CandidateUpload ref='candidateUpload' accept='image/*' maxFileSize={60000} 
+								{(chooseImage) => <CandidateUpload ref={candidateUpload} accept='image/*' maxFileSize={60000} 
 													onSelect={this.onSelect}
 													chooseLabel={chooseImage} 
 													party={this} candidate={selectedCandidate} 
@@ -239,7 +241,6 @@ export class ModalCandidates extends Component {
 								} else {
 									this.setState({id: '', name: '', sex: '', image: '', opened: true})
 								}
-								this.refs.upload.refs.candidateUpload.forceUpdate()
 							}} itemTemplate={this.imgTemplate} style={{width: '30em'}} listStyle={{maxHeight: '250px'}} />
 					</div>
 				</div>
