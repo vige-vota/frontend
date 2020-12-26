@@ -16,7 +16,6 @@ const axiosInstance = axios.create(defaultOptions)
  * @param onAuthenticatedCallback
  */
 const initKeycloak = (onAuthenticatedCallback) => {
-  console.log(defaultOptions)
   _kc.init({
     onLoad: 'check-sso',
     silentCheckSsoRedirectUri: window.location.origin + '/frontend/silent-check-sso.html',

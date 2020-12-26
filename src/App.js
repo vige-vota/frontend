@@ -16,6 +16,7 @@ import SockJsClient from './SockJsClient'
 import UserService from './services/UserService'
 
 export var config
+var appContainer
 
 class App extends Component {
 
@@ -26,39 +27,37 @@ class App extends Component {
           ],
           visible: true
        }
+       appContainer = this
        UserService.axiosInstance.get(process.env.REACT_APP_VOTING_PAPERS_URL)
         	.then(function(response) {
-        		config = response.data.config
+        		config = response.data
         		let activeItem = {}
         		if (config.votingPapers && config.votingPapers[0])
         			activeItem = { id: config.votingPapers[0].id, label: config.votingPapers[0].name }
-        		this.setState({
+        		appContainer.setState({
           		    activeItem: activeItem
         		})
         		config.votingPapers.map((votingPaper) => {
 					if (config.admin)
-            			return this.getState().items.push({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' })
+            			return appContainer.state.items.push({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' })
 					else 
-						return this.getState().items.push({ id: votingPaper.id, label: votingPaper.name })
+						return appContainer.state.items.push({ id: votingPaper.id, label: votingPaper.name })
         		})
-        		this.setState({confirmButtonLabel : <FormattedMessage
+        		appContainer.setState({confirmButtonLabel : <FormattedMessage
             		id='app.confirm'
             		defaultMessage='Confirm'
         			/>})
 				if (config.admin)
-			 		this.getState().items.push({ label: '+' })
+			 		appContainer.state.items.push({ label: '+' })
 	    		if (config.votingPapers.length > 0 || config.admin)
-	    			this.getState().items.push({ label: this.state.confirmButtonLabel })
-	    	})
+	    			appContainer.state.items.push({ label: appContainer.state.confirmButtonLabel })
+				const tabs = colorTabs(appContainer)
+				if (tabs && tabs[0])
+					tabs[0].click()
+	    		})
 			.catch(function(error) {
 				console.log(error)
 			});
-    }
-
-    componentDidMount() {
-		const tabs = colorTabs(this)
-		if (tabs && tabs[0])
-			tabs[0].click()
     }
 
 	componentDidUpdate() {
