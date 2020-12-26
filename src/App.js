@@ -14,6 +14,7 @@ import {Panel} from 'primereact/panel';
 import {getTabs, colorTabs, removeTab, getVotingPaperById, addToList} from './Utilities'
 import SockJsClient from './SockJsClient'
 import UserService from './services/UserService'
+import {ProgressSpinner} from 'primereact/progressspinner'
 
 export var config
 var appContainer
@@ -108,7 +109,9 @@ class App extends Component {
 							this.setState({operation: 'websocket'})
 					 }} />
 		}
-        return (
+		if (!config)
+			return (<ProgressSpinner/>)
+        else return (
             <div className='App'>
             	{realTimeVotes}
                 <div className='content-section implementation'>

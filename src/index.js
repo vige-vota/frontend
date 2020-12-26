@@ -12,7 +12,6 @@ import * as serviceWorker from './serviceWorker'
 import locale_en from 'react-intl/locale-data/en'
 import locale_it from 'react-intl/locale-data/it'
 import messages_it from './translations/it.json'
-import {ProgressSpinner} from 'primereact/progressspinner'
 import UserService from './services/UserService'
 
 addLocaleData([...locale_en, ...locale_it])
@@ -22,7 +21,6 @@ const messages = {
 }
 const language = navigator.language.split(/[-_]/)[0]  // language without region code
 
-ReactDOM.render(<ProgressSpinner/>, document.getElementById('root'))
 const renderApp = () => ReactDOM.render(<IntlProvider locale={language} messages={messages[language]}><App /></IntlProvider>, document.getElementById('root'))
 UserService.initKeycloak(renderApp)
 // If you want your app to work offline and load faster, you can change
