@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom'
 import { FormattedMessage } from 'react-intl'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
@@ -36,7 +36,7 @@ export class ConfirmCreate extends Component {
         this.props.window.refs.ruler.errors({message: errors.message})
     }
 
-    confirm() {
+    doConfirm() {
     	let json = JSON.parse(stringify(config))
     	let button = ReactDOM.findDOMNode(this).querySelectorAll('.pi-check')[0]
     	button.className = 'pi pi-spin pi-spinner p-c p-button-icon-left'
@@ -48,11 +48,18 @@ export class ConfirmCreate extends Component {
 		      return response
 		})
 		.catch(error => {
-	    	button.className = 'pi pi-check p-c p-button-icon-left'
 			this.errors(error)
+	    	button.className = 'pi pi-check p-c p-button-icon-left'
 			console.log(error)
-			UserService.doLogin()
 		})
+    }
+    
+    confirm() {
+    	UserService.updateToken()
+    	.then(() => {
+    		UserService.axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + UserService.getToken()
+    		this.doConfirm()
+    	})
     }
 
     onHide() {

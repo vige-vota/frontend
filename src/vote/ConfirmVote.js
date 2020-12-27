@@ -8,7 +8,7 @@ import { selections } from './Validator'
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import { config } from '../App'
-import axios from 'axios'
+import UserService from '../services/UserService'
 import { party, group } from './Party'
 import { candidate } from './Candidates'
 
@@ -73,11 +73,19 @@ export class ConfirmVote extends Component {
     	})
     	return vote
     }
-
+    
     confirm() {
+    	UserService.updateToken()
+    	.then(() => {
+    		UserService.axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + UserService.getToken()
+    		this.doConfirm()
+    	})
+    }
+
+    doConfirm() {
     	let button = ReactDOM.findDOMNode(this).querySelectorAll('.pi-check')[0]
     	button.className = 'pi pi-spin pi-spinner p-c p-button-icon-left'
-    	axios
+    	UserService.axiosInstance
     		.post(process.env.REACT_APP_VOTING_URL, this.createVote())
     		.then(response => {
     	    	button.className = 'pi pi-check p-c p-button-icon-left'
