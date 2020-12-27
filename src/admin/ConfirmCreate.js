@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import { config } from '../App'
-import axios from 'axios'
+import UserService from '../services/UserService'
 import stringify from 'json-stringify-safe'
 
 export class ConfirmCreate extends Component {
@@ -40,18 +40,19 @@ export class ConfirmCreate extends Component {
     	let json = JSON.parse(stringify(config))
     	let button = ReactDOM.findDOMNode(this).querySelectorAll('.pi-check')[0]
     	button.className = 'pi pi-spin pi-spinner p-c p-button-icon-left'
-    	axios
+    	UserService.axiosInstance
 		.post(process.env.REACT_APP_VOTING_PAPERS_URL, json)
 		.then(response => {
 	    	  button.className = 'pi pi-check p-c p-button-icon-left'
 			  this.setState({ visible: false })
 		      return response
-		      })
+		})
 		.catch(error => {
 	    	button.className = 'pi pi-check p-c p-button-icon-left'
 			this.errors(error)
 			console.log(error)
-		});
+			UserService.doLogin()
+		})
     }
 
     onHide() {

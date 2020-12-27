@@ -153,7 +153,7 @@ export class ModalVotingPaper extends Component {
     }
 
     imgTemplate(option) {
-		const logoPath = './template_images/' + option.value + '.png';
+		const logoPath = './frontend/template_images/' + option.value + '.png';
 
         return (
             <div className='p-clearfix'>
