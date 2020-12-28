@@ -1,7 +1,11 @@
 import Keycloak from 'keycloak-js'
 import axios from 'axios'
 
-const _kc = new Keycloak('/keycloak.json')
+const _kc = new Keycloak({
+	clientId: 'frontend',
+	realm: 'vota-domain',
+	url: process.env.REACT_APP_AUTH_URL
+})
 const defaultOptions = {
   headers: {
       'Content-Type': 'application/json',
