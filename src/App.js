@@ -39,7 +39,7 @@ class App extends Component {
           		    activeItem: activeItem
         		})
         		config.votingPapers.map((votingPaper) => {
-					if (config.admin)
+					if (config.state === 'PREPARE')
             			return appContainer.state.items.push({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' })
 					else 
 						return appContainer.state.items.push({ id: votingPaper.id, label: votingPaper.name })
@@ -48,9 +48,9 @@ class App extends Component {
             		id='app.confirm'
             		defaultMessage='Confirm'
         			/>})
-				if (config.admin)
+				if (config.state === 'PREPARE')
 			 		appContainer.state.items.push({ label: '+' })
-	    		if (config.votingPapers.length > 0 || config.admin)
+	    		if (config.votingPapers.length > 0 || config.state === 'PREPARE')
 	    			appContainer.state.items.push({ label: appContainer.state.confirmButtonLabel })
 				const tabs = colorTabs(appContainer)
 				if (tabs && tabs[0])
@@ -72,12 +72,7 @@ class App extends Component {
 		let confirm = <ConfirmVote ref='confirm' window={this}/>
 		let modalVotingPaper = ''
 		let ruler = ''
-		let realTimeVotes = ''
-		if (config && config.admin) {
-			confirm = <ConfirmCreate ref='confirm' window={this}/>
-			modalVotingPaper = <ModalVotingPaper ref='modalVotingPaper' />
-			ruler = <Ruler ref='ruler' />
-			realTimeVotes = <SockJsClient url={process.env.REACT_APP_VOTING_PAPERS_REALTIME_URL} topics={['/topic/votingpaper']}
+		let realTimeVotes = <SockJsClient url={process.env.REACT_APP_VOTING_PAPERS_REALTIME_URL} topics={['/topic/votingpaper']}
 						onMessage={(msg) => {
 							msg.votingPapers.forEach((votingPaper, i) => {
 								let currentItem = this.state.items[i]
@@ -106,8 +101,13 @@ class App extends Component {
 							let index = this.state.items.map((e) => e.id).indexOf(this.state.activeItem.id)
 							if (index >= 0)
 								tabs[index].click()
+							config.state = msg.state
 							this.setState({operation: 'websocket'})
 					 }} />
+		if (config && config.state === 'PREPARE') {
+			confirm = <ConfirmCreate ref='confirm' window={this}/>
+			modalVotingPaper = <ModalVotingPaper ref='modalVotingPaper' />
+			ruler = <Ruler ref='ruler' />
 		}
 		if (!config)
 			return (<ProgressSpinner/>)
@@ -118,7 +118,7 @@ class App extends Component {
                     <Validator ref='validator' />
 					{ruler}
                     <TabMenu ref='tabMenu' className={this.state.visible ? '' : 'disabled'}  model={this.state.items} activeItem={this.state.activeItem} onTabChange={(e) => {
-                    	if (config.admin && e.originalEvent.target.className.startsWith('pi')) {
+                    	if (config.state === 'PREPARE' && e.originalEvent.target.className.startsWith('pi')) {
 							let currentVotingPaper = getVotingPaperById(e.value)
 							this.refs.modalVotingPaper.setState({
 								votingPaper: e,

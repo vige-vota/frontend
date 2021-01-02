@@ -15,7 +15,7 @@ export class AdminButtons extends Component {
     }
 
     render() {
-		if (config.admin) {
+		if (config.state === 'PREPARE') {
 			const style = {
 				color: '#'+this.props.party.votingPaper.color
 			}
