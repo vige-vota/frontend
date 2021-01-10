@@ -24,7 +24,7 @@ Then create a SSL certificate for the https. Here a sample:
 ```
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=GB/ST=London/L=London/O=Global Security/OU=IT Department/CN=localhost"
 ```
-and copy it in the home directory under the .http-serve folder.
+and copy it in the home directory under the .https-serve folder.
 
 Now to start the application install the https server:
 ```
