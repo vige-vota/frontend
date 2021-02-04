@@ -25,7 +25,7 @@
     "build": "react-scripts --max-old-space-size=2048 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
+    "predeploy": "mv .env.production.local ../to.move && npm run build && mv ../to.move .env.production.local",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
