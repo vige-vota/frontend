@@ -9,7 +9,7 @@ npm start
 
 And connect to http://localhost:3000
 
-You would update the online application in https://vige-vota.github.io/frontend url. Simply digit in your frontend folder the command:
+You would update the online application in http://vota-frontend.vige.it url. Simply digit in your frontend folder the command:
 ```
 npm run deploy
 ```
@@ -56,4 +56,4 @@ nodeclipse -p
 ## Online application
 
 You can see the updated online application simply connecting to:
-Then open https://vige-vota.github.io/frontend
+Then open http://vota-frontend.vige.it

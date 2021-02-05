@@ -37,7 +37,7 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "homepage": "https://vige-vota.github.io/frontend",
+  "homepage": "http://vota-frontend.vige.it",
   "devDependencies": {
     "gh-pages": "^2.2.0"
   }
