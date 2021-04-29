@@ -50,7 +50,7 @@ const updateToken = (successCallback) => {
 
 const getUsername = () => _kc.tokenParsed.preferred_username
 
-export default {
+const users = {
   initKeycloak,
   doLogin,
   doLogout,
@@ -59,3 +59,5 @@ export default {
   getUsername,
   axiosInstance
 }
+
+export default users
