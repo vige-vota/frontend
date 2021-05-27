@@ -49,6 +49,10 @@ const updateToken = (successCallback) => {
 }
 
 const getUsername = () => _kc.tokenParsed.preferred_username
+        
+const getProfile = () => _kc.loadUserProfile()
+
+const getRoles = () => _kc.realmAccess.roles
 
 const users = {
   initKeycloak,
@@ -57,7 +61,9 @@ const users = {
   getToken,
   updateToken,
   getUsername,
-  axiosInstance
+  axiosInstance,
+  getProfile,
+  getRoles
 }
 
 export default users

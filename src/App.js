@@ -29,7 +29,9 @@ class App extends Component {
           visible: true
        }
        appContainer = this
-       UserService.axiosInstance.get(process.env.REACT_APP_VOTING_PAPERS_URL)
+       
+   	   UserService.getProfile().then(function(profile) {
+       		UserService.axiosInstance.get(process.env.REACT_APP_VOTING_PAPERS_URL)
         	.then(function(response) {
         		config = response.data
         		let activeItem = {}
@@ -59,6 +61,9 @@ class App extends Component {
 			.catch(function(error) {
 				console.log(error)
 			});
+		}).catch(function() {
+        console.log('Failed to load user profile');
+    	});
     }
 
 	componentDidUpdate() {

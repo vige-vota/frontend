@@ -23,25 +23,33 @@ export const getValueById = (id) => {
 	let valuer = ''
 	if (id) {
     	config.votingPapers.forEach((votingPaper) => {
-			if (votingPaper.id === id)
-				valuer = votingPaper
-			if (votingPaper.groups)
-				votingPaper.groups.forEach((group) => {
-					if (group.id === id)
-						valuer = group
-					if (group.parties)
-						group.parties.forEach((party) => {
-							if (party.id === id)
-								valuer = party
-			    			if (party.candidates)
-								party.candidates.forEach((candidate) => {
-									if (candidate.id === id)
-										valuer = candidate
-								})
-						})
-				})
+    		valuer = getValueByIdAntVotingPaper(id, votingPaper)
 		})
 	}
+	return valuer
+}
+
+export const getValueByIdAntVotingPaper = (id, votingPaper) => {
+	let valuer = ''
+	if (id) {
+		if (votingPaper.id === id)
+			valuer = votingPaper
+		if (votingPaper.groups)
+			votingPaper.groups.forEach((group) => {
+				if (group.id === id)
+					valuer = group
+				if (group.parties)
+					group.parties.forEach((party) => {
+						if (party.id === id)
+							valuer = party
+			    		if (party.candidates)
+							party.candidates.forEach((candidate) => {
+								if (candidate.id === id)
+									valuer = candidate
+							})
+						})
+				})
+		}
 	return valuer
 }
 
