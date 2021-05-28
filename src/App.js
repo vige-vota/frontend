@@ -58,10 +58,6 @@ class App extends Component {
 		let ruler = ''
 		let realTimeVotes = <SockJsClient url={process.env.REACT_APP_VOTING_PAPERS_REALTIME_URL} topics={['/topic/votingpaper']}
 						onMessage={(msg) => {
-							console.log(msg)
-							console.log(config)
-							console.log(this.state.items)
-							console.log(getTabs(this))
 							msg.votingPapers = msg.votingPapers.filter(votingPaper => isValid(votingPaper, msg))
 							if (msg.state === config.state) {
 								msg.votingPapers.forEach((votingPaper, i) => {

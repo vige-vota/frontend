@@ -1,10 +1,11 @@
 import { config } from './App'
 import ReactDOM from 'react-dom'
 import { FormattedMessage } from 'react-intl'
+import UserService from './services/UserService'
 
 export const isValid = (votingPaper, msg) => {
  	if (msg.state === 'PREPARE') {
-    	return getValueByIdAntVotingPaper(parseInt(config.profile.attributes['block'][0]), votingPaper) !== ''
+    	return UserService.getRoles().includes('admin') || getValueByIdAntVotingPaper(parseInt(config.profile.attributes['block'][0]), votingPaper) !== ''
     } else {
     	return votingPaper.zone === -1 || config.profile.attributes['zones'].includes(votingPaper.zone.toString())
     }
