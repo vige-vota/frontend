@@ -139,16 +139,16 @@ export const createTabs = (appContainer) => {
             activeItem: activeItem
         })
         config.votingPapers.map((votingPaper) => {
-			if (config.state === 'PREPARE')
+			if (config.state === 'PREPARE' && (UserService.getRoles().includes('admin') || parseInt(config.profile.attributes['block'][0]) === votingPaper.id))
             	return appContainer.state.items.push({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' })
-			else 
+			else
 				return appContainer.state.items.push({ id: votingPaper.id, label: votingPaper.name })
         })
         appContainer.setState({confirmButtonLabel : <FormattedMessage
             		id='app.confirm'
             		defaultMessage='Confirm'
         			/>})
-		if (config.state === 'PREPARE')
+		if (config.state === 'PREPARE' && UserService.getRoles().includes('admin'))
 			 appContainer.state.items.push({ label: '+' })
 	    if (config.votingPapers.length > 0 || config.state === 'PREPARE')
 	    	 appContainer.state.items.push({ label: appContainer.state.confirmButtonLabel })
