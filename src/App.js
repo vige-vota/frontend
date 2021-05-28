@@ -11,7 +11,7 @@ import { Ruler } from './admin/Ruler'
 import background from './images/background.png'
 import logo from './images/logo.ico'
 import {Panel} from 'primereact/panel';
-import {getTabs, colorTabs, removeTab, getVotingPaperById, addToList} from './Utilities'
+import {getTabs, createTabs, colorTabs, removeTab, getVotingPaperById, addToList, isValid} from './Utilities'
 import SockJsClient from './SockJsClient'
 import UserService from './services/UserService'
 import {ProgressSpinner} from 'primereact/progressspinner'
@@ -34,29 +34,8 @@ class App extends Component {
        		UserService.axiosInstance.get(process.env.REACT_APP_VOTING_PAPERS_URL)
         	.then(function(response) {
         		config = response.data
-        		let activeItem = {}
-        		if (config.votingPapers && config.votingPapers[0])
-        			activeItem = { id: config.votingPapers[0].id, label: config.votingPapers[0].name }
-        		appContainer.setState({
-          		    activeItem: activeItem
-        		})
-        		config.votingPapers.map((votingPaper) => {
-					if (config.state === 'PREPARE')
-            			return appContainer.state.items.push({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' })
-					else 
-						return appContainer.state.items.push({ id: votingPaper.id, label: votingPaper.name })
-        		})
-        		appContainer.setState({confirmButtonLabel : <FormattedMessage
-            		id='app.confirm'
-            		defaultMessage='Confirm'
-        			/>})
-				if (config.state === 'PREPARE')
-			 		appContainer.state.items.push({ label: '+' })
-	    		if (config.votingPapers.length > 0 || config.state === 'PREPARE')
-	    			appContainer.state.items.push({ label: appContainer.state.confirmButtonLabel })
-				const tabs = colorTabs(appContainer)
-				if (tabs && tabs[0])
-					tabs[0].click()
+        		config.profile = profile
+        		createTabs(appContainer)
 	    		})
 			.catch(function(error) {
 				console.log(error)
@@ -79,34 +58,47 @@ class App extends Component {
 		let ruler = ''
 		let realTimeVotes = <SockJsClient url={process.env.REACT_APP_VOTING_PAPERS_REALTIME_URL} topics={['/topic/votingpaper']}
 						onMessage={(msg) => {
-							msg.votingPapers.forEach((votingPaper, i) => {
-								let currentItem = this.state.items[i]
-								if (this.state.items.filter(e => e.id === votingPaper.id).length === 0) {
-									config.votingPapers.push(votingPaper)
-									const length = this.state.items.length-2
-									this.setState({ items: addToList({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' }, length, this.state.items) })
-								} else if (currentItem.id === votingPaper.id) {
-									if (currentItem)
-										currentItem.label = votingPaper.name
-									let currentVotingPaper = config.votingPapers[i]
-									if (currentVotingPaper) {
-										currentVotingPaper.type = votingPaper.type
-										currentVotingPaper.disjointed = votingPaper.disjointed
-										currentVotingPaper.color = votingPaper.color
-										currentVotingPaper.maxCandidates = votingPaper.maxCandidates
-										currentVotingPaper.name = votingPaper.name
-										currentVotingPaper.groups = votingPaper.groups
-										currentVotingPaper.parties = votingPaper.parties
+							console.log(msg)
+							console.log(config)
+							console.log(this.state.items)
+							console.log(getTabs(this))
+							msg.votingPapers = msg.votingPapers.filter(votingPaper => isValid(votingPaper, msg))
+							if (msg.state === config.state) {
+								msg.votingPapers.forEach((votingPaper, i) => {
+									let currentItem = this.state.items[i]
+									if (this.state.items.filter(e => e.id === votingPaper.id).length === 0) {
+										config.votingPapers.push(votingPaper)
+										const length = this.state.items.length-2
+										this.setState({ items: addToList({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' }, length, this.state.items) })
+									} else if (currentItem.id === votingPaper.id) {
+										if (currentItem)
+											currentItem.label = votingPaper.name
+										let currentVotingPaper = config.votingPapers[i]
+										if (currentVotingPaper) {
+											currentVotingPaper.type = votingPaper.type
+											currentVotingPaper.disjointed = votingPaper.disjointed
+											currentVotingPaper.color = votingPaper.color
+											currentVotingPaper.maxCandidates = votingPaper.maxCandidates
+											currentVotingPaper.name = votingPaper.name
+											currentVotingPaper.groups = votingPaper.groups
+											currentVotingPaper.parties = votingPaper.parties
+										}
 									}
-								}
-							})
-							let toRemove = config.votingPapers.filter(value => -1 === msg.votingPapers.map(e => e.id).indexOf(value.id))
-							toRemove.forEach(item => removeTab(item, this))
-							const tabs = getTabs(this)
-							let index = this.state.items.map((e) => e.id).indexOf(this.state.activeItem.id)
-							if (index >= 0)
-								tabs[index].click()
-							config.state = msg.state
+								})
+								let toRemove = config.votingPapers.filter(value => -1 === msg.votingPapers.map(e => e.id).indexOf(value.id))
+								toRemove.forEach(item => removeTab(item, this))
+								const tabs = getTabs(this)
+								let index = this.state.items.map((e) => e.id).indexOf(this.state.activeItem.id)
+								if (index >= 0)
+									tabs[index].click()
+							}
+							if (msg.state !== config.state) {
+								config.state = msg.state
+								config.votingPapers = msg.votingPapers
+								this.setState({ items: [] })
+								createTabs(this)
+							} else
+								config.state = msg.state
 							this.setState({operation: 'websocket'})
 					 }} />
 		if (config && config.state === 'PREPARE') {

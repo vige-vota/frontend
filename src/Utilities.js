@@ -1,6 +1,15 @@
 import { config } from './App'
 import ReactDOM from 'react-dom'
+import { FormattedMessage } from 'react-intl'
 
+export const isValid = (votingPaper, msg) => {
+ 	if (msg.state === 'PREPARE') {
+    	return getValueByIdAntVotingPaper(parseInt(config.profile.attributes['block'][0]), votingPaper) !== ''
+    } else {
+    	return votingPaper.zone === -1 || config.profile.attributes['zones'].includes(votingPaper.zone.toString())
+    }
+}
+    
 export const getVotingPaper = (value) => {
     let parent = getParent(value)
     if (parent != null)
@@ -119,6 +128,32 @@ export const generateId = () => {
 
 export const getTabs = (component) => {
     return ReactDOM.findDOMNode(component).querySelectorAll('.p-menuitem-link')
+}
+
+export const createTabs = (appContainer) => {
+	let activeItem = {}
+    if (config.votingPapers && config.votingPapers[0])
+        activeItem = { id: config.votingPapers[0].id, label: config.votingPapers[0].name }
+        appContainer.setState({
+            activeItem: activeItem
+        })
+        config.votingPapers.map((votingPaper) => {
+			if (config.state === 'PREPARE')
+            	return appContainer.state.items.push({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' })
+			else 
+				return appContainer.state.items.push({ id: votingPaper.id, label: votingPaper.name })
+        })
+        appContainer.setState({confirmButtonLabel : <FormattedMessage
+            		id='app.confirm'
+            		defaultMessage='Confirm'
+        			/>})
+		if (config.state === 'PREPARE')
+			 appContainer.state.items.push({ label: '+' })
+	    if (config.votingPapers.length > 0 || config.state === 'PREPARE')
+	    	 appContainer.state.items.push({ label: appContainer.state.confirmButtonLabel })
+		const tabs = colorTabs(appContainer)
+		if (tabs && tabs[0])
+			tabs[0].click()
 }
 
 export const colorTabs = (component) => {
