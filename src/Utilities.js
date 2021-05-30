@@ -11,6 +11,15 @@ export const isValid = (votingPaper, msg) => {
     }
 }
     
+export const hasIdInTheTree = (value, id) => {
+    while (value !== null) {
+    	if (value.id === id)
+    		return true
+        value = getParent(value)
+    }
+    return false
+}
+    
 export const getVotingPaper = (value) => {
     let parent = getParent(value)
     if (parent != null)
@@ -94,37 +103,9 @@ export const addToList = (value, index, list) => {
 }
 
 export const generateId = () => {
-    let id = null
-    config.votingPapers.forEach((votingPaper) => {
-		if (votingPaper.id > id)
-			id = votingPaper.id
-		if (votingPaper.groups)
-			votingPaper.groups.forEach((group) => {
-				if (group.id > id)
-					id = group.id
-				if (group.parties)
-					group.parties.forEach((party) => {
-						if (party.id > id)
-							id = party.id
-			    		if (party.candidates)
-							party.candidates.forEach((candidate) => {
-								if (candidate.id > id)
-									id = candidate.id
-							})
-					})
-			})
-			if (votingPaper.parties)
-				votingPaper.parties.forEach((party) => {
-					if (party.id > id)
-						id = party.id
-			    	if (party.candidates)
-						party.candidates.forEach((candidate) => {
-							if (candidate.id > id)
-								id = candidate.id
-						})
-				})
-	})
-	return id + 1
+	let id = -config.nextId
+	config.nextId++;
+	return id
 }
 
 export const getTabs = (component) => {

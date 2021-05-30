@@ -41,7 +41,7 @@ class App extends Component {
 				console.log(error)
 			});
 		}).catch(function() {
-        console.log('Failed to load user profile');
+        	console.log('Failed to load user profile');
     	});
     }
 

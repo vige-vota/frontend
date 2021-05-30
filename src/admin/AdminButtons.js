@@ -4,7 +4,7 @@ import './AdminButtons.css'
 import { config } from '../App'
 import { ModalParty } from './ModalParty'
 import { ModalCandidates } from './ModalCandidates'
-import { isGroup } from '../Utilities'
+import { isGroup, hasIdInTheTree } from '../Utilities'
 import UserService from '../services/UserService'
 
 export class AdminButtons extends Component {
@@ -23,7 +23,7 @@ export class AdminButtons extends Component {
 			let modalInsertButton = ''
 			let modalUpdateButton = ''
 			let modalCandidatesButton = ''
-			if (UserService.getRoles().includes('admin') || parseInt(config.profile.attributes['block'][0]) ===  this.props.party.id) {
+			if (UserService.getRoles().includes('admin') || hasIdInTheTree(this.props.party, parseInt(config.profile.attributes['block'][0]))) {
 				const thisIsGroup = isGroup(this.props.party)
 				if (thisIsGroup || !this.props.party.name) {
 					let styleButton = ''
