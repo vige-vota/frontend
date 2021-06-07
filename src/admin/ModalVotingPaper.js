@@ -30,6 +30,7 @@ export class ModalVotingPaper extends Component {
 			operation: '',
 			disjointed: false,
 			maxCandidates: 0,
+			zone: 0,
 			color: '',
 			type: ''
         }
@@ -56,6 +57,11 @@ export class ModalVotingPaper extends Component {
         this.state.maxCandidatesLabel = <FormattedMessage
             id='app.configuration.maxcandidates'
             defaultMessage='Candidates number'
+        />
+
+        this.state.zoneLabel = <FormattedMessage
+            id='app.configuration.zone'
+            defaultMessage='Zone'
         />
 
         this.state.templatesLabel = <FormattedMessage
@@ -106,6 +112,7 @@ export class ModalVotingPaper extends Component {
 						votingPaper.name = this.state.votingPaper.value.label
 						votingPaper.disjointed = this.state.disjointed
 						votingPaper.maxCandidates = this.state.maxCandidates
+						votingPaper.zone = this.state.zone
 						votingPaper.color = this.state.color
 						votingPaper.type = this.state.type
 					}
@@ -132,6 +139,7 @@ export class ModalVotingPaper extends Component {
 					  parties: partiesAr,
 					  disjointed: this.state.disjointed,
 					  maxCandidates: this.state.maxCandidates,
+					  zone: this.state.zone,
 					  color: this.state.color, 
 					  type: this.state.type
 					})
@@ -224,6 +232,13 @@ export class ModalVotingPaper extends Component {
 						{
 							maxCandidates: Number.isInteger(e.value) ? parseInt(e.value) : 0
 						}) } value={this.state.maxCandidates} min={0} max={3}></Spinner></div>
+				</div>
+				<div className='p-grid'>
+    				<div className='p-col'>{this.state.zoneLabel}</div>
+    				<div className='p-col'><Spinner onChange={(e) => this.setState(
+						{
+							zone: Number.isInteger(e.value) ? parseInt(e.value) : 0
+						}) } value={this.state.zone} min={-1}></Spinner></div>
 				</div>
 				<div className='p-grid'>
     				<div className='p-col'>{this.state.colorLabel}</div>

@@ -75,6 +75,7 @@ class App extends Component {
 											currentVotingPaper.disjointed = votingPaper.disjointed
 											currentVotingPaper.color = votingPaper.color
 											currentVotingPaper.maxCandidates = votingPaper.maxCandidates
+											currentVotingPaper.zone = votingPaper.zone
 											currentVotingPaper.name = votingPaper.name
 											currentVotingPaper.groups = votingPaper.groups
 											currentVotingPaper.parties = votingPaper.parties
@@ -119,6 +120,7 @@ class App extends Component {
 								operation: 'update',
 								disjointed: currentVotingPaper.disjointed,
 								maxCandidates: currentVotingPaper.maxCandidates,
+								zone: currentVotingPaper.zone,
 								color: currentVotingPaper.color,
 								type: currentVotingPaper.type
 							})
@@ -134,6 +136,7 @@ class App extends Component {
 										operation: 'insert',
 										disjointed: false,
 										maxCandidates: 0,
+										zone: 0,
 										color: '1976D2',
 										type: 'bigger'
 									})
