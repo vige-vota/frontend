@@ -7,3 +7,7 @@
 	max-height: 322px;
     max-width: 335px;
 }
+
+.modal-voting-paper .disabled {
+    display: none;
+}

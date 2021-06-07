@@ -30,7 +30,7 @@ export class ModalVotingPaper extends Component {
 			operation: '',
 			disjointed: false,
 			maxCandidates: 0,
-			zone: 0,
+			zone: -1,
 			color: '',
 			type: ''
         }
@@ -112,7 +112,10 @@ export class ModalVotingPaper extends Component {
 						votingPaper.name = this.state.votingPaper.value.label
 						votingPaper.disjointed = this.state.disjointed
 						votingPaper.maxCandidates = this.state.maxCandidates
-						votingPaper.zone = this.state.zone
+						if (this.state.type === 'little-nogroup' || this.state.type === 'little')
+							votingPaper.zone = -1
+						else
+							votingPaper.zone = this.state.zone
 						votingPaper.color = this.state.color
 						votingPaper.type = this.state.type
 					}
@@ -127,11 +130,14 @@ export class ModalVotingPaper extends Component {
 				let generatedId = generateId()
 				let groupsAr
 				let partiesAr
+				let zoneForPapers = this.state.zone
 				if (this.state.type === 'little-nogroup') {
 					partiesAr = []
 				} else {
 					groupsAr = []
 				}
+				if (this.state.type === 'little-nogroup' || this.state.type === 'little')
+					zoneForPapers = -1
 				config.votingPapers.push(
 					{ id: generatedId, 
 					  name: this.state.votingPaper.value.label, 
@@ -139,7 +145,7 @@ export class ModalVotingPaper extends Component {
 					  parties: partiesAr,
 					  disjointed: this.state.disjointed,
 					  maxCandidates: this.state.maxCandidates,
-					  zone: this.state.zone,
+					  zone: zoneForPapers,
 					  color: this.state.color, 
 					  type: this.state.type
 					})
@@ -174,12 +180,24 @@ export class ModalVotingPaper extends Component {
 	render() {
 		let votingPaperValue = this.state.votingPaper.value
 		let deleteButton = ''
+		let zoneClass = 'p-grid'
 		if (votingPaperValue && this.state.operation === 'update')
 			deleteButton = <FormattedMessage
                     id='app.delete'
                     defaultMessage='Delete'>
                     {(ok) => <Button label={ok} icon='pi pi-check' onClick={this.delete} className='confirm' />}
                 </FormattedMessage>
+		if (this.state.type === 'little-nogroup' || this.state.type === 'little')
+			zoneClass = 'p-grid disabled'
+		const zoneField = (
+				<div className={zoneClass} ref='zone'>
+    				<div className='p-col'>{this.state.zoneLabel}</div>
+    				<div className='p-col'><Spinner onChange={(e) => this.setState(
+						{
+							zone: Number.isInteger(e.value) ? parseInt(e.value) : 0
+						}) } value={this.state.zone} min={-1}></Spinner></div>
+				</div>
+		)
         const footer = (
             <div>
                 <FormattedMessage
@@ -233,13 +251,7 @@ export class ModalVotingPaper extends Component {
 							maxCandidates: Number.isInteger(e.value) ? parseInt(e.value) : 0
 						}) } value={this.state.maxCandidates} min={0} max={3}></Spinner></div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.zoneLabel}</div>
-    				<div className='p-col'><Spinner onChange={(e) => this.setState(
-						{
-							zone: Number.isInteger(e.value) ? parseInt(e.value) : 0
-						}) } value={this.state.zone} min={-1}></Spinner></div>
-				</div>
+				{ zoneField }
 				<div className='p-grid'>
     				<div className='p-col'>{this.state.colorLabel}</div>
     				<div className='p-col'><ColorPicker value={this.state.color} 
@@ -252,8 +264,13 @@ export class ModalVotingPaper extends Component {
 				<div className='p-grid'>
     				<div className='p-col'>
 							<ListBox value={this.state.type} filter={true} options={types} onChange={(e) => {
-								if (e.value)
+								if (e.value) {
 									this.setState({type: e.value})
+									if (e.value === 'little-nogroup' || e.value === 'little')
+										this.refs['zone'].className = 'p-grid disabled'
+									else
+										this.refs['zone'].className = 'p-grid'
+								}
 							}} itemTemplate={this.imgTemplate} 
                                     style={{width: '105em'}} listStyle={{maxHeight: '250px'}} />
 					</div>

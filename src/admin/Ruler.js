@@ -21,6 +21,9 @@ export const validateVotingPaper = (component, list) => {
 	} else if (!value || value.label.length > 50) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.maxname' defaultMessage='You can specify a maximum length of {number} characters for the name' values = {{ number: 50 }}/>})
     	return false
+	} else if (!value || ((component.type === 'bigger' || component.type === 'bigger-partygroup') && component.zone === -1)) {
+    	errors({name: 'name', message: <FormattedMessage id='app.admin.error.zonebigger' defaultMessage='The voting paper must have the zone'/>})
+    	return false
 	} else if (!value || list.filter(e => e.name.toUpperCase() === value.label.toUpperCase() && e.id !== value.id).length > 0) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.existingname' defaultMessage='The name of the voting paper already exists'/>})
     	return false
