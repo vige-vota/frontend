@@ -89,7 +89,7 @@ export class ModalCandidates extends Component {
     }
 
     imgTemplate(option) {
-		let candidate = this.state.candidates.filter(e => e.id === parseInt(option.value))[0]
+		let candidate = this.state.candidates.filter(e => e.id === parseInt(option.value, 10))[0]
 				
 		const image = candidate.image;
 		
@@ -231,7 +231,7 @@ export class ModalCandidates extends Component {
 				<div className='p-grid'>
 					<div className='p-col'>
 							<ListBox ref='boxCandidates' value={this.state.id} filter={true} options={this.state.candidates} onChange={(e) => {
-								let selectedCandidate = this.state.candidates.filter(f => f.id === parseInt(e.value))[0]
+								let selectedCandidate = this.state.candidates.filter(f => f.id === parseInt(e.value, 10))[0]
 								if (e.value) {
 									this.setState({id: e.value, 
 												   name: selectedCandidate.name, 

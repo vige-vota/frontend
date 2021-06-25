@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'primereact/button'
+import { ButtonComponent } from 'primereact/button'
 import { Candidates } from './Candidates'
 import { isGroup, getVotingPaper, add, remove } from '../Utilities'
 import classNames from 'classnames'
@@ -11,7 +11,7 @@ import './Party.css'
 export const group = 'group'
 export const party = 'party'
 
-export class Party extends Button {
+export class Party extends ButtonComponent {
 
     putX(e) {
 		if ((!this.refs['admin-buttons'].refs.modalParty && 

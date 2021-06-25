@@ -23,7 +23,7 @@ export class AdminButtons extends Component {
 			let modalInsertButton = ''
 			let modalUpdateButton = ''
 			let modalCandidatesButton = ''
-			if (UserService.getRoles().includes('admin') || hasIdInTheTree(this.props.party, parseInt(config.profile.attributes['block'][0]))) {
+			if (UserService.getRoles().includes('admin') || hasIdInTheTree(this.props.party, parseInt(config.profile.attributes['block'][0], 10))) {
 				const thisIsGroup = isGroup(this.props.party)
 				if (thisIsGroup || !this.props.party.name) {
 					let styleButton = ''

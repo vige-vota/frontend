@@ -5,7 +5,7 @@ import { Button } from 'primereact/button'
 import {colorTabs, removeTab, generateId, addToList} from '../Utilities'
 import {InputText} from 'primereact/inputtext'
 import {Checkbox} from 'primereact/checkbox'
-import {Spinner} from 'primereact/spinner'
+import {ProgressSpinner} from 'primereact/progressspinner'
 import {ColorPicker} from 'primereact/colorpicker'
 import {ListBox} from 'primereact/listbox'
 import 'primeflex/primeflex.css'
@@ -192,10 +192,10 @@ export class ModalVotingPaper extends Component {
 		const zoneField = (
 				<div className={zoneClass} ref='zone'>
     				<div className='p-col'>{this.state.zoneLabel}</div>
-    				<div className='p-col'><Spinner onChange={(e) => this.setState(
+    				<div className='p-col'><ProgressSpinner onChange={(e) => this.setState(
 						{
-							zone: Number.isInteger(e.value) ? parseInt(e.value) : 0
-						}) } value={this.state.zone} min={-1}></Spinner></div>
+							zone: Number.isInteger(e.value) ? parseInt(e.value, 10) : 0
+						}) } value={this.state.zone} min={-1}></ProgressSpinner></div>
 				</div>
 		)
         const footer = (
@@ -246,10 +246,10 @@ export class ModalVotingPaper extends Component {
 				</div>
 				<div className='p-grid'>
     				<div className='p-col'>{this.state.maxCandidatesLabel}</div>
-    				<div className='p-col'><Spinner onChange={(e) => this.setState(
+    				<div className='p-col'><ProgressSpinner onChange={(e) => this.setState(
 						{
-							maxCandidates: Number.isInteger(e.value) ? parseInt(e.value) : 0
-						}) } value={this.state.maxCandidates} min={0} max={3}></Spinner></div>
+							maxCandidates: Number.isInteger(e.value) ? parseInt(e.value, 10) : 0
+						}) } value={this.state.maxCandidates} min={0} max={3}></ProgressSpinner></div>
 				</div>
 				{ zoneField }
 				<div className='p-grid'>

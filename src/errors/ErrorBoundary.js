@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import './ErrorBoundary.css'
 
-class ErrorBoundary extends React.Component {
+class ErrorBoundary extends Component {
   
   render() {
       // Error path

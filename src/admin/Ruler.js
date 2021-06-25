@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Growl} from 'primereact/growl'
+import {Toast} from 'primereact/toast'
 import { FormattedMessage } from 'react-intl'
 import { selections } from '../vote/Validator'
 
@@ -92,6 +92,6 @@ export class Ruler extends Component {
     }
 
     render() {
-        return <Growl ref={(el) => this.growl = el}></Growl>
+        return <Toast ref={(el) => this.growl = el}></Toast>
     }
 }
