@@ -36,7 +36,7 @@ export class VotingPaper extends Component {
         buttonProps.party = party
         buttonProps.ref = buttonProps.key
         buttonProps.id = buttonProps.key
-		buttonProps.votingPaper = this
+		buttonProps.votingpaper = this
         return (
             <Party {...buttonProps} onClick={(e) => {
                 let button = this.refs[buttonProps.ref]
@@ -63,7 +63,7 @@ export class VotingPaper extends Component {
             buttonProps.style = gridRow
             buttonProps.ref = buttonProps.key
             buttonProps.id = buttonProps.key
-			buttonProps.votingPaper = this
+			buttonProps.votingpaper = this
             return (
                 <Party {...buttonProps} onClick={(e) => {
                     let button = this.refs[buttonProps.ref]

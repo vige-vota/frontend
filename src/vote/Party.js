@@ -7,6 +7,7 @@ import { validate, selections } from './Validator'
 import { AdminButtons } from '../admin/AdminButtons'
 import x from '../images/x.png'
 import './Party.css'
+import ObjectUtils from 'primereact/components/utils/ObjectUtils';
 
 export const group = 'group'
 export const party = 'party'
@@ -64,7 +65,7 @@ export class Party extends ButtonComponent {
     }
 
     renderLabel() {
-        if (this.props.votingPaper.props.config.maxCandidates === 0 || 
+        if (this.props.votingpaper.props.config.maxCandidates === 0 || 
         	(this.props.party.name && 
         	(!this.props.party.candidates || this.props.party.candidates.length === 0))) {
             const buttonLabel = this.props.party.name || 'p-btn'
@@ -95,24 +96,20 @@ export class Party extends ButtonComponent {
         })
         let icon = this.renderIcon()
         let label = this.renderLabel()
+        let badge = this.renderBadge()
         let candidates = this.renderCandidates()
 
-        let buttonProps = Object.assign({}, this.props)
-        delete buttonProps.iconPos
-        delete buttonProps.icon
-        delete buttonProps.tooltip
-        delete buttonProps.tooltipOptions
-        delete buttonProps.party
-        delete buttonProps.votingPaper
+        let buttonProps = ObjectUtils.findDiffKeys(this.props, ButtonComponent.defaultProps);
 
         return (
             <div ref={(el) => this.element = el} {...buttonProps} className={className}>
-				<AdminButtons party={this.props.party} partyComponent={this} votingPaper={this.props.votingPaper} ref='admin-buttons'/>
+				<AdminButtons party={this.props.party} partyComponent={this} votingPaper={this.props.votingpaper} ref='admin-buttons'/>
 				{this.props.iconPos === 'left' && icon}
                 {label}
                 {candidates}
                 {this.props.iconPos === 'right' && icon}
                 {this.props.children}
+                {badge}
             </div>
         )
     }
