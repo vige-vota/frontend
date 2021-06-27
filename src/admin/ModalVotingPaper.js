@@ -35,6 +35,7 @@ export class ModalVotingPaper extends Component {
 			type: ''
         }
  		this.nameInputText= React.createRef();
+ 		this.zone= React.createRef();
         this.state.configurationHeader = <FormattedMessage
             id='app.configuration.header'
             defaultMessage='Configure your Voting Paper'
@@ -84,8 +85,7 @@ export class ModalVotingPaper extends Component {
 
 	componentDidUpdate() {
 		if (this.state.operation === 'insert' && !this.state.votingPaper.value)
-			if (this.nameInputText.current)
-				this.nameInputText.current.focus()
+			this.nameInputText.current && this.nameInputText.current.focus()
 		if (this.state.app && this.state.operation.startsWith('confirmed')) {
   			let tabs = colorTabs(this.state.app)
 			this.setState({ operation: '' })
@@ -192,7 +192,7 @@ export class ModalVotingPaper extends Component {
 		if (this.state.type === 'little-nogroup' || this.state.type === 'little')
 			zoneClass = 'p-grid disabled'
 		const zoneField = (
-				<div className={zoneClass} ref='zone'>
+				<div className={zoneClass} ref={this.zone}>
     				<div className='p-col'>{this.state.zoneLabel}</div>
     				<div className='p-col'><InputNumber showButtons onValueChange={(e) => this.setState(
 						{
@@ -234,7 +234,7 @@ export class ModalVotingPaper extends Component {
 								}
 							}
 						}) } onKeyPress={(e) => {
-							if (e.nativeEvent.keyCode === 13)
+							if (e.nativeEvent.key === 13)
 								this.confirm()
 						}} /></div>
 				</div>
@@ -269,12 +269,12 @@ export class ModalVotingPaper extends Component {
 								if (e.value) {
 									this.setState({type: e.value})
 									if (e.value === 'little-nogroup' || e.value === 'little')
-										this.refs['zone'].className = 'p-grid disabled'
+										this.zone.current.className = 'p-grid disabled'
 									else
-										this.refs['zone'].className = 'p-grid'
+										this.zone.current.className = 'p-grid'
 								}
 							}} itemTemplate={this.imgTemplate} 
-                                    style={{width: '105em'}} listStyle={{maxHeight: '250px'}} />
+                                    style={{width: '20.5em'}} listStyle={{maxHeight: '250px'}} />
 					</div>
 				</div>
             </Dialog>)
