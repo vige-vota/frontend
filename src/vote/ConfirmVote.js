@@ -145,13 +145,13 @@ export class ConfirmVote extends Component {
                 <FormattedMessage
                     id='app.yes'
                     defaultMessage='Yes'>
-                    {(yes) => <Button label={yes} icon='pi pi-check' onClick={this.confirm} className='confirm' />}
+                    {(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={this.confirm} className='confirm' />}
                 </FormattedMessage>
 
                 <FormattedMessage
                     id='app.no'
                     defaultMessage='No'>
-                    {(no) => <Button label={no} icon='pi pi-times' onClick={this.onHide} className='p-button-secondary confirm' />}
+                    {(no) => <Button label={no[0]} icon='pi pi-times' onClick={this.onHide} className='p-button-secondary confirm' />}
                 </FormattedMessage>
             </div>
         )
@@ -162,7 +162,7 @@ export class ConfirmVote extends Component {
                     id='app.confirm.norecordsfound'
                     defaultMessage='Empty selection'>
                         {(noRecordsFound) => <DataTable value={this.sort(selections)} rowGroupMode='subheader' sortField='votingPaper' sortOrder={1} groupField='votingPaper'
-                            rowGroupHeaderTemplate={this.headerTemplate} rowGroupFooterTemplate={this.footerTemplate} emptyMessage={noRecordsFound}>
+                            rowGroupHeaderTemplate={this.headerTemplate} rowGroupFooterTemplate={this.footerTemplate} emptyMessage={noRecordsFound[0]}>
                                 <Column field='type' body={(e) =>
 
                                 (<b><FormattedMessage

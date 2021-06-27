@@ -108,14 +108,14 @@ export class ModalCandidates extends Component {
                 <FormattedMessage
                     id='app.confirm'
                     defaultMessage='Confirm'>
-                    {(yes) => <Button label={yes} icon='pi pi-check' onClick={this.confirm}
+                    {(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={this.confirm}
 					className='confirm' />}
                 </FormattedMessage>
 
 				<FormattedMessage
                     id='app.cancel'
                     defaultMessage='Cancel'>
-                    {(no) => <Button label={no} icon='pi pi-times' onClick={this.onHide}
+                    {(no) => <Button label={no[0]} icon='pi pi-times' onClick={this.onHide}
 					className='p-button-secondary confirm' />}
                 </FormattedMessage>
             </div>
@@ -149,7 +149,7 @@ export class ModalCandidates extends Component {
             					defaultMessage='Choose Image'>
 								{(chooseImage) => <CandidateUpload ref={candidateUpload} accept='image/*' maxFileSize={60000} 
 													onSelect={this.onSelect}
-													chooseLabel={chooseImage} 
+													chooseLabel={chooseImage[0]} 
 													party={this} candidate={selectedCandidate} 
 													previewWidth={150} />}
 						</FormattedMessage>
@@ -161,7 +161,7 @@ export class ModalCandidates extends Component {
                 		<FormattedMessage
                     		id='app.insert'
                     		defaultMessage='Insert'>
-                    		{(yes) => <Button label={yes} icon='pi pi-check' onClick={() => {
+                    		{(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={() => {
 								let value = {
 									name: this.state.name,
 									sex: this.state.sex,
@@ -186,7 +186,7 @@ export class ModalCandidates extends Component {
                 		<FormattedMessage
                     		id='app.update'
                     		defaultMessage='Update'>
-                    		{(yes) => <Button label={yes} icon='pi pi-check' onClick={() => {
+                    		{(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={() => {
 								let value = {
 									id: this.state.id,
 									name: this.state.name,
@@ -212,7 +212,7 @@ export class ModalCandidates extends Component {
                 		<FormattedMessage
                     		id='app.delete'
                     		defaultMessage='Delete'>
-                    		{(yes) => <Button label={yes} icon='pi pi-check' onClick={() => {
+                    		{(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={() => {
 								const index = this.state.candidates.map((e) => e.id).indexOf(this.state.id)
 								this.state.candidates.splice(index, 1)
 								this.setState({

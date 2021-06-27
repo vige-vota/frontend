@@ -20,6 +20,7 @@ export class ModalParty extends Component {
 			operation: '',
 			opened: false
         }
+ 		this.nameInputText = React.createRef();
         this.state.configurationHeader = <FormattedMessage
             id='app.configuration.headerparty'
             defaultMessage='Configure your Party'
@@ -65,7 +66,7 @@ export class ModalParty extends Component {
 
 	componentDidUpdate() {
 		if (this.state.operation === 'insert' && !this.state.partyName)
-			this.name.element.focus()
+			this.nameInputText.current && this.nameInputText.current.focus()
 	}
 	
     open() {
@@ -142,7 +143,7 @@ export class ModalParty extends Component {
 			deleteButton = <FormattedMessage
                     id='app.delete'
                     defaultMessage='Delete'>
-                    {(ok) => <Button label={ok} icon='pi pi-check' onClick={this.delete}
+                    {(ok) => <Button label={ok[0]} icon='pi pi-check' onClick={this.delete}
 					className='confirm' />}
                 </FormattedMessage>
         const footer = (
@@ -150,7 +151,7 @@ export class ModalParty extends Component {
                 <FormattedMessage
                     id='app.confirm'
                     defaultMessage='Confirm'>
-                    {(yes) => <Button label={yes} icon='pi pi-check' onClick={this.confirm}
+                    {(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={this.confirm}
 					className='confirm' />}
                 </FormattedMessage>
 
@@ -159,7 +160,7 @@ export class ModalParty extends Component {
 				<FormattedMessage
                     id='app.cancel'
                     defaultMessage='Cancel'>
-                    {(no) => <Button label={no} icon='pi pi-times' onClick={this.onHide}
+                    {(no) => <Button label={no[0]} icon='pi pi-times' onClick={this.onHide}
 					className='p-button-secondary confirm' />}
                 </FormattedMessage>
             </div>
@@ -180,11 +181,11 @@ export class ModalParty extends Component {
             <Dialog contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-party'>
 				<div className='p-grid'>
     				<div className='p-col'>{this.state.name}</div>
-    				<div className='p-col'><InputText ref={(input) => { this.name = input; }} value={this.state.partyName} onChange={(e) => this.setState(
+    				<div className='p-col'><InputText ref={this.nameInputText} value={this.state.partyName} onChange={(e) => this.setState(
 						{
 							partyName: e.target.value
 						}) } onKeyPress={(e) => {
-							if (e.nativeEvent.keyCode === 13)
+							if (e.nativeEvent.key === 13)
 								this.confirm()
 						}} /></div>
 				</div>
@@ -201,7 +202,7 @@ export class ModalParty extends Component {
             					defaultMessage='Choose Image'>
 								{(chooseImage) => <PartyUpload accept='image/*' maxFileSize={60000} 
 													onSelect={this.onSelect}
-													chooseLabel={chooseImage} 
+													chooseLabel={chooseImage[0]} 
 													party={this} previewWidth={150} />}
 						</FormattedMessage>
 					</div>
