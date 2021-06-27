@@ -20,7 +20,7 @@ export class ModalParty extends Component {
 			operation: '',
 			opened: false
         }
- 		this.nameInputText = React.createRef();
+ 		this.nameInputText = React.createRef()
         this.state.configurationHeader = <FormattedMessage
             id='app.configuration.headerparty'
             defaultMessage='Configure your Party'

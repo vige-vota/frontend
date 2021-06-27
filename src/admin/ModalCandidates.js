@@ -28,6 +28,10 @@ export class ModalCandidates extends Component {
 			generateId: '',
 			opened: false
         }
+ 		this.candidatesDialog = createRef()
+ 		this.boxCandidates = createRef()
+ 		this.upload = React.forwardRef()
+ 		this.nameInputText = createRef()
         this.state.configurationHeader = <FormattedMessage
             id='app.configuration.headercandidates'
             defaultMessage='Manage candidates'
@@ -121,10 +125,10 @@ export class ModalCandidates extends Component {
             </div>
         )
         return (
-            <Dialog ref='candidates-dialog' contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={this.state.configurationHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-candidates'>
+            <Dialog ref={this.candidatesDialog} contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={this.state.configurationHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-candidates'>
 				<div className='p-grid'>
     				<div className='p-col'>{this.state.namesurnameLabel}</div>
-    				<div className='p-col'><InputText ref={(input) => { this.name = input; }} 
+    				<div className='p-col'><InputText ref={this.nameInputText} 
 						 value={this.state.name} 
 						 onChange={(e) => {
 							this.setState({ name: e.target.value})
@@ -145,7 +149,7 @@ export class ModalCandidates extends Component {
 				</div>
 				<div className='p-grid'>
     				<div className='p-col'>
-						<FormattedMessage ref='upload' id='app.configuration.chooseimage'
+						<FormattedMessage ref={this.upload} id='app.configuration.chooseimage'
             					defaultMessage='Choose Image'>
 								{(chooseImage) => <CandidateUpload ref={candidateUpload} accept='image/*' maxFileSize={60000} 
 													onSelect={this.onSelect}
@@ -178,7 +182,7 @@ export class ModalCandidates extends Component {
 									value.id = generatedId
 									value.value = generatedId
 									this.state.candidates.push(value)
-									this.refs.boxCandidates.forceUpdate()}
+									this.boxCandidates.forceUpdate()}
 								}
 							}
 							className='confirm' />}
@@ -204,7 +208,7 @@ export class ModalCandidates extends Component {
 											f.sex = this.state.sex
 										}
 									})
-									this.refs.boxCandidates.forceUpdate()}
+									this.boxCandidates.current.forceUpdate()}
 								}
 							}
 							className='confirm' />}
@@ -221,8 +225,8 @@ export class ModalCandidates extends Component {
 									image: '',
 									sex: ''
 								})
-								this.refs.upload.refs.candidateUpload.state.files.pop()
-								this.refs['candidates-dialog'].forceUpdate()}
+								this.upload.current.candidateUpload.current.state.files.pop()
+								this.candidatesDialog.current.forceUpdate()}
 							}
 							className='confirm' />}
                 		</FormattedMessage>
@@ -230,7 +234,7 @@ export class ModalCandidates extends Component {
 				</div>
 				<div className='p-grid'>
 					<div className='p-col'>
-							<ListBox ref='boxCandidates' value={this.state.id} filter={true} options={this.state.candidates} onChange={(e) => {
+							<ListBox ref={this.boxCandidates} value={this.state.id} filter={true} options={this.state.candidates} onChange={(e) => {
 								let selectedCandidate = this.state.candidates.filter(f => f.id === parseInt(e.value, 10))[0]
 								if (e.value) {
 									this.setState({id: e.value, 
@@ -241,7 +245,7 @@ export class ModalCandidates extends Component {
 								} else {
 									this.setState({id: '', name: '', sex: '', image: '', opened: true})
 								}
-							}} itemTemplate={this.imgTemplate} style={{width: '30em'}} listStyle={{maxHeight: '250px'}} />
+							}} itemTemplate={this.imgTemplate} style={{width: '21em'}} listStyle={{maxHeight: '250px'}} />
 					</div>
 				</div>
             </Dialog>)
