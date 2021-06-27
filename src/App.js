@@ -29,6 +29,8 @@ class App extends Component {
           visible: true
        }
        appContainer = this
+ 	   this.modalVotingPaper = React.createRef();
+ 	   this.confirm = React.createRef();
        
    	   UserService.getProfile().then(function(profile) {
        		UserService.axiosInstance.get(process.env.REACT_APP_VOTING_PAPERS_URL)
@@ -53,8 +55,8 @@ class App extends Component {
 	}
 
     render() {
-		let confirm = <ConfirmVote ref='confirm' window={this}/>
-		let modalVotingPaper = ''
+		let confirmComponent = <ConfirmVote ref={this.confirm} window={this}/>
+		let modalVotingPaperComponent = ''
 		let ruler = ''
 		let realTimeVotes = <SockJsClient url={process.env.REACT_APP_VOTING_PAPERS_REALTIME_URL} topics={['/topic/votingpaper']}
 						onMessage={(msg) => {
@@ -99,8 +101,8 @@ class App extends Component {
 							this.setState({operation: 'websocket'})
 					 }} />
 		if (config && config.state === 'PREPARE') {
-			confirm = <ConfirmCreate ref='confirm' window={this}/>
-			modalVotingPaper = <ModalVotingPaper ref='modalVotingPaper' />
+			confirmComponent = <ConfirmCreate ref={this.confirm} window={this}/>
+			modalVotingPaperComponent = <ModalVotingPaper ref={this.modalVotingPaper} />
 			ruler = <Ruler ref='ruler' />
 		}
 		if (!config)
@@ -112,9 +114,9 @@ class App extends Component {
                     <Validator ref='validator' />
 					{ruler}
                     <TabMenu ref='tabMenu' className={this.state.visible ? '' : 'disabled'}  model={this.state.items} activeItem={this.state.activeItem} onTabChange={(e) => {
-                    	if (config.state === 'PREPARE' && e.originalEvent.target.className.startsWith('pi')) {
+                    	if (config.state === 'PREPARE' && e.originalEvent.target.className.startsWith('p-menuitem-icon')) {
 							let currentVotingPaper = getVotingPaperById(e.value)
-							this.refs.modalVotingPaper.setState({
+							this.modalVotingPaper.current.setState({
 								votingPaper: e,
 								app: this,
 								operation: 'update',
@@ -124,13 +126,13 @@ class App extends Component {
 								color: currentVotingPaper.color,
 								type: currentVotingPaper.type
 							})
-							this.refs.modalVotingPaper.open()
+							this.modalVotingPaper.current.open()
 						} else if (this.state.visible) {
                             if (e.value.label === this.state.confirmButtonLabel)
-                                this.refs.confirm.open()
+                                this.confirm.current.open()
                             else {
 								if (e.value.label === '+') {
-									this.refs.modalVotingPaper.setState({
+									this.modalVotingPaper.current.setState({
 										votingPaper: '',
 										app: this,
 										operation: 'insert',
@@ -140,7 +142,7 @@ class App extends Component {
 										color: '1976D2',
 										type: 'bigger'
 									})
-                                	this.refs.modalVotingPaper.open()
+                                	this.modalVotingPaper.current.open()
                              	} else 
                                 	this.setState({ activeItem: e.value })
 							}
@@ -148,8 +150,8 @@ class App extends Component {
                     }
                     } />
 
-					{modalVotingPaper}
-					{confirm}
+					{modalVotingPaperComponent}
+					{confirmComponent}
 
                     <p className='powered'>
                         <img alt='logo' className='logo' src={logo} />

@@ -34,8 +34,8 @@ export class ModalVotingPaper extends Component {
 			color: '',
 			type: ''
         }
- 		this.nameInputText= React.createRef();
- 		this.zone= React.createRef();
+ 		this.nameInputText = React.createRef();
+ 		this.zone = React.createRef();
         this.state.configurationHeader = <FormattedMessage
             id='app.configuration.header'
             defaultMessage='Configure your Voting Paper'
