@@ -11,9 +11,7 @@ import {CandidateUpload} from './CandidateUpload'
 import {addImage, generateId} from '../Utilities'
 import {M, F} from '../vote/Validator'
 import { validateCandidate } from './Ruler'
-
-const candidateUpload = createRef('candidateUpload');
-	
+		
 export class ModalCandidates extends Component {
         
     constructor(data) {
@@ -28,9 +26,9 @@ export class ModalCandidates extends Component {
 			generateId: '',
 			opened: false
         }
+		this.candidateUpload = createRef()
  		this.candidatesDialog = createRef()
  		this.boxCandidates = createRef()
- 		this.upload = React.forwardRef()
  		this.nameInputText = createRef()
         this.state.configurationHeader = <FormattedMessage
             id='app.configuration.headercandidates'
@@ -149,14 +147,14 @@ export class ModalCandidates extends Component {
 				</div>
 				<div className='p-grid'>
     				<div className='p-col'>
-						<FormattedMessage ref={this.upload} id='app.configuration.chooseimage'
-            					defaultMessage='Choose Image'>
-								{(chooseImage) => <CandidateUpload ref={candidateUpload} accept='image/*' maxFileSize={60000} 
+    					<FormattedMessage id='app.configuration.chooseimage'
+            				defaultMessage='Choose Image'>
+							{(chooseImage) => <CandidateUpload ref={this.candidateUpload} accept='image/*' maxFileSize={60000} 
 													onSelect={this.onSelect}
 													chooseLabel={chooseImage[0]} 
 													party={this} candidate={selectedCandidate} 
 													previewWidth={150} />}
-						</FormattedMessage>
+		   				</FormattedMessage>
 					</div>
 				</div>
 				<div className='p-grid'>
@@ -225,7 +223,7 @@ export class ModalCandidates extends Component {
 									image: '',
 									sex: ''
 								})
-								this.upload.current.candidateUpload.current.state.files.pop()
+								this.candidateUpload.current.state.files.pop()
 								this.candidatesDialog.current.forceUpdate()}
 							}
 							className='confirm' />}
