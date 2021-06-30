@@ -5,10 +5,12 @@
 .modal-candidates .admin-candidates .p-button {
 	height: 30px !important;
     width: 100px !important;
+    margin: 4px;
 }
 
 .modal-candidates .p-dialog-content .admin-candidates {
-    text-align: right;
+    text-align: center;
+    padding: 0.571rem;
 }
 
 .modal-candidates .p-inputtext {
@@ -26,11 +28,11 @@
 }
 
 .modal-candidates .p-button-secondary.confirm {
-    background-color: #f4f4f4 !important;
+    background-color: #607D8B !important;
 }
 
 .modal-candidates .p-button-secondary.confirm:hover {
-    background-color: #c8c8c8 !important;
+    background-color: #546E7A !important;
 }
 
 .modal-candidates .p-button.p-button-text-icon-left .p-button-text {
@@ -97,6 +99,8 @@
     height: 32px;
     width: 150px;
     background-color: #007ad9;
+    right: 157px;
+    top: 32px;
 }
 
 .modal-candidates .p-fileupload .p-button.p-button-text-icon-left .p-button-text {
@@ -106,7 +110,8 @@
 
 .modal-candidates .p-fileupload .p-fileupload-files {
     position: absolute;
-    left: -12px;
+    left: 144px;
+    bottom: -127px;
 }
 
 .modal-candidates .p-fileupload .p-fileupload-content {
@@ -130,8 +135,9 @@
 }
 
 .modal-candidates .p-fileupload-row>div:nth-child(3) {
-    position: relative;
-	bottom: 376%;
+    position: relative;    
+    bottom: 200%;
+    right: 80%;
 }
 
 .modal-candidates .p-fileupload-row>div:nth-child(4) {
