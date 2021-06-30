@@ -20,7 +20,6 @@ export class ModalParty extends Component {
 			operation: '',
 			opened: false
         }
- 		this.nameInputText = React.createRef()
         this.state.configurationHeader = <FormattedMessage
             id='app.configuration.headerparty'
             defaultMessage='Configure your Party'
@@ -63,11 +62,6 @@ export class ModalParty extends Component {
 		this.onSelect = this.onSelect.bind(this);
 
     }
-
-	componentDidUpdate() {
-		if (this.state.operation === 'insert' && !this.state.partyName)
-			this.nameInputText.current && this.nameInputText.current.focus()
-	}
 	
     open() {
 		this.setState({ visible: true })
@@ -177,17 +171,24 @@ export class ModalParty extends Component {
 				header = this.state.configurationInsertPartyHeader
 			 else
 				header = this.state.configurationInsertGroupHeader
-        return (
-            <Dialog contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-party'>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.name}</div>
-    				<div className='p-col'><InputText ref={this.nameInputText} value={this.state.partyName} onChange={(e) => this.setState(
+		let autoFocus = false
+		if (this.state.operation === 'insert' && !this.state.partyName)
+			autoFocus = true
+		let inputTextProps = {
+			autoFocus: autoFocus
+		}
+		let inputText = <InputText {...inputTextProps} value={this.state.partyName} onChange={(e) => this.setState(
 						{
 							partyName: e.target.value
 						}) } onKeyPress={(e) => {
 							if (e.nativeEvent.key === 13)
 								this.confirm()
-						}} /></div>
+						}} />
+        return (
+            <Dialog contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-party'>
+				<div className='p-grid'>
+    				<div className='p-col'>{this.state.name}</div>
+    				<div className='p-col'>{inputText}</div>
 				</div>
 				<div className='p-grid'>
     				<div className='p-col'>{this.state.title}</div>

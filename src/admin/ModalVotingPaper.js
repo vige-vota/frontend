@@ -34,7 +34,6 @@ export class ModalVotingPaper extends Component {
 			color: '',
 			type: ''
         }
- 		this.nameInputText = React.createRef()
  		this.zone = React.createRef()
         this.state.configurationHeader = <FormattedMessage
             id='app.configuration.header'
@@ -84,8 +83,6 @@ export class ModalVotingPaper extends Component {
     }
 
 	componentDidUpdate() {
-		if (this.state.operation === 'insert' && !this.state.votingPaper.value)
-			this.nameInputText.current && this.nameInputText.current.focus()
 		if (this.state.app && this.state.operation.startsWith('confirmed')) {
   			let tabs = colorTabs(this.state.app)
 			this.setState({ operation: '' })
@@ -220,11 +217,13 @@ export class ModalVotingPaper extends Component {
 		let header = this.state.configurationInsertHeader
 		if (this.state.operation === 'update')
 			header = this.state.configurationHeader
-        return (
-            <Dialog contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-voting-paper'>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.name}</div>
-    				<div className='p-col'><InputText ref={this.nameInputText} value={votingPaperValue ? votingPaperValue.label : ''} onChange={(e) => this.setState(
+		let autoFocus = false
+		if (this.state.operation === 'insert' && !this.state.votingPaper.value)
+			autoFocus = true
+		let inputTextProps = {
+			autoFocus: autoFocus
+		}
+		let inputText = <InputText {...inputTextProps} value={votingPaperValue ? votingPaperValue.label : ''} onChange={(e) => this.setState(
 						{
 							votingPaper: { 
 								value: { 
@@ -236,7 +235,12 @@ export class ModalVotingPaper extends Component {
 						}) } onKeyPress={(e) => {
 							if (e.nativeEvent.key === 13)
 								this.confirm()
-						}} /></div>
+						}} />
+        return (
+            <Dialog contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-voting-paper'>
+				<div className='p-grid'>
+    				<div className='p-col'>{this.state.name}</div>
+    				<div className='p-col'>{inputText}</div>
 				</div>
 				<div className='p-grid'>
     				<div className='p-col'>{this.state.disjointedLabel}</div>
