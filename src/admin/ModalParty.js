@@ -181,7 +181,7 @@ export class ModalParty extends Component {
 						{
 							partyName: e.target.value
 						}) } onKeyPress={(e) => {
-							if (e.nativeEvent.key === 13)
+							if (e.nativeEvent.key === 'Enter')
 								this.confirm()
 						}} />
         return (

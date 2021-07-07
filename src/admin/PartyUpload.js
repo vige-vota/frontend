@@ -47,8 +47,8 @@ export class PartyUpload extends FileUpload {
 
 	    return true;
 	} 
-
-	componentDidUpdate() {
+	
+	show() {
 		if (this.props.party.state.opened) {
 			let party = this.props.party.props.party
 			if (party && party.image)
@@ -65,5 +65,13 @@ export class PartyUpload extends FileUpload {
 				!this.props.party.state.image)
 				this.state.files.pop()
 		}
+	}
+
+	componentDidMount() {
+		this.show()
+	}
+	
+	componentDidUpdate() {
+		this.show()
 	}
 }

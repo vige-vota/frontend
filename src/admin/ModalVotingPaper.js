@@ -233,7 +233,7 @@ export class ModalVotingPaper extends Component {
 								}
 							}
 						}) } onKeyPress={(e) => {
-							if (e.nativeEvent.key === 13)
+							if (e.nativeEvent.key === 'Enter')
 								this.confirm()
 						}} />
         return (
