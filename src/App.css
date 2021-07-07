@@ -64,3 +64,22 @@ body .p-tabmenu.p-component.disabled {
     pointer-events: none;
     cursor: default;
 }
+
+body .p-button.p-button-secondary, body .p-buttonset.p-button-secondary > .p-button {
+    color: #333333;
+    border: 1px solid #f4f4f4;
+}
+
+.p-button.p-button-secondary:not(a):not(.p-disabled):hover, .p-buttonset.p-button-secondary > .p-button:not(a):not(.p-disabled):hover, .p-splitbutton.p-button-secondary > .p-button:not(a):not(.p-disabled):hover, .p-fileupload-choose.p-button-secondary:not(a):not(.p-disabled):hover {
+	background-color: white;
+	color: black;
+}
+
+.p-button-text-only {
+	display: block;
+}
+
+body .p-button .pi {
+    left: 1%;
+    position: absolute;
+}
