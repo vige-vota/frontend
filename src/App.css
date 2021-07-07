@@ -81,5 +81,6 @@ body .p-button.p-button-secondary, body .p-buttonset.p-button-secondary > .p-but
 
 body .p-button .pi {
     left: 1%;
+    top: 17%;
     position: absolute;
 }

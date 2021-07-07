@@ -32,7 +32,7 @@ export class VotingPaper extends Component {
         let buttonProps = Object.assign({})
         buttonProps.key = 'party-' + group.id + '-' + party.id
         buttonProps.icon = 'pi'
-        buttonProps.className = 'p-button-secondary'
+        buttonProps.className = 'p-button-secondary second-row'
         buttonProps.party = party
         buttonProps.ref = buttonProps.key
         buttonProps.id = buttonProps.key
