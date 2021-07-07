@@ -105,14 +105,17 @@ export class ConfirmVote extends Component {
     }
 
     componentDidUpdate() {
-        let elements = ReactDOM.findDOMNode(this).getElementsByClassName('p-rowgroup-header')
-    	config.votingPapers.forEach((votingPaper) => {
-			for (let i=0; i < elements.length; i++)
-				if (elements[i] && elements[i].innerHTML.indexOf('id="'+votingPaper.id) >= 0) {
-					elements[i].style.setProperty('background-color', '#'+votingPaper.color)
-					elements[i].style.setProperty('border-color', '#'+votingPaper.color)
-				}
-		})
+    	let node = ReactDOM.findDOMNode(this)
+    	if (node) {
+        	let elements = node.getElementsByClassName('p-rowgroup-header')
+    		config.votingPapers.forEach((votingPaper) => {
+				for (let i=0; i < elements.length; i++)
+					if (elements[i] && elements[i].innerHTML.indexOf('id="'+votingPaper.id) >= 0) {
+						elements[i].style.setProperty('background-color', '#'+votingPaper.color)
+						elements[i].style.setProperty('border-color', '#'+votingPaper.color)
+					}
+			})
+		}
     }
 
     headerTemplate(data) {
