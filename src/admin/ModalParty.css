@@ -36,18 +36,10 @@
 	font-size: 14px !important;
 }
 
-.modal-party .p-button-icon-left {
-    left: 5px !important;
-}
-
 .modal-party .p-fileupload-choose {
     height: 32px !important;
     width: 150px !important;
 	background-color: #007ad9 !important;
-}
-
-.modal-party .p-button .pi {
-    top: 50% !important;
 }
 
 .modal-party .p-fileupload-choose .p-button-text {
