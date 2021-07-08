@@ -34,6 +34,7 @@ export class ConfirmVote extends Component {
         this.errors = this.errors.bind(this)
         this.confirm = this.confirm.bind(this)
         this.onHide = this.onHide.bind(this)
+        this.show = this.show.bind(this)
     }
 
     open() {
@@ -104,7 +105,7 @@ export class ConfirmVote extends Component {
         this.setState({ visible: false })
     }
 
-    componentDidUpdate() {
+    show() {
     	let node = ReactDOM.findDOMNode(this)
     	if (node) {
         	let elements = node.getElementsByClassName('p-rowgroup-header')
@@ -125,7 +126,7 @@ export class ConfirmVote extends Component {
     footerTemplate(data) {
         return ([<td key={data.votingPaper.name + '_footerTotalLabel'} colSpan='2'></td>
         ]
-        );
+        )
     }
 
     sortByElement(a, b, order = ASC) {
@@ -159,7 +160,7 @@ export class ConfirmVote extends Component {
             </div>
         )
 		return (
-            <Dialog contentStyle={{'maxHeight': '500px'}} header={this.state.confirmHeader} visible={this.state.visible} footer={footer} onHide={this.onHide}>
+            <Dialog contentStyle={{'maxHeight': '500px'}} header={this.state.confirmHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} onShow={this.show}>
                 {this.state.confirmBody}<br/><br/>
                 <FormattedMessage
                     id='app.confirm.norecordsfound'

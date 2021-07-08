@@ -84,3 +84,11 @@ body .p-button .pi {
     top: 17%;
     position: absolute;
 }
+
+.p-dialog {
+  text-align: center;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  text-align: center;
+}

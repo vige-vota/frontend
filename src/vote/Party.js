@@ -14,13 +14,18 @@ export const party = 'party'
 
 export class Party extends ButtonComponent {
 
+    constructor() {
+        super()
+ 		this.adminButtons = React.createRef()
+    }
+
     putX(e) {
-		if ((!this.refs['admin-buttons'].refs.modalParty && 
-			 !this.refs['admin-buttons'].refs.modalInsertParty && 
-			 !this.refs['admin-buttons'].refs.modalCandidates) || 
-			(!this.refs['admin-buttons'].refs.modalParty.state.visible && 
-			 !this.refs['admin-buttons'].refs.modalInsertParty.state.visible && 
-			 !this.refs['admin-buttons'].refs.modalCandidates.state.visible)) {
+		if ((!this.adminButtons.current.modalParty.current &&
+			 !this.adminButtons.current.modalInsertParty.current &&
+			 !this.adminButtons.current.modalCandidates.current) || 
+			(!this.adminButtons.current.modalParty.current.state.visible && 
+			 !this.adminButtons.current.modalInsertParty.current.state.visible && 
+			 !this.adminButtons.current.modalCandidates.current.state.visible)) {
         	e.value = this.props.party
         	if(!e.target.classList.contains('excludeSelect') && validate(e)){
             	if (!e.value.selected)
@@ -103,7 +108,7 @@ export class Party extends ButtonComponent {
 
         return (
             <div ref={(el) => this.element = el} {...buttonProps} className={className}>
-				<AdminButtons party={this.props.party} partyComponent={this} votingPaper={this.props.votingpaper} ref='admin-buttons'/>
+				<AdminButtons party={this.props.party} partyComponent={this} votingPaper={this.props.votingpaper} ref={this.adminButtons}/>
 				{this.props.iconPos === 'left' && icon}
                 {label}
                 {candidates}
