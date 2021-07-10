@@ -22,10 +22,6 @@ body .p-button.voting-paper-admin .pi {
     top: 50% !important;
 }
 
-body .p-button.voting-paper-admin:hover {
-	border-color: transparent !important;
-}
-
 body .admin-buttons .p-button {
     min-width: 2px !important;
 }

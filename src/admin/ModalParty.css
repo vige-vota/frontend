@@ -13,16 +13,8 @@
     background-color: #007ad9 !important;
 }
 
-.modal-party .p-dialog-footer .p-component.confirm:hover {
-    background-color: #0067B8 !important;
-}
-
 .modal-party .p-dialog-footer .p-button-secondary.confirm {
     background-color: #607D8B !important;
-}
-
-.modal-party .p-dialog-footer .p-button-secondary.confirm:hover {
-    background-color: #546E7A !important;
 }
 
 .modal-party .p-dialog-footer .p-button.p-button-text-icon-left .p-button-text {
@@ -117,6 +109,12 @@
 .modal-party .p-fileupload-row>div:nth-child(4) {
     position: relative;
 	bottom: 276%;
+}
+
+.modal-party .p-button:not(.p-button-secondary):not(a):not(.p-disabled):hover {
+    background: #116fbf !important;
+    color: #ffffff !important;
+    border-color: #116fbf !important;
 }
 
 .p-fileupload-files img {

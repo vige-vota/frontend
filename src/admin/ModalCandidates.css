@@ -23,16 +23,8 @@
     background-color: #007ad9 !important;
 }
 
-.modal-candidates .p-component.confirm:hover {
-    background-color: #0067B8 !important;
-}
-
 .modal-candidates .p-button-secondary.confirm {
     background-color: #607D8B !important;
-}
-
-.modal-candidates .p-button-secondary.confirm:hover {
-    background-color: #546E7A !important;
 }
 
 .modal-candidates .p-button.p-button-text-icon-left .p-button-text {
@@ -46,22 +38,10 @@
 	font-size: 14px !important;
 }
 
-.modal-candidates .p-button-icon-left {
-    left: 5px !important;
-}
-
 .modal-candidates .p-fileupload-choose {
     height: 32px !important;
     width: 150px !important;
 	background-color: #007ad9 !important;
-}
-
-.modal-candidates .p-button .p-button-text {
-    top: 0% !important;
-}
-
-.modal-candidates .p-button .pi {
-    top: 50% !important;
 }
 
 .modal-candidates .p-radiobutton {
@@ -143,6 +123,12 @@
 .modal-candidates .p-fileupload-row>div:nth-child(4) {
     position: relative;
 	bottom: 276%;
+}
+
+.modal-candidates .p-button:not(.p-button-secondary):not(a):not(.p-disabled):hover {
+    background: #116fbf !important;
+    color: #ffffff !important;
+    border-color: #116fbf !important;
 }
 
 .p-fileupload-files img {

@@ -70,6 +70,10 @@ body .p-button.p-button-secondary, body .p-buttonset.p-button-secondary > .p-but
     border: 1px solid #f4f4f4;
 }
 
+body .p-button-secondary.confirm:hover {
+    background-color: #546E7A !important;
+}
+
 .p-button.p-button-secondary:not(a):not(.p-disabled):hover, .p-buttonset.p-button-secondary > .p-button:not(a):not(.p-disabled):hover, .p-splitbutton.p-button-secondary > .p-button:not(a):not(.p-disabled):hover, .p-fileupload-choose.p-button-secondary:not(a):not(.p-disabled):hover {
 	background-color: white;
 	color: black;
