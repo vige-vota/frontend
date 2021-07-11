@@ -60,45 +60,43 @@ class App extends Component {
 		let ruler = ''
 		let realTimeVotes = <SockJsClient url={process.env.REACT_APP_VOTING_PAPERS_REALTIME_URL} topics={['/topic/votingpaper']}
 						onMessage={(msg) => {
-							msg.votingPapers = msg.votingPapers.filter(votingPaper => isValid(votingPaper, msg))
-							if (msg.state === config.state) {
-								msg.votingPapers.forEach((votingPaper, i) => {
-									let currentItem = this.state.items[i]
-									if (this.state.items.filter(e => e.id === votingPaper.id).length === 0) {
-										config.votingPapers.push(votingPaper)
-										const length = this.state.items.length-2
-										this.setState({ items: addToList({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' }, length, this.state.items) })
-									} else if (currentItem.id === votingPaper.id) {
-										if (currentItem)
-											currentItem.label = votingPaper.name
-										let currentVotingPaper = config.votingPapers[i]
-										if (currentVotingPaper) {
-											currentVotingPaper.type = votingPaper.type
-											currentVotingPaper.disjointed = votingPaper.disjointed
-											currentVotingPaper.color = votingPaper.color
-											currentVotingPaper.maxCandidates = votingPaper.maxCandidates
-											currentVotingPaper.zone = votingPaper.zone
-											currentVotingPaper.name = votingPaper.name
-											currentVotingPaper.groups = votingPaper.groups
-											currentVotingPaper.parties = votingPaper.parties
+							if (msg.state !== config.state)
+								window.location.reload()
+							else {
+								msg.votingPapers = msg.votingPapers.filter(votingPaper => isValid(votingPaper, msg))
+								if (msg.state === config.state) {
+									msg.votingPapers.forEach((votingPaper, i) => {
+										let currentItem = this.state.items[i]
+										if (this.state.items.filter(e => e.id === votingPaper.id).length === 0) {
+											config.votingPapers.push(votingPaper)
+											const length = this.state.items.length-2
+											this.setState({ items: addToList({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' }, length, this.state.items) })
+										} else if (currentItem.id === votingPaper.id) {
+											if (currentItem)
+												currentItem.label = votingPaper.name
+											let currentVotingPaper = config.votingPapers[i]
+											if (currentVotingPaper) {
+												currentVotingPaper.type = votingPaper.type
+												currentVotingPaper.disjointed = votingPaper.disjointed
+												currentVotingPaper.color = votingPaper.color
+												currentVotingPaper.maxCandidates = votingPaper.maxCandidates
+												currentVotingPaper.zone = votingPaper.zone
+												currentVotingPaper.name = votingPaper.name
+												currentVotingPaper.groups = votingPaper.groups
+												currentVotingPaper.parties = votingPaper.parties
+											}
 										}
-									}
-								})
-								let toRemove = config.votingPapers.filter(value => -1 === msg.votingPapers.map(e => e.id).indexOf(value.id))
-								toRemove.forEach(item => removeTab(item, this))
-								const tabs = getTabs(this)
-								let index = this.state.items.map((e) => e.id).indexOf(this.state.activeItem.id)
-								if (index >= 0)
-									tabs[index].click()
+									})
+									let toRemove = config.votingPapers.filter(value => -1 === msg.votingPapers.map(e => e.id).indexOf(value.id))
+									toRemove.forEach(item => removeTab(item, this))
+									const tabs = getTabs(this)
+									let index = this.state.items.map((e) => e.id).indexOf(this.state.activeItem.id)
+									if (index >= 0)
+										tabs[index].click()
+								}
+								config.state = msg.state
+								this.setState({operation: 'websocket'})
 							}
-							if (msg.state !== config.state) {
-								config.state = msg.state
-								config.votingPapers = msg.votingPapers
-								this.setState({ items: [] })
-								createTabs(this)
-							} else
-								config.state = msg.state
-							this.setState({operation: 'websocket'})
 					 }} />
 		if (config && config.state === 'PREPARE') {
 			confirmComponent = <ConfirmCreate ref={this.confirm} window={this}/>
