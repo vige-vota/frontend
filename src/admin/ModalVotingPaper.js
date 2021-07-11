@@ -5,7 +5,7 @@ import { Button } from 'primereact/button'
 import {colorTabs, removeTab, generateId, addToList} from '../Utilities'
 import {InputText} from 'primereact/inputtext'
 import {Checkbox} from 'primereact/checkbox'
-import {Spinner} from 'primereact/spinner'
+import {InputNumber} from 'primereact/inputnumber'
 import {ColorPicker} from 'primereact/colorpicker'
 import {ListBox} from 'primereact/listbox'
 import 'primeflex/primeflex.css'
@@ -34,6 +34,7 @@ export class ModalVotingPaper extends Component {
 			color: '',
 			type: ''
         }
+ 		this.zone = React.createRef()
         this.state.configurationHeader = <FormattedMessage
             id='app.configuration.header'
             defaultMessage='Configure your Voting Paper'
@@ -82,8 +83,6 @@ export class ModalVotingPaper extends Component {
     }
 
 	componentDidUpdate() {
-		if (this.state.operation === 'insert' && !this.state.votingPaper.value)
-			this.name.element.focus()
 		if (this.state.app && this.state.operation.startsWith('confirmed')) {
   			let tabs = colorTabs(this.state.app)
 			this.setState({ operation: '' })
@@ -185,17 +184,17 @@ export class ModalVotingPaper extends Component {
 			deleteButton = <FormattedMessage
                     id='app.delete'
                     defaultMessage='Delete'>
-                    {(ok) => <Button label={ok} icon='pi pi-check' onClick={this.delete} className='confirm' />}
+                    {(ok) => <Button label={ok[0]} icon='pi pi-check' onClick={this.delete} className='confirm' />}
                 </FormattedMessage>
 		if (this.state.type === 'little-nogroup' || this.state.type === 'little')
 			zoneClass = 'p-grid disabled'
 		const zoneField = (
-				<div className={zoneClass} ref='zone'>
+				<div className={zoneClass} ref={this.zone}>
     				<div className='p-col'>{this.state.zoneLabel}</div>
-    				<div className='p-col'><Spinner onChange={(e) => this.setState(
+    				<div className='p-col'><InputNumber showButtons onValueChange={(e) => this.setState(
 						{
-							zone: Number.isInteger(e.value) ? parseInt(e.value) : 0
-						}) } value={this.state.zone} min={-1}></Spinner></div>
+							zone: Number.isInteger(e.value) ? parseInt(e.value, 10) : 0
+						}) } value={this.state.zone} min={-1}></InputNumber></div>
 				</div>
 		)
         const footer = (
@@ -203,7 +202,7 @@ export class ModalVotingPaper extends Component {
                 <FormattedMessage
                     id='app.confirm'
                     defaultMessage='Confirm'>
-                    {(yes) => <Button label={yes} icon='pi pi-check' onClick={this.confirm} className='confirm' />}
+                    {(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={this.confirm} className='confirm' />}
                 </FormattedMessage>
 
                 {deleteButton}
@@ -211,18 +210,20 @@ export class ModalVotingPaper extends Component {
 				<FormattedMessage
                     id='app.cancel'
                     defaultMessage='Cancel'>
-                    {(no) => <Button label={no} icon='pi pi-times' onClick={this.onHide} className='p-button-secondary confirm' />}
+                    {(no) => <Button label={no[0]} icon='pi pi-times' onClick={this.onHide} className='p-button-secondary confirm' />}
                 </FormattedMessage>
             </div>
         )
 		let header = this.state.configurationInsertHeader
 		if (this.state.operation === 'update')
 			header = this.state.configurationHeader
-        return (
-            <Dialog contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-voting-paper'>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.name}</div>
-    				<div className='p-col'><InputText ref={(input) => { this.name = input; }} value={votingPaperValue ? votingPaperValue.label : ''} onChange={(e) => this.setState(
+		let autoFocus = false
+		if (this.state.operation === 'insert' && !this.state.votingPaper.value)
+			autoFocus = true
+		let inputTextProps = {
+			autoFocus: autoFocus
+		}
+		let inputText = <InputText {...inputTextProps} value={votingPaperValue ? votingPaperValue.label : ''} onChange={(e) => this.setState(
 						{
 							votingPaper: { 
 								value: { 
@@ -232,9 +233,14 @@ export class ModalVotingPaper extends Component {
 								}
 							}
 						}) } onKeyPress={(e) => {
-							if (e.nativeEvent.keyCode === 13)
+							if (e.nativeEvent.key === 'Enter')
 								this.confirm()
-						}} /></div>
+						}} />
+        return (
+            <Dialog contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-voting-paper'>
+				<div className='p-grid'>
+    				<div className='p-col'>{this.state.name}</div>
+    				<div className='p-col'>{inputText}</div>
 				</div>
 				<div className='p-grid'>
     				<div className='p-col'>{this.state.disjointedLabel}</div>
@@ -246,10 +252,10 @@ export class ModalVotingPaper extends Component {
 				</div>
 				<div className='p-grid'>
     				<div className='p-col'>{this.state.maxCandidatesLabel}</div>
-    				<div className='p-col'><Spinner onChange={(e) => this.setState(
+    				<div className='p-col'><InputNumber showButtons onValueChange={(e) => this.setState(
 						{
-							maxCandidates: Number.isInteger(e.value) ? parseInt(e.value) : 0
-						}) } value={this.state.maxCandidates} min={0} max={3}></Spinner></div>
+							maxCandidates: Number.isInteger(e.value) ? parseInt(e.value, 10) : 0
+						}) } value={this.state.maxCandidates} min={0} max={3}></InputNumber></div>
 				</div>
 				{ zoneField }
 				<div className='p-grid'>
@@ -267,12 +273,12 @@ export class ModalVotingPaper extends Component {
 								if (e.value) {
 									this.setState({type: e.value})
 									if (e.value === 'little-nogroup' || e.value === 'little')
-										this.refs['zone'].className = 'p-grid disabled'
+										this.zone.current.className = 'p-grid disabled'
 									else
-										this.refs['zone'].className = 'p-grid'
+										this.zone.current.className = 'p-grid'
 								}
 							}} itemTemplate={this.imgTemplate} 
-                                    style={{width: '105em'}} listStyle={{maxHeight: '250px'}} />
+                                    style={{width: '20.5em'}} listStyle={{maxHeight: '250px'}} />
 					</div>
 				</div>
             </Dialog>)

@@ -4,10 +4,6 @@ body .bigger .p-button, body .bigger .p-buttonset.p-button-secondary > .p-button
     background-color: white;
 }
 
-body .bigger .p-button .pi {
-    top: 13%;
-}
-
 body .bigger .p-button.p-button-text-icon-left .p-button-text {
     top: 20%;
     left: 35%;
@@ -34,4 +30,13 @@ body .bigger .first-row .button-selected {
     left: 35%;
     bottom: 1%;
     position: absolute;
+}
+
+body .bigger .content-party .first-row .p-button.admin-button {
+	left: 45%;
+    bottom: 1%;
+}
+
+body .bigger .content-party .p-button-text-icon-left .p-button.admin-button {
+	left: 7em;
 }

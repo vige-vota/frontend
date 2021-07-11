@@ -1,5 +1,6 @@
 .modal-party .p-dialog-content {
 	text-align: left;
+	overflow: hidden;
 }
 
 .modal-party .p-inputtext {
@@ -12,16 +13,8 @@
     background-color: #007ad9 !important;
 }
 
-.modal-party .p-dialog-footer .p-component.confirm:hover {
-    background-color: #0067B8 !important;
-}
-
 .modal-party .p-dialog-footer .p-button-secondary.confirm {
-    background-color: #f4f4f4 !important;
-}
-
-.modal-party .p-dialog-footer .p-button-secondary.confirm:hover {
-    background-color: #c8c8c8 !important;
+    background-color: #607D8B !important;
 }
 
 .modal-party .p-dialog-footer .p-button.p-button-text-icon-left .p-button-text {
@@ -35,18 +28,10 @@
 	font-size: 14px !important;
 }
 
-.modal-party .p-button-icon-left {
-    left: 5px !important;
-}
-
 .modal-party .p-fileupload-choose {
     height: 32px !important;
     width: 150px !important;
 	background-color: #007ad9 !important;
-}
-
-.modal-party .p-button .pi {
-    top: 50% !important;
 }
 
 .modal-party .p-fileupload-choose .p-button-text {
@@ -80,6 +65,8 @@
     height: 32px;
     width: 150px;
     background-color: #007ad9;
+    right: 157px;
+    top: 32px;
 }
 
 .modal-party .p-fileupload .p-button.p-button-text-icon-left .p-button-text {
@@ -88,8 +75,9 @@
 }
 
 .modal-party .p-fileupload .p-fileupload-files {
-    position: relative;
-    left: -25px;
+    position: absolute;
+    left: 144px;
+    bottom: -127px;
 }
 
 .modal-party .p-fileupload .p-fileupload-content {
@@ -113,13 +101,20 @@
 }
 
 .modal-party .p-fileupload-row>div:nth-child(3) {
-    position: relative;
-	bottom: 376%;
+    position: relative;    
+    bottom: 200%;
+    right: 80%;
 }
 
 .modal-party .p-fileupload-row>div:nth-child(4) {
     position: relative;
 	bottom: 276%;
+}
+
+.modal-party .p-button:not(.p-button-secondary):not(a):not(.p-disabled):hover {
+    background: #116fbf !important;
+    color: #ffffff !important;
+    border-color: #116fbf !important;
 }
 
 .p-fileupload-files img {

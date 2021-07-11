@@ -7,14 +7,10 @@ import './templates/little-nogroup.css'
 import './templates/little.css'
 import './templates/bigger.css'
 import './templates/bigger-partygroup.css'
-import {IntlProvider, addLocaleData} from 'react-intl'
+import {IntlProvider} from 'react-intl'
 import * as serviceWorker from './serviceWorker'
-import locale_en from 'react-intl/locale-data/en'
-import locale_it from 'react-intl/locale-data/it'
 import messages_it from './translations/it.json'
 import UserService from './services/UserService'
-
-addLocaleData([...locale_en, ...locale_it])
 
 const messages = {
     'it': messages_it

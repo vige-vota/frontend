@@ -1,4 +1,4 @@
-import React from 'react'
+import { Component } from 'react'
 import SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
 import PropTypes from 'prop-types'
@@ -12,7 +12,7 @@ import Lo from 'lodash'
  * @see {@link https://stomp.github.io/|STOMP}
  * @see {@link https://github.com/sockjs/sockjs-client|StompJS}
  */
-class SockJsClient extends React.Component {
+class SockJsClient extends Component {
   static defaultProps = {
     onConnect: () => {},
     onDisconnect: () => {},

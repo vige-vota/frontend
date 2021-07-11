@@ -29,6 +29,8 @@ class App extends Component {
           visible: true
        }
        appContainer = this
+ 	   this.modalVotingPaper = React.createRef();
+ 	   this.confirm = React.createRef();
        
    	   UserService.getProfile().then(function(profile) {
        		UserService.axiosInstance.get(process.env.REACT_APP_VOTING_PAPERS_URL)
@@ -53,54 +55,52 @@ class App extends Component {
 	}
 
     render() {
-		let confirm = <ConfirmVote ref='confirm' window={this}/>
-		let modalVotingPaper = ''
+		let confirmComponent = <ConfirmVote ref={this.confirm} window={this}/>
+		let modalVotingPaperComponent = ''
 		let ruler = ''
 		let realTimeVotes = <SockJsClient url={process.env.REACT_APP_VOTING_PAPERS_REALTIME_URL} topics={['/topic/votingpaper']}
 						onMessage={(msg) => {
-							msg.votingPapers = msg.votingPapers.filter(votingPaper => isValid(votingPaper, msg))
-							if (msg.state === config.state) {
-								msg.votingPapers.forEach((votingPaper, i) => {
-									let currentItem = this.state.items[i]
-									if (this.state.items.filter(e => e.id === votingPaper.id).length === 0) {
-										config.votingPapers.push(votingPaper)
-										const length = this.state.items.length-2
-										this.setState({ items: addToList({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' }, length, this.state.items) })
-									} else if (currentItem.id === votingPaper.id) {
-										if (currentItem)
-											currentItem.label = votingPaper.name
-										let currentVotingPaper = config.votingPapers[i]
-										if (currentVotingPaper) {
-											currentVotingPaper.type = votingPaper.type
-											currentVotingPaper.disjointed = votingPaper.disjointed
-											currentVotingPaper.color = votingPaper.color
-											currentVotingPaper.maxCandidates = votingPaper.maxCandidates
-											currentVotingPaper.zone = votingPaper.zone
-											currentVotingPaper.name = votingPaper.name
-											currentVotingPaper.groups = votingPaper.groups
-											currentVotingPaper.parties = votingPaper.parties
+							if (msg.state !== config.state)
+								window.location.reload()
+							else {
+								msg.votingPapers = msg.votingPapers.filter(votingPaper => isValid(votingPaper, msg))
+								if (msg.state === config.state) {
+									msg.votingPapers.forEach((votingPaper, i) => {
+										let currentItem = this.state.items[i]
+										if (this.state.items.filter(e => e.id === votingPaper.id).length === 0) {
+											config.votingPapers.push(votingPaper)
+											const length = this.state.items.length-2
+											this.setState({ items: addToList({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' }, length, this.state.items) })
+										} else if (currentItem.id === votingPaper.id) {
+											if (currentItem)
+												currentItem.label = votingPaper.name
+											let currentVotingPaper = config.votingPapers[i]
+											if (currentVotingPaper) {
+												currentVotingPaper.type = votingPaper.type
+												currentVotingPaper.disjointed = votingPaper.disjointed
+												currentVotingPaper.color = votingPaper.color
+												currentVotingPaper.maxCandidates = votingPaper.maxCandidates
+												currentVotingPaper.zone = votingPaper.zone
+												currentVotingPaper.name = votingPaper.name
+												currentVotingPaper.groups = votingPaper.groups
+												currentVotingPaper.parties = votingPaper.parties
+											}
 										}
-									}
-								})
-								let toRemove = config.votingPapers.filter(value => -1 === msg.votingPapers.map(e => e.id).indexOf(value.id))
-								toRemove.forEach(item => removeTab(item, this))
-								const tabs = getTabs(this)
-								let index = this.state.items.map((e) => e.id).indexOf(this.state.activeItem.id)
-								if (index >= 0)
-									tabs[index].click()
+									})
+									let toRemove = config.votingPapers.filter(value => -1 === msg.votingPapers.map(e => e.id).indexOf(value.id))
+									toRemove.forEach(item => removeTab(item, this))
+									const tabs = getTabs(this)
+									let index = this.state.items.map((e) => e.id).indexOf(this.state.activeItem.id)
+									if (index >= 0)
+										tabs[index].click()
+								}
+								config.state = msg.state
+								this.setState({operation: 'websocket'})
 							}
-							if (msg.state !== config.state) {
-								config.state = msg.state
-								config.votingPapers = msg.votingPapers
-								this.setState({ items: [] })
-								createTabs(this)
-							} else
-								config.state = msg.state
-							this.setState({operation: 'websocket'})
 					 }} />
 		if (config && config.state === 'PREPARE') {
-			confirm = <ConfirmCreate ref='confirm' window={this}/>
-			modalVotingPaper = <ModalVotingPaper ref='modalVotingPaper' />
+			confirmComponent = <ConfirmCreate ref={this.confirm} window={this}/>
+			modalVotingPaperComponent = <ModalVotingPaper ref={this.modalVotingPaper} />
 			ruler = <Ruler ref='ruler' />
 		}
 		if (!config)
@@ -112,9 +112,9 @@ class App extends Component {
                     <Validator ref='validator' />
 					{ruler}
                     <TabMenu ref='tabMenu' className={this.state.visible ? '' : 'disabled'}  model={this.state.items} activeItem={this.state.activeItem} onTabChange={(e) => {
-                    	if (config.state === 'PREPARE' && e.originalEvent.target.className.startsWith('pi')) {
+                    	if (config.state === 'PREPARE' && e.originalEvent.target.className.startsWith('p-menuitem-icon')) {
 							let currentVotingPaper = getVotingPaperById(e.value)
-							this.refs.modalVotingPaper.setState({
+							this.modalVotingPaper.current.setState({
 								votingPaper: e,
 								app: this,
 								operation: 'update',
@@ -124,13 +124,13 @@ class App extends Component {
 								color: currentVotingPaper.color,
 								type: currentVotingPaper.type
 							})
-							this.refs.modalVotingPaper.open()
+							this.modalVotingPaper.current.open()
 						} else if (this.state.visible) {
                             if (e.value.label === this.state.confirmButtonLabel)
-                                this.refs.confirm.open()
+                                this.confirm.current.open()
                             else {
 								if (e.value.label === '+') {
-									this.refs.modalVotingPaper.setState({
+									this.modalVotingPaper.current.setState({
 										votingPaper: '',
 										app: this,
 										operation: 'insert',
@@ -140,7 +140,7 @@ class App extends Component {
 										color: '1976D2',
 										type: 'bigger'
 									})
-                                	this.refs.modalVotingPaper.open()
+                                	this.modalVotingPaper.current.open()
                              	} else 
                                 	this.setState({ activeItem: e.value })
 							}
@@ -148,8 +148,8 @@ class App extends Component {
                     }
                     } />
 
-					{modalVotingPaper}
-					{confirm}
+					{modalVotingPaperComponent}
+					{confirmComponent}
 
                     <p className='powered'>
                         <img alt='logo' className='logo' src={logo} />

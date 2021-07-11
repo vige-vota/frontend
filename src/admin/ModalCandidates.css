@@ -5,10 +5,12 @@
 .modal-candidates .admin-candidates .p-button {
 	height: 30px !important;
     width: 100px !important;
+    margin: 4px;
 }
 
 .modal-candidates .p-dialog-content .admin-candidates {
-    text-align: right;
+    text-align: center;
+    padding: 0.571rem;
 }
 
 .modal-candidates .p-inputtext {
@@ -21,16 +23,8 @@
     background-color: #007ad9 !important;
 }
 
-.modal-candidates .p-component.confirm:hover {
-    background-color: #0067B8 !important;
-}
-
 .modal-candidates .p-button-secondary.confirm {
-    background-color: #f4f4f4 !important;
-}
-
-.modal-candidates .p-button-secondary.confirm:hover {
-    background-color: #c8c8c8 !important;
+    background-color: #607D8B !important;
 }
 
 .modal-candidates .p-button.p-button-text-icon-left .p-button-text {
@@ -44,22 +38,10 @@
 	font-size: 14px !important;
 }
 
-.modal-candidates .p-button-icon-left {
-    left: 5px !important;
-}
-
 .modal-candidates .p-fileupload-choose {
     height: 32px !important;
     width: 150px !important;
 	background-color: #007ad9 !important;
-}
-
-.modal-candidates .p-button .p-button-text {
-    top: 0% !important;
-}
-
-.modal-candidates .p-button .pi {
-    top: 50% !important;
 }
 
 .modal-candidates .p-radiobutton {
@@ -97,6 +79,8 @@
     height: 32px;
     width: 150px;
     background-color: #007ad9;
+    right: 157px;
+    top: 32px;
 }
 
 .modal-candidates .p-fileupload .p-button.p-button-text-icon-left .p-button-text {
@@ -106,7 +90,8 @@
 
 .modal-candidates .p-fileupload .p-fileupload-files {
     position: absolute;
-    left: -12px;
+    left: 144px;
+    bottom: -127px;
 }
 
 .modal-candidates .p-fileupload .p-fileupload-content {
@@ -130,13 +115,20 @@
 }
 
 .modal-candidates .p-fileupload-row>div:nth-child(3) {
-    position: relative;
-	bottom: 376%;
+    position: relative;    
+    bottom: 200%;
+    right: 80%;
 }
 
 .modal-candidates .p-fileupload-row>div:nth-child(4) {
     position: relative;
 	bottom: 276%;
+}
+
+.modal-candidates .p-button:not(.p-button-secondary):not(a):not(.p-disabled):hover {
+    background: #116fbf !important;
+    color: #ffffff !important;
+    border-color: #116fbf !important;
 }
 
 .p-fileupload-files img {

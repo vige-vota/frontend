@@ -1,3 +1,4 @@
+import React from 'react'
 import { config } from './App'
 import ReactDOM from 'react-dom'
 import { FormattedMessage } from 'react-intl'
@@ -5,7 +6,7 @@ import UserService from './services/UserService'
 
 export const isValid = (votingPaper, msg) => {
  	if (msg.state === 'PREPARE') {
-    	return UserService.getRoles().includes('admin') || getValueByIdAntVotingPaper(parseInt(config.profile.attributes['block'][0]), votingPaper) !== ''
+    	return UserService.getRoles().includes('admin') || getValueByIdAntVotingPaper(parseInt(config.profile.attributes['block'][0], 10), votingPaper) !== ''
     } else {
     	return votingPaper.zone === -1 || config.profile.attributes['zones'].includes(votingPaper.zone.toString())
     }
@@ -120,7 +121,7 @@ export const createTabs = (appContainer) => {
             activeItem: activeItem
         })
         config.votingPapers.map((votingPaper) => {
-			if (config.state === 'PREPARE' && (UserService.getRoles().includes('admin') || parseInt(config.profile.attributes['block'][0]) === votingPaper.id))
+			if (config.state === 'PREPARE' && (UserService.getRoles().includes('admin') || parseInt(config.profile.attributes['block'][0], 10) === votingPaper.id))
             	return appContainer.state.items.push({ id: votingPaper.id, label: votingPaper.name, icon: 'pi pi-fw pi-briefcase' })
 			else
 				return appContainer.state.items.push({ id: votingPaper.id, label: votingPaper.name })

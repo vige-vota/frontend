@@ -82,13 +82,13 @@ export class ConfirmCreate extends Component {
                 <FormattedMessage
                     id='app.yes'
                     defaultMessage='Yes'>
-                    {(yes) => <Button label={yes} icon='pi pi-check' onClick={this.confirm} className='confirm' />}
+                    {(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={this.confirm} className='confirm' />}
                 </FormattedMessage>
 
                 <FormattedMessage
                     id='app.no'
                     defaultMessage='No'>
-                    {(no) => <Button label={no} icon='pi pi-times' onClick={this.onHide} className='p-button-secondary confirm' />}
+                    {(no) => <Button label={no[0]} icon='pi pi-times' onClick={this.onHide} className='p-button-secondary confirm' />}
                 </FormattedMessage>
             </div>
         )

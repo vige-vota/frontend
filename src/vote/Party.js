@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'primereact/button'
+import { ButtonComponent } from 'primereact/button'
 import { Candidates } from './Candidates'
 import { isGroup, getVotingPaper, add, remove } from '../Utilities'
 import classNames from 'classnames'
@@ -7,19 +7,25 @@ import { validate, selections } from './Validator'
 import { AdminButtons } from '../admin/AdminButtons'
 import x from '../images/x.png'
 import './Party.css'
+import ObjectUtils from 'primereact/components/utils/ObjectUtils';
 
 export const group = 'group'
 export const party = 'party'
 
-export class Party extends Button {
+export class Party extends ButtonComponent {
+
+    constructor() {
+        super()
+ 		this.adminButtons = React.createRef()
+    }
 
     putX(e) {
-		if ((!this.refs['admin-buttons'].refs.modalParty && 
-			 !this.refs['admin-buttons'].refs.modalInsertParty && 
-			 !this.refs['admin-buttons'].refs.modalCandidates) || 
-			(!this.refs['admin-buttons'].refs.modalParty.state.visible && 
-			 !this.refs['admin-buttons'].refs.modalInsertParty.state.visible && 
-			 !this.refs['admin-buttons'].refs.modalCandidates.state.visible)) {
+		if ((!this.adminButtons.current.modalParty.current &&
+			 !this.adminButtons.current.modalInsertParty.current &&
+			 !this.adminButtons.current.modalCandidates.current) || 
+			(!this.adminButtons.current.modalParty.current.state.visible && 
+			 !this.adminButtons.current.modalInsertParty.current.state.visible && 
+			 !this.adminButtons.current.modalCandidates.current.state.visible)) {
         	e.value = this.props.party
         	if(!e.target.classList.contains('excludeSelect') && validate(e)){
             	if (!e.value.selected)
@@ -64,7 +70,7 @@ export class Party extends Button {
     }
 
     renderLabel() {
-        if (this.props.votingPaper.props.config.maxCandidates === 0 || 
+        if (this.props.votingpaper.props.config.maxCandidates === 0 || 
         	(this.props.party.name && 
         	(!this.props.party.candidates || this.props.party.candidates.length === 0))) {
             const buttonLabel = this.props.party.name || 'p-btn'
@@ -95,24 +101,20 @@ export class Party extends Button {
         })
         let icon = this.renderIcon()
         let label = this.renderLabel()
+        let badge = this.renderBadge()
         let candidates = this.renderCandidates()
 
-        let buttonProps = Object.assign({}, this.props)
-        delete buttonProps.iconPos
-        delete buttonProps.icon
-        delete buttonProps.tooltip
-        delete buttonProps.tooltipOptions
-        delete buttonProps.party
-        delete buttonProps.votingPaper
+        let buttonProps = ObjectUtils.findDiffKeys(this.props, ButtonComponent.defaultProps);
 
         return (
             <div ref={(el) => this.element = el} {...buttonProps} className={className}>
-				<AdminButtons party={this.props.party} partyComponent={this} votingPaper={this.props.votingPaper} ref='admin-buttons'/>
+				<AdminButtons party={this.props.party} partyComponent={this} votingPaper={this.props.votingpaper} ref={this.adminButtons}/>
 				{this.props.iconPos === 'left' && icon}
                 {label}
                 {candidates}
                 {this.props.iconPos === 'right' && icon}
                 {this.props.children}
+                {badge}
             </div>
         )
     }

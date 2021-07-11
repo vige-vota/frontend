@@ -11,9 +11,7 @@ import {CandidateUpload} from './CandidateUpload'
 import {addImage, generateId} from '../Utilities'
 import {M, F} from '../vote/Validator'
 import { validateCandidate } from './Ruler'
-
-const candidateUpload = createRef('candidateUpload');
-	
+		
 export class ModalCandidates extends Component {
         
     constructor(data) {
@@ -28,6 +26,10 @@ export class ModalCandidates extends Component {
 			generateId: '',
 			opened: false
         }
+		this.candidateUpload = createRef()
+ 		this.candidatesDialog = createRef()
+ 		this.boxCandidates = createRef()
+ 		this.nameInputText = createRef()
         this.state.configurationHeader = <FormattedMessage
             id='app.configuration.headercandidates'
             defaultMessage='Manage candidates'
@@ -89,7 +91,7 @@ export class ModalCandidates extends Component {
     }
 
     imgTemplate(option) {
-		let candidate = this.state.candidates.filter(e => e.id === parseInt(option.value))[0]
+		let candidate = this.state.candidates.filter(e => e.id === parseInt(option.value, 10))[0]
 				
 		const image = candidate.image;
 		
@@ -108,23 +110,23 @@ export class ModalCandidates extends Component {
                 <FormattedMessage
                     id='app.confirm'
                     defaultMessage='Confirm'>
-                    {(yes) => <Button label={yes} icon='pi pi-check' onClick={this.confirm}
+                    {(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={this.confirm}
 					className='confirm' />}
                 </FormattedMessage>
 
 				<FormattedMessage
                     id='app.cancel'
                     defaultMessage='Cancel'>
-                    {(no) => <Button label={no} icon='pi pi-times' onClick={this.onHide}
+                    {(no) => <Button label={no[0]} icon='pi pi-times' onClick={this.onHide}
 					className='p-button-secondary confirm' />}
                 </FormattedMessage>
             </div>
         )
         return (
-            <Dialog ref='candidates-dialog' contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={this.state.configurationHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-candidates'>
+            <Dialog ref={this.candidatesDialog} contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={this.state.configurationHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-candidates'>
 				<div className='p-grid'>
     				<div className='p-col'>{this.state.namesurnameLabel}</div>
-    				<div className='p-col'><InputText ref={(input) => { this.name = input; }} 
+    				<div className='p-col'><InputText ref={this.nameInputText} 
 						 value={this.state.name} 
 						 onChange={(e) => {
 							this.setState({ name: e.target.value})
@@ -145,14 +147,14 @@ export class ModalCandidates extends Component {
 				</div>
 				<div className='p-grid'>
     				<div className='p-col'>
-						<FormattedMessage ref='upload' id='app.configuration.chooseimage'
-            					defaultMessage='Choose Image'>
-								{(chooseImage) => <CandidateUpload ref={candidateUpload} accept='image/*' maxFileSize={60000} 
+    					<FormattedMessage id='app.configuration.chooseimage'
+            				defaultMessage='Choose Image'>
+							{(chooseImage) => <CandidateUpload ref={this.candidateUpload} accept='image/*' maxFileSize={60000} 
 													onSelect={this.onSelect}
-													chooseLabel={chooseImage} 
+													chooseLabel={chooseImage[0]} 
 													party={this} candidate={selectedCandidate} 
 													previewWidth={150} />}
-						</FormattedMessage>
+		   				</FormattedMessage>
 					</div>
 				</div>
 				<div className='p-grid'>
@@ -161,7 +163,7 @@ export class ModalCandidates extends Component {
                 		<FormattedMessage
                     		id='app.insert'
                     		defaultMessage='Insert'>
-                    		{(yes) => <Button label={yes} icon='pi pi-check' onClick={() => {
+                    		{(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={() => {
 								let value = {
 									name: this.state.name,
 									sex: this.state.sex,
@@ -178,7 +180,7 @@ export class ModalCandidates extends Component {
 									value.id = generatedId
 									value.value = generatedId
 									this.state.candidates.push(value)
-									this.refs.boxCandidates.forceUpdate()}
+									this.boxCandidates.forceUpdate()}
 								}
 							}
 							className='confirm' />}
@@ -186,7 +188,7 @@ export class ModalCandidates extends Component {
                 		<FormattedMessage
                     		id='app.update'
                     		defaultMessage='Update'>
-                    		{(yes) => <Button label={yes} icon='pi pi-check' onClick={() => {
+                    		{(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={() => {
 								let value = {
 									id: this.state.id,
 									name: this.state.name,
@@ -204,7 +206,7 @@ export class ModalCandidates extends Component {
 											f.sex = this.state.sex
 										}
 									})
-									this.refs.boxCandidates.forceUpdate()}
+									this.boxCandidates.current.forceUpdate()}
 								}
 							}
 							className='confirm' />}
@@ -212,7 +214,7 @@ export class ModalCandidates extends Component {
                 		<FormattedMessage
                     		id='app.delete'
                     		defaultMessage='Delete'>
-                    		{(yes) => <Button label={yes} icon='pi pi-check' onClick={() => {
+                    		{(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={() => {
 								const index = this.state.candidates.map((e) => e.id).indexOf(this.state.id)
 								this.state.candidates.splice(index, 1)
 								this.setState({
@@ -221,8 +223,8 @@ export class ModalCandidates extends Component {
 									image: '',
 									sex: ''
 								})
-								this.refs.upload.refs.candidateUpload.state.files.pop()
-								this.refs['candidates-dialog'].forceUpdate()}
+								this.candidateUpload.current.state.files.pop()
+								this.candidatesDialog.current.forceUpdate()}
 							}
 							className='confirm' />}
                 		</FormattedMessage>
@@ -230,8 +232,8 @@ export class ModalCandidates extends Component {
 				</div>
 				<div className='p-grid'>
 					<div className='p-col'>
-							<ListBox ref='boxCandidates' value={this.state.id} filter={true} options={this.state.candidates} onChange={(e) => {
-								let selectedCandidate = this.state.candidates.filter(f => f.id === parseInt(e.value))[0]
+							<ListBox ref={this.boxCandidates} value={this.state.id} filter={true} options={this.state.candidates} onChange={(e) => {
+								let selectedCandidate = this.state.candidates.filter(f => f.id === parseInt(e.value, 10))[0]
 								if (e.value) {
 									this.setState({id: e.value, 
 												   name: selectedCandidate.name, 
@@ -241,7 +243,7 @@ export class ModalCandidates extends Component {
 								} else {
 									this.setState({id: '', name: '', sex: '', image: '', opened: true})
 								}
-							}} itemTemplate={this.imgTemplate} style={{width: '30em'}} listStyle={{maxHeight: '250px'}} />
+							}} itemTemplate={this.imgTemplate} style={{width: '21em'}} listStyle={{maxHeight: '250px'}} />
 					</div>
 				</div>
             </Dialog>)

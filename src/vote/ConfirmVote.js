@@ -34,6 +34,7 @@ export class ConfirmVote extends Component {
         this.errors = this.errors.bind(this)
         this.confirm = this.confirm.bind(this)
         this.onHide = this.onHide.bind(this)
+        this.show = this.show.bind(this)
     }
 
     open() {
@@ -104,15 +105,18 @@ export class ConfirmVote extends Component {
         this.setState({ visible: false })
     }
 
-    componentDidUpdate() {
-        let elements = ReactDOM.findDOMNode(this).getElementsByClassName('p-rowgroup-header')
-    	config.votingPapers.forEach((votingPaper) => {
-			for (let i=0; i < elements.length; i++)
-				if (elements[i] && elements[i].innerHTML.indexOf('id="'+votingPaper.id) >= 0) {
-					elements[i].style.setProperty('background-color', '#'+votingPaper.color)
-					elements[i].style.setProperty('border-color', '#'+votingPaper.color)
-				}
-		})
+    show() {
+    	let node = ReactDOM.findDOMNode(this)
+    	if (node) {
+        	let elements = node.getElementsByClassName('p-rowgroup-header')
+    		config.votingPapers.forEach((votingPaper) => {
+				for (let i=0; i < elements.length; i++)
+					if (elements[i] && elements[i].innerHTML.indexOf('id="'+votingPaper.id) >= 0) {
+						elements[i].style.setProperty('background-color', '#'+votingPaper.color)
+						elements[i].style.setProperty('border-color', '#'+votingPaper.color)
+					}
+			})
+		}
     }
 
     headerTemplate(data) {
@@ -122,7 +126,7 @@ export class ConfirmVote extends Component {
     footerTemplate(data) {
         return ([<td key={data.votingPaper.name + '_footerTotalLabel'} colSpan='2'></td>
         ]
-        );
+        )
     }
 
     sortByElement(a, b, order = ASC) {
@@ -145,24 +149,24 @@ export class ConfirmVote extends Component {
                 <FormattedMessage
                     id='app.yes'
                     defaultMessage='Yes'>
-                    {(yes) => <Button label={yes} icon='pi pi-check' onClick={this.confirm} className='confirm' />}
+                    {(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={this.confirm} className='confirm' />}
                 </FormattedMessage>
 
                 <FormattedMessage
                     id='app.no'
                     defaultMessage='No'>
-                    {(no) => <Button label={no} icon='pi pi-times' onClick={this.onHide} className='p-button-secondary confirm' />}
+                    {(no) => <Button label={no[0]} icon='pi pi-times' onClick={this.onHide} className='p-button-secondary confirm' />}
                 </FormattedMessage>
             </div>
         )
 		return (
-            <Dialog contentStyle={{'maxHeight': '500px'}} header={this.state.confirmHeader} visible={this.state.visible} footer={footer} onHide={this.onHide}>
+            <Dialog contentStyle={{'maxHeight': '500px'}} header={this.state.confirmHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} onShow={this.show}>
                 {this.state.confirmBody}<br/><br/>
                 <FormattedMessage
                     id='app.confirm.norecordsfound'
                     defaultMessage='Empty selection'>
                         {(noRecordsFound) => <DataTable value={this.sort(selections)} rowGroupMode='subheader' sortField='votingPaper' sortOrder={1} groupField='votingPaper'
-                            rowGroupHeaderTemplate={this.headerTemplate} rowGroupFooterTemplate={this.footerTemplate} emptyMessage={noRecordsFound}>
+                            rowGroupHeaderTemplate={this.headerTemplate} rowGroupFooterTemplate={this.footerTemplate} emptyMessage={noRecordsFound[0]}>
                                 <Column field='type' body={(e) =>
 
                                 (<b><FormattedMessage

@@ -5,7 +5,6 @@ body .admin-buttons {
 body .content-party .p-button.admin-button {
 	width: 30px;
 	height: 30px;
-	left: 31%;
 	border-style: none;
 }
 
@@ -23,14 +22,6 @@ body .p-button.voting-paper-admin .pi {
     top: 50% !important;
 }
 
-body .p-button.voting-paper-admin:hover {
-	border-color: transparent !important;
-}
-
-body .content-party .p-button.admin-button .pi {
-	top: 50%;
-}
-
 body .admin-buttons .p-button {
     min-width: 2px !important;
 }
@@ -41,4 +32,8 @@ body .admin-buttons .p-button-icon-only .p-button-icon-left {
 
 body .admin-buttons .p-button-text {
     left: 0% !important;
+}
+
+body .p-button-label {
+    font-size: 12px;
 }

@@ -35,3 +35,12 @@ body .little .first-row .button-selected {
     bottom: 1%;
     position: absolute;
 }
+
+body .little .content-party .first-row .p-button.admin-button {
+	left: 45%;
+    bottom: 1%;
+}
+
+body .little .content-party .p-button-text-icon-left .p-button.admin-button {
+	left: 7em;
+}

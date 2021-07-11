@@ -12,7 +12,7 @@ body .bigger-partygroup .p-button.p-button-text-icon-left .p-button-text {
 body .bigger-partygroup .p-button.p-button-text-icon-left .p-button-subtext {
     left: 23%;
     top: 75%;
-    right: 12%;
+    right: 16%;
 }
 
 body .bigger-partygroup .content-party {
@@ -52,4 +52,14 @@ body .bigger-partygroup .candidates {
     position: absolute;
     bottom: 21%;
     left: 35%;
+}
+
+body .bigger-partygroup .content-party .first-row .p-button.admin-button {
+	right: 10%;
+	top: 1em;
+}
+
+body .bigger-partygroup .content-party .second-row .p-button.admin-button {
+	left: 6em;
+	bottom: 50px;
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Party } from './Party'
-import 'primereact/resources/themes/nova-light/theme.css'
+import 'primereact/resources/themes/nova/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 import './VotingPaper.css'
@@ -32,11 +32,11 @@ export class VotingPaper extends Component {
         let buttonProps = Object.assign({})
         buttonProps.key = 'party-' + group.id + '-' + party.id
         buttonProps.icon = 'pi'
-        buttonProps.className = 'p-button-secondary'
+        buttonProps.className = 'p-button-secondary second-row'
         buttonProps.party = party
         buttonProps.ref = buttonProps.key
         buttonProps.id = buttonProps.key
-		buttonProps.votingPaper = this
+		buttonProps.votingpaper = this
         return (
             <Party {...buttonProps} onClick={(e) => {
                 let button = this.refs[buttonProps.ref]
@@ -63,7 +63,7 @@ export class VotingPaper extends Component {
             buttonProps.style = gridRow
             buttonProps.ref = buttonProps.key
             buttonProps.id = buttonProps.key
-			buttonProps.votingPaper = this
+			buttonProps.votingpaper = this
             return (
                 <Party {...buttonProps} onClick={(e) => {
                     let button = this.refs[buttonProps.ref]
