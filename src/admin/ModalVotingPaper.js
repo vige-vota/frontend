@@ -12,6 +12,8 @@ import 'primeflex/primeflex.css'
 import { validateVotingPaper, validateDisjointed } from './Ruler'
 import { config } from '../App'
 import './ModalVotingPaper.css'
+import { TreeSelect } from 'primereact/treeselect'
+import { ZoneService } from '../services/ZoneService'
 
 const types = [
     {label: 'Bigger', value: 'bigger'},
@@ -32,7 +34,8 @@ export class ModalVotingPaper extends Component {
 			maxCandidates: 0,
 			zone: -1,
 			color: '',
-			type: ''
+			type: '',
+			zones: null
         }
  		this.zone = React.createRef()
         this.state.configurationHeader = <FormattedMessage
@@ -79,7 +82,14 @@ export class ModalVotingPaper extends Component {
         this.confirm = this.confirm.bind(this)
         this.delete = this.delete.bind(this)
         this.onHide = this.onHide.bind(this)
+        this.zoneService = new ZoneService();
 
+    }
+
+    componentDidMount() {
+        this.zoneService.getTreeZones().then(data => {
+        	this.setState({ zones: this.zoneService.convert(data.data.zones) })
+        })
     }
 
 	componentDidUpdate() {
@@ -191,10 +201,14 @@ export class ModalVotingPaper extends Component {
 		const zoneField = (
 				<div className={zoneClass} ref={this.zone}>
     				<div className='p-col'>{this.state.zoneLabel}</div>
-    				<div className='p-col'><InputNumber showButtons onValueChange={(e) => this.setState(
+    				<div className='p-col'>
+							<TreeSelect value={this.state.zone} 
+									options={this.state.zones} onChange={(e) => this.setState(
 						{
 							zone: Number.isInteger(e.value) ? parseInt(e.value, 10) : 0
-						}) } value={this.state.zone} min={-1}></InputNumber></div>
+						})}>
+							</TreeSelect>
+					</div>
 				</div>
 		)
         const footer = (
