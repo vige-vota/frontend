@@ -38,6 +38,7 @@ export class ModalVotingPaper extends Component {
 			zones: null
         }
  		this.zone = React.createRef()
+ 		this.zoneSelect = React.createRef()
         this.state.configurationHeader = <FormattedMessage
             id='app.configuration.header'
             defaultMessage='Configure your Voting Paper'
@@ -202,12 +203,16 @@ export class ModalVotingPaper extends Component {
 				<div className={zoneClass} ref={this.zone}>
     				<div className='p-col'>{this.state.zoneLabel}</div>
     				<div className='p-col'>
-							<TreeSelect value={this.state.zone} 
+    				<FormattedMessage
+            				id='app.configuration.choose.zone'
+            				defaultMessage='Choose zone'>
+							{(chooseZone) => <TreeSelect ref={this.zoneSelect} value={this.state.zone} 
 									options={this.state.zones} onChange={(e) => this.setState(
 						{
-							zone: Number.isInteger(e.value) ? parseInt(e.value, 10) : 0
-						})}>
-							</TreeSelect>
+							zone: e.value
+						})} filter placeholder={chooseZone[0]}>
+							</TreeSelect>}
+							</FormattedMessage>
 					</div>
 				</div>
 		)

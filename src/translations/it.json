@@ -29,6 +29,7 @@
 	"app.configuration.disjointed": "Voto disgiunto",
 	"app.configuration.maxcandidates": "Numero di candidati",
 	"app.configuration.zone": "Zona",
+	"app.configuration.choose.zone": "Scegli la zona",
 	"app.configuration.color": "Colore della scheda",
 	"app.configuration.templateslabel": "Tipo di scheda",
 	"app.configuration.insert.header": "Aggiungi la scheda",

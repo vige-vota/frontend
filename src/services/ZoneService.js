@@ -12,7 +12,7 @@ export class ZoneService {
     					key: e.id,
     					data: e.id,
     					label: e.name,
-    					icon: 'pi pi-fw pi-inbox',
+    					icon: 'pi pi-fw pi-cog',
     					children: this.convert(e.zones)
     				}
     	})
