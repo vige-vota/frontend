@@ -73,6 +73,57 @@ export const getValueByIdAntVotingPaper = (id, votingPaper) => {
 	return valuer
 }
 
+export const updateSelections = (votingPaper, currentVotingPaper) => {
+	let groups = votingPaper.groups
+	let currentGroups = currentVotingPaper.groups
+	if (groups && currentGroups)
+		groups.forEach((group) => {
+			currentGroups.forEach((currentGroup) => {
+				if (group.id === currentGroup.id) {
+					group.selected = currentGroup.selected
+					let parties = group.parties
+					let currentParties = currentGroup.parties
+					if (parties && currentParties)
+						parties.forEach((party) => {
+							currentParties.forEach((currentParty) => {
+								if (party.id === currentParty.id) {
+									party.selected = currentParty.selected
+									let candidates = party.candidates
+									let currentCandidates = party.currentCandidates
+									if (candidates && currentCandidates)
+										candidates.forEach((candidate) => {
+											currentCandidates.forEach((currentCandidate) => {
+												if (candidate.id === currentCandidate.id)
+													candidate.selected = currentCandidate.selected
+											})
+										})
+								}
+							})
+						})
+				}
+			})
+		})
+		let parties = votingPaper.parties
+		let currentParties = currentVotingPaper.parties
+		if (parties && currentParties)
+			parties.forEach((party) => {
+				currentParties.forEach((currentParty) => {
+					if (party.id === currentParty.id) {
+							party.selected = currentParty.selected
+							let candidates = party.candidates
+							let currentCandidates = party.currentCandidates
+							if (candidates && currentCandidates)
+								candidates.forEach((candidate) => {
+									currentCandidates.forEach((currentCandidate) => {
+										if (candidate.id === currentCandidate.id)
+											candidate.selected = currentCandidate.selected
+									})
+								})
+					}
+				})
+			})
+}
+
 export const isParty = (value) => {
     let parent = getParent(value)
     return parent != null && parent.parties

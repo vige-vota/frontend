@@ -11,7 +11,7 @@ import { Ruler } from './admin/Ruler'
 import background from './images/background.png'
 import logo from './images/logo.ico'
 import {Panel} from 'primereact/panel';
-import {getTabs, createTabs, colorTabs, removeTab, getVotingPaperById, addToList, isValid} from './Utilities'
+import {getTabs, createTabs, colorTabs, removeTab, getVotingPaperById, addToList, isValid, updateSelections} from './Utilities'
 import SockJsClient from './SockJsClient'
 import UserService from './services/UserService'
 import {ProgressSpinner} from 'primereact/progressspinner'
@@ -87,6 +87,7 @@ class App extends Component {
 												currentVotingPaper.maxCandidates = votingPaper.maxCandidates
 												currentVotingPaper.zone = votingPaper.zone
 												currentVotingPaper.name = votingPaper.name
+												updateSelections(votingPaper, currentVotingPaper)
 												currentVotingPaper.groups = votingPaper.groups
 												currentVotingPaper.parties = votingPaper.parties
 											}
