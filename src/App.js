@@ -63,6 +63,11 @@ class App extends Component {
 							if (msg.state !== config.state)
 								window.location.reload()
 							else {
+								UserService.getProfile().then(function(profile) {
+        							config.profile = profile
+								}).catch(function() {
+        							console.log('Failed to load user profile');
+    							});
 								msg.votingPapers = msg.votingPapers.filter(votingPaper => isValid(votingPaper, msg))
 								if (msg.state === config.state) {
 									msg.votingPapers.forEach((votingPaper, i) => {
