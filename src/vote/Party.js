@@ -7,15 +7,15 @@ import { validate, selections } from './Validator'
 import { AdminButtons } from '../admin/AdminButtons'
 import x from '../images/x.png'
 import './Party.css'
-import ObjectUtils from 'primereact/components/utils/ObjectUtils';
+import { ObjectUtils } from 'primereact/utils';
 
 export const group = 'group'
 export const party = 'party'
 
 export class Party extends ButtonComponent {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
  		this.adminButtons = React.createRef()
     }
 

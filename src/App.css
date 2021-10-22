@@ -75,8 +75,8 @@ body .p-button-secondary.confirm:hover {
 }
 
 .p-button.p-button-secondary:not(a):not(.p-disabled):hover, .p-buttonset.p-button-secondary > .p-button:not(a):not(.p-disabled):hover, .p-splitbutton.p-button-secondary > .p-button:not(a):not(.p-disabled):hover, .p-fileupload-choose.p-button-secondary:not(a):not(.p-disabled):hover {
-	background-color: white;
-	color: black;
+	background-color: white !important;
+	color: black !important;
 }
 
 .p-button-text-only {

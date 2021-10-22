@@ -256,7 +256,7 @@ export class ModalVotingPaper extends Component {
 								this.confirm()
 						}} />
         return (
-            <Dialog contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-voting-paper'>
+            <Dialog contentStyle={{'maxHeight': '620px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-voting-paper'>
 				<div className='p-grid'>
     				<div className='p-col'>{this.state.name}</div>
     				<div className='p-col'>{inputText}</div>

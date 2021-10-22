@@ -10,7 +10,10 @@
 
 .modal-candidates .p-dialog-content .admin-candidates {
     text-align: center;
-    padding: 0.571rem;
+}
+
+.modal-candidates .p-grid {
+	padding-bottom: 10px;
 }
 
 .modal-candidates .p-inputtext {
@@ -100,10 +103,6 @@
 
 .modal-candidates .p-fileupload .p-fileupload-content .p-progressbar {
     width: 75%;
-}
-
-.modal-candidates .p-col {
-    width: 0%;
 }
 
 .modal-candidates .p-fileupload-row {

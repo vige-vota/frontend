@@ -3,10 +3,8 @@
 	overflow: hidden;
 }
 
-.modal-party .p-inputtext {
-	width: 100%;
-	max-height: 322px;
-    max-width: 335px;
+.modal-party .p-grid {
+	padding-bottom: 10px;
 }
 
 .modal-party .p-dialog-footer .p-component.confirm {

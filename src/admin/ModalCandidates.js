@@ -123,7 +123,7 @@ export class ModalCandidates extends Component {
             </div>
         )
         return (
-            <Dialog ref={this.candidatesDialog} contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={this.state.configurationHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-candidates'>
+            <Dialog ref={this.candidatesDialog} contentStyle={{'maxHeight': '700px', 'width':'360px'}} header={this.state.configurationHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-candidates'>
 				<div className='p-grid'>
     				<div className='p-col'>{this.state.namesurnameLabel}</div>
     				<div className='p-col'><InputText ref={this.nameInputText} 
@@ -158,7 +158,7 @@ export class ModalCandidates extends Component {
 					</div>
 				</div>
 				<div className='p-grid'>
-					<hr style={{ width:'110%', background: '#fff' }} />
+					<hr style={{ background: '#fff' }} />
     				<div className='p-col admin-candidates'>
                 		<FormattedMessage
                     		id='app.insert'
