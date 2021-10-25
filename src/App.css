@@ -41,21 +41,6 @@ body .p-tabmenu .p-tabmenu-nav {
     padding-right: 28%;
 }
 
-body .powered {
-    position: absolute;
-    top: 0%;
-    right: 1%;
-    font-family: "Open Sans", "Helvetica Neue", sans-serif;
-    font-size: 14px;
-}
-
-body .logo {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    right: 100%;
-}
-
 body .p-dialog-content .p-datatable-wrapper .p-datatable-thead {
     display: none;
 }

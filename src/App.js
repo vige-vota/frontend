@@ -9,7 +9,6 @@ import './App.css'
 import { Validator } from './vote/Validator'
 import { Ruler } from './admin/Ruler'
 import background from './images/background.png'
-import logo from './images/logo.ico'
 import {Panel} from 'primereact/panel';
 import {getTabs, createTabs, colorTabs, removeTab, getVotingPaperById, addToList, isValid, updateSelections} from './Utilities'
 import SockJsClient from './SockJsClient'
@@ -156,15 +155,6 @@ class App extends Component {
 
 					{modalVotingPaperComponent}
 					{confirmComponent}
-
-                    <p className='powered'>
-                        <img alt='logo' className='logo' src={logo} />
-                        <FormattedMessage
-                            id='app.powered'
-                            defaultMessage='Powered by '
-                        />
-                        <a href='http://www.vige.it'>Vige</a>
-                    </p>
                 </div>
                 {config && config.votingPapers.map((votingPaper) => {
                         let confirmedHeader =
