@@ -206,11 +206,14 @@ export class ModalVotingPaper extends Component {
     				<FormattedMessage
             				id='app.configuration.choose.zone'
             				defaultMessage='Choose zone'>
-							{(chooseZone) => <TreeSelect ref={this.zoneSelect} value={this.state.zone} 
-									options={this.state.zones} onChange={(e) => this.setState(
-						{
-							zone: e.value
-						})} filter placeholder={chooseZone[0]}>
+							{(chooseZone) => <TreeSelect ref={this.zoneSelect} value={this.state.zone}
+									options={this.state.zones} onChange={(e) => {
+										this.setState(
+										{
+											zone: e.value
+										})
+									}
+						} filter placeholder={chooseZone[0]}>
 							</TreeSelect>}
 							</FormattedMessage>
 					</div>
