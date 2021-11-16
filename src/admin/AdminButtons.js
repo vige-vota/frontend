@@ -4,7 +4,7 @@ import './AdminButtons.css'
 import { config } from '../App'
 import { ModalParty } from './ModalParty'
 import { ModalCandidates } from './ModalCandidates'
-import { isGroup, hasIdInTheTree } from '../Utilities'
+import { isGroup, hasIdInTheTree, hasIdUnderTheTree } from '../Utilities'
 import UserService from '../services/UserService'
 
 export class AdminButtons extends Component {
@@ -26,8 +26,12 @@ export class AdminButtons extends Component {
 			let modalInsertButton = ''
 			let modalUpdateButton = ''
 			let modalCandidatesButton = ''
-			if (UserService.getRoles().includes('admin') || hasIdInTheTree(this.props.party, parseInt(config.profile.attributes['block'][0], 10))) {
-				const thisIsGroup = isGroup(this.props.party)
+			let isAdmin = UserService.getRoles().includes('admin')
+			let block = parseInt(config.profile.attributes['block'][0], 10)
+			let isIdInTheTree = isAdmin || hasIdInTheTree(this.props.party, block)
+			let isIdUnderTheTree = isAdmin || hasIdUnderTheTree(this.props.party, block)
+			const thisIsGroup = isGroup(this.props.party)
+			if (isIdInTheTree) {
 				if (thisIsGroup || !this.props.party.name) {
 					let styleButton = ''
 					if (!this.props.party.name)
@@ -58,19 +62,19 @@ export class AdminButtons extends Component {
                     			this.modalParty.current.open()
 							}
                     	}/>
-						if (!thisIsGroup && this.props.party.votingPaper.maxCandidates 
-							&& this.props.party.votingPaper.maxCandidates > 0)
-            				modalCandidatesButton = <Button icon='pi pi-users' className='admin-button' style={style} onClick={(e) => {
-									e.stopPropagation()
-									this.modalCandidates.current.setState({
-											operation: 'update',
-											opened: true
-										})
-                    				this.modalCandidates.current.open()
-								}
-                    		}/>
 				}
 			}
+			if ((isIdInTheTree || isIdUnderTheTree) && this.props.party.name && !thisIsGroup && this.props.party.votingPaper.maxCandidates 
+							&& this.props.party.votingPaper.maxCandidates > 0)
+            			modalCandidatesButton = <Button icon='pi pi-users' className='admin-button' style={style} onClick={(e) => {
+								e.stopPropagation()
+								this.modalCandidates.current.setState({
+										operation: 'update',
+										opened: true
+									})
+                    			this.modalCandidates.current.open()
+							}
+                    	}/>
         	return (
 				<div className='admin-buttons'>
 					<ModalParty ref={this.modalParty} party={this.props.party} votingPaper={this.props.votingPaper} />

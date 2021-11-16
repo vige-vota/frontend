@@ -8,9 +8,11 @@ import {ListBox} from 'primereact/listbox'
 import 'primeflex/primeflex.css'
 import './ModalCandidates.css'
 import {CandidateUpload} from './CandidateUpload'
-import {addImage, generateId} from '../Utilities'
+import {addImage, generateId, hasIdInTheTree, getValueById} from '../Utilities'
 import {M, F} from '../vote/Validator'
 import { validateCandidate } from './Ruler'
+import { config } from '../App'
+import UserService from '../services/UserService'
 		
 export class ModalCandidates extends Component {
         
@@ -72,7 +74,10 @@ export class ModalCandidates extends Component {
 					sex: e.sex
 				})
 			})
-		this.setState({ id: '', sex: '', image: '', name: '', candidates: candidates, visible: true })
+		let isAdmin = UserService.getRoles().includes('admin')
+		let block = parseInt(config.profile.attributes['block'][0], 10)
+		let partyEnabled = isAdmin || hasIdInTheTree(getValueById(party.id), block)
+		this.setState({ id: '', sex: '', image: '', name: '', candidates: candidates, visible: true, partyEnabled: partyEnabled, isAdmin: isAdmin, block: block })
     }
 
     confirm() {
@@ -122,12 +127,25 @@ export class ModalCandidates extends Component {
                 </FormattedMessage>
             </div>
         )
+		let isIdInTheTree = this.state.isAdmin || hasIdInTheTree(getValueById(this.state.id), this.state.block)
+        let candidateUpload = <div className='p-grid'>
+    				<div className='p-col'>
+    					<FormattedMessage id='app.configuration.chooseimage'
+            				defaultMessage='Choose Image'>
+							{(chooseImage) => <CandidateUpload ref={this.candidateUpload} accept='image/*' maxFileSize={60000} 
+													onSelect={this.onSelect}
+													chooseLabel={chooseImage[0]} 
+													party={this} candidate={selectedCandidate} 
+													previewWidth={150} disabled={!isIdInTheTree} />}
+		   				</FormattedMessage>
+					</div>
+				</div>
         return (
             <Dialog ref={this.candidatesDialog} contentStyle={{'maxHeight': '700px', 'width':'360px'}} header={this.state.configurationHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-candidates'>
 				<div className='p-grid'>
     				<div className='p-col'>{this.state.namesurnameLabel}</div>
     				<div className='p-col'><InputText ref={this.nameInputText} 
-						 value={this.state.name} 
+						 value={this.state.name} disabled={!isIdInTheTree}
 						 onChange={(e) => {
 							this.setState({ name: e.target.value})
 						 }} /></div>
@@ -138,32 +156,21 @@ export class ModalCandidates extends Component {
 						{M}
 						<RadioButton value={M} name='sex' 
 							onChange={(e) => this.setState({ sex: e.value })} 
-							checked={this.state.sex === M} />
+							checked={this.state.sex === M} disabled={!isIdInTheTree} />
 						{F}
 						<RadioButton value={F} name='sex' 
 							onChange={(e) => this.setState({ sex: e.value })} 
-							checked={this.state.sex === F} />
+							checked={this.state.sex === F} disabled={!isIdInTheTree} />
 					</div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>
-    					<FormattedMessage id='app.configuration.chooseimage'
-            				defaultMessage='Choose Image'>
-							{(chooseImage) => <CandidateUpload ref={this.candidateUpload} accept='image/*' maxFileSize={60000} 
-													onSelect={this.onSelect}
-													chooseLabel={chooseImage[0]} 
-													party={this} candidate={selectedCandidate} 
-													previewWidth={150} />}
-		   				</FormattedMessage>
-					</div>
-				</div>
+				{candidateUpload}
 				<div className='p-grid'>
 					<hr style={{ background: '#fff' }} />
     				<div className='p-col admin-candidates'>
-                		<FormattedMessage
+    					<FormattedMessage
                     		id='app.insert'
                     		defaultMessage='Insert'>
-                    		{(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={() => {
+                    		{(yes) => <Button disabled={!this.state.partyEnabled} label={yes[0]} icon='pi pi-check' onClick={() => {
 								let value = {
 									name: this.state.name,
 									sex: this.state.sex,
@@ -188,7 +195,7 @@ export class ModalCandidates extends Component {
                 		<FormattedMessage
                     		id='app.update'
                     		defaultMessage='Update'>
-                    		{(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={() => {
+                    		{(yes) => <Button disabled={!isIdInTheTree} label={yes[0]} icon='pi pi-check' onClick={() => {
 								let value = {
 									id: this.state.id,
 									name: this.state.name,
@@ -214,7 +221,7 @@ export class ModalCandidates extends Component {
                 		<FormattedMessage
                     		id='app.delete'
                     		defaultMessage='Delete'>
-                    		{(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={() => {
+                    		{(yes) => <Button disabled={!this.state.partyEnabled} label={yes[0]} icon='pi pi-check' onClick={() => {
 								const index = this.state.candidates.map((e) => e.id).indexOf(this.state.id)
 								this.state.candidates.splice(index, 1)
 								this.setState({

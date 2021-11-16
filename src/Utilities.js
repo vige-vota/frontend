@@ -21,6 +21,24 @@ export const hasIdInTheTree = (value, id) => {
     return false
 }
     
+export const hasIdUnderTheTree = (value, id) => {
+    if (value.id === id)
+    	return true
+    let groups = value.groups
+    let parties = value.parties
+    let candidates = value.candidates
+    if (groups)
+    	for (let i = 0; i < groups.length; i++ )
+        	return hasIdUnderTheTree(groups[i], id)
+    else if (parties)
+    	for (let j = 0; j < parties.length; j++ )
+        	return hasIdUnderTheTree(parties[j], id)
+    else if (candidates)
+    	for (let x = 0; x < candidates.length; x++ )
+        	return hasIdUnderTheTree(candidates[x], id)
+    return false
+}
+    
 export const getVotingPaper = (value) => {
     let parent = getParent(value)
     if (parent != null)
