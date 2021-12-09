@@ -123,7 +123,7 @@ export class ModalVotingPaper extends Component {
 						votingPaper.disjointed = this.state.disjointed
 						votingPaper.maxCandidates = this.state.maxCandidates
 						if (this.state.type === 'little-nogroup' || this.state.type === 'little')
-							votingPaper.zone = -1
+							votingPaper.zone = null
 						else
 							votingPaper.zone = this.state.zone
 						votingPaper.color = this.state.color
