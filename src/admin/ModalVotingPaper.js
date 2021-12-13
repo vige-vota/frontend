@@ -32,7 +32,6 @@ export class ModalVotingPaper extends Component {
 			operation: '',
 			disjointed: false,
 			maxCandidates: 0,
-			zone: -1,
 			color: '',
 			type: '',
 			zones: null
@@ -147,7 +146,7 @@ export class ModalVotingPaper extends Component {
 					groupsAr = []
 				}
 				if (this.state.type === 'little-nogroup' || this.state.type === 'little')
-					zoneForPapers = -1
+					zoneForPapers = null
 				config.votingPapers.push(
 					{ id: generatedId, 
 					  name: this.state.votingPaper.value.label, 

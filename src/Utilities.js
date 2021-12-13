@@ -8,7 +8,7 @@ export const isValid = (votingPaper, msg) => {
  	if (msg.state === 'PREPARE') {
     	return UserService.getRoles().includes('admin') || getValueByIdAntVotingPaper(parseInt(config.profile.attributes['block'][0], 10), votingPaper) !== ''
     } else {
-    	return votingPaper.zone === -1 || config.profile.attributes['zones'].includes(votingPaper.zone.toString())
+    	return !votingPaper.zone || config.profile.attributes['zones'].includes(votingPaper.zone.toString())
     }
 }
     
