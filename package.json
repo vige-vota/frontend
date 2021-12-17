@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "1.0.0-SNAPSHOT",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "axios": "^0.21.1",
