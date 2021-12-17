@@ -7,9 +7,9 @@ npm install
 npm start
 ```
 
-And connect to http://localhost:3000
+And connect to [http://localhost:3000](http://localhost:3000)
 
-You would update the online application in http://vota-frontend.vige.it url. Simply digit in your frontend folder the command:
+You would update the online application in [http://vota-frontend.vige.it](http://vota-frontend.vige.it) url. Simply digit in your frontend folder the command:
 ```
 npm run deploy
 ```
@@ -43,7 +43,7 @@ $IP_ADDRESS  vota-voting.vige.it
 
 where in $IP_ADDRESS you must choose the ip address where is located the server
 
-Now you can connect in the application going to: open https://localhost
+Now you can connect in the application going to: open [https://localhost](https://localhost)
 
 ## Eclipse
 
@@ -56,4 +56,4 @@ nodeclipse -p
 ## Online application
 
 You can see the updated online application simply connecting to:
-Then open http://vota-frontend.vige.it
+Then open [http://vota-frontend.vige.it](http://vota-frontend.vige.it)
