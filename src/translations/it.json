@@ -25,6 +25,8 @@
 	"app.configuration.gender": "Sesso",
 	"app.configuration.title": "Titolo",
 	"app.configuration.chooseimage": "Scegli l'Immagine",
+	"app.configuration.startingdate": "Data d'inizio",
+	"app.configuration.endingdate": "Data di fine",
 	"app.configuration.disjointed": "Voto disgiunto",
 	"app.configuration.maxcandidates": "Numero di candidati",
 	"app.configuration.zone": "Zona",

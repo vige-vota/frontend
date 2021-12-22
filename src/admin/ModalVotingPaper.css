@@ -15,3 +15,9 @@
 .modal-voting-paper .p-grid {
 	padding-bottom: 10px;
 }
+
+.modal-voting-paper .p-calendar {
+    position: relative;
+    display: inline-flex;
+    width: 44%;
+}

@@ -7,6 +7,7 @@ import {InputText} from 'primereact/inputtext'
 import {Checkbox} from 'primereact/checkbox'
 import {InputNumber} from 'primereact/inputnumber'
 import {ColorPicker} from 'primereact/colorpicker'
+import {Calendar} from 'primereact/calendar'
 import {ListBox} from 'primereact/listbox'
 import 'primeflex/primeflex.css'
 import { validateVotingPaper, validateDisjointed } from './Ruler'
@@ -14,6 +15,7 @@ import { config } from '../App'
 import './ModalVotingPaper.css'
 import { TreeSelect } from 'primereact/treeselect'
 import { ZoneService } from '../services/ZoneService'
+import Moment from 'moment'
 
 const types = [
     {label: 'Bigger', value: 'bigger'},
@@ -21,6 +23,8 @@ const types = [
     {label: 'Little', value: 'little'},
     {label: 'Little no groups', value: 'little-nogroup'}
 ];
+
+const DATE_FORMAT = 'YYYY-MM-DDThh:mm:ss';
 
 export class ModalVotingPaper extends Component {
 
@@ -30,6 +34,8 @@ export class ModalVotingPaper extends Component {
 			votingPaper: '',
 			app: '',
 			operation: '',
+			startingDate: null,
+			endingDate: null,
 			disjointed: false,
 			maxCandidates: 0,
 			color: '',
@@ -51,6 +57,16 @@ export class ModalVotingPaper extends Component {
         this.state.name = <FormattedMessage
             id='app.configuration.name'
             defaultMessage='Name'
+        />
+
+        this.state.startingDateLabel = <FormattedMessage
+            id='app.configuration.startingdate'
+            defaultMessage='Starting date'
+        />
+
+        this.state.endingDateLabel = <FormattedMessage
+            id='app.configuration.endingdate'
+            defaultMessage='Ending date'
         />
 
         this.state.disjointedLabel = <FormattedMessage
@@ -119,6 +135,8 @@ export class ModalVotingPaper extends Component {
 				config.votingPapers.forEach((votingPaper) => {
 					if (votingPaper.id === this.state.votingPaper.value.id) {
 						votingPaper.name = this.state.votingPaper.value.label
+						votingPaper.startingDate = Moment(this.state.startingDate).format(DATE_FORMAT)
+						votingPaper.endingDate = Moment(this.state.endingDate).format(DATE_FORMAT)
 						votingPaper.disjointed = this.state.disjointed
 						votingPaper.maxCandidates = this.state.maxCandidates
 						if (this.state.type === 'little-nogroup' || this.state.type === 'little')
@@ -152,6 +170,8 @@ export class ModalVotingPaper extends Component {
 					  name: this.state.votingPaper.value.label, 
 					  groups: groupsAr,
 					  parties: partiesAr,
+					  startingDate: Moment(this.state.startingDate).format(DATE_FORMAT),
+					  endingDate: Moment(this.state.endingDate).format(DATE_FORMAT),
 					  disjointed: this.state.disjointed,
 					  maxCandidates: this.state.maxCandidates,
 					  zone: zoneForPapers,
@@ -263,6 +283,24 @@ export class ModalVotingPaper extends Component {
     				<div className='p-col'>{this.state.name}</div>
     				<div className='p-col'>{inputText}</div>
 				</div>
+				<div className='p-grid'>
+    				<div className='p-col'>{this.state.startingDateLabel}</div>
+    				<div className='p-col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={this.state.startingDate} 
+    					onChange={(e) => { 
+							this.setState(
+							{
+								startingDate: e.value
+							}) }}></Calendar></div>
+    			</div>
+				<div className='p-grid'>
+    				<div className='p-col'>{this.state.endingDateLabel}</div>
+    				<div className='p-col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={this.state.endingDate} 
+    					onChange={(e) => { 
+							this.setState(
+							{
+								endingDate: e.value
+							}) }}></Calendar></div>
+    			</div>
 				<div className='p-grid'>
     				<div className='p-col'>{this.state.disjointedLabel}</div>
     				<div className='p-col'><Checkbox onChange={(e) => { 
