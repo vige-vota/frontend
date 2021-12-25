@@ -24,7 +24,7 @@ const types = [
     {label: 'Little no groups', value: 'little-nogroup'}
 ];
 
-const DATE_FORMAT = 'YYYY-MM-DDThh:mm:ss';
+const DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 export class ModalVotingPaper extends Component {
 

@@ -13,6 +13,20 @@ export const validateDisjointed = (component) => {
 	} else return true
 }
 
+export const validateDate = (component) => {
+	if (component) {
+		let currentDate = new Date()
+		if (!component.startingDate || !component.endingDate) {
+    		errors({name: 'name', message: <FormattedMessage id='app.admin.error.dateempty' defaultMessage='Dates must not be empty' values = {{ name: component.label }}/>})
+    		return false
+		} else if (component.endingDate.getTime() < currentDate.getTime() || component.endingDate.getTime() < component.startingDate.getTime()) {
+    		errors({name: 'name', message: <FormattedMessage id='app.admin.error.endingdate' defaultMessage='Ending date must be older than current date and starting date' values = {{ name: component.label }}/>})
+    		return false
+		}
+		return true
+	} else return true
+}
+
 export const validateVotingPaper = (component, list) => {
 	let value = component.votingPaper.value
 	if (!value || !value.label) {
@@ -29,6 +43,8 @@ export const validateVotingPaper = (component, list) => {
     	return false
 	} else if (!value || list.filter(e => ((component.type === 'little-nogroup' && e.type !== 'little-nogroup') || (component.type !== 'little-nogroup' && e.type === 'little-nogroup')) && e.id === value.id).length > 0) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.littlenogroup' defaultMessage='You cannot pass from a party voting paper to a group voting paper. Remove and create again the voting paper'/>})
+    	return false
+	} else if (!value || !validateDate(component)) {
     	return false
 	}
     return true
