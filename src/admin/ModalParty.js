@@ -186,19 +186,19 @@ export class ModalParty extends Component {
 						}} />
         return (
             <Dialog contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-party'>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.name}</div>
-    				<div className='p-col'>{inputText}</div>
+				<div className='grid'>
+    				<div className='col'>{this.state.name}</div>
+    				<div className='col'>{inputText}</div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.title}</div>
-    				<div className='p-col'><InputText ref={(input) => { this.title = input; }} value={this.state.partyTitle ? this.state.partyTitle : ''} onChange={(e) => this.setState(
+				<div className='grid'>
+    				<div className='col'>{this.state.title}</div>
+    				<div className='col'><InputText ref={(input) => { this.title = input; }} value={this.state.partyTitle ? this.state.partyTitle : ''} onChange={(e) => this.setState(
 						{
 							partyTitle: e.target.value
 						})} /></div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>
+				<div className='grid'>
+    				<div className='col'>
 						<FormattedMessage id='app.configuration.chooseimage'
             					defaultMessage='Choose Image'>
 								{(chooseImage) => <PartyUpload accept='image/*' maxFileSize={60000} 

@@ -128,8 +128,8 @@ export class ModalCandidates extends Component {
             </div>
         )
 		let isIdInTheTree = this.state.isAdmin || hasIdInTheTree(getValueById(this.state.id), this.state.block)
-        let candidateUpload = <div className='p-grid'>
-    				<div className='p-col'>
+        let candidateUpload = <div className='grid'>
+    				<div className='col'>
     					<FormattedMessage id='app.configuration.chooseimage'
             				defaultMessage='Choose Image'>
 							{(chooseImage) => <CandidateUpload ref={this.candidateUpload} accept='image/*' maxFileSize={60000} 
@@ -142,17 +142,17 @@ export class ModalCandidates extends Component {
 				</div>
         return (
             <Dialog ref={this.candidatesDialog} contentStyle={{'maxHeight': '700px', 'width':'360px'}} header={this.state.configurationHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-candidates'>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.namesurnameLabel}</div>
-    				<div className='p-col'><InputText ref={this.nameInputText} 
+				<div className='grid'>
+    				<div className='col'>{this.state.namesurnameLabel}</div>
+    				<div className='col'><InputText ref={this.nameInputText} 
 						 value={this.state.name} disabled={!isIdInTheTree}
 						 onChange={(e) => {
 							this.setState({ name: e.target.value})
 						 }} /></div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.genderLabel}</div>
-    				<div className='p-col'>
+				<div className='grid'>
+    				<div className='col'>{this.state.genderLabel}</div>
+    				<div className='col'>
 						{M}
 						<RadioButton value={M} name='sex' 
 							onChange={(e) => this.setState({ sex: e.value })} 
@@ -164,9 +164,9 @@ export class ModalCandidates extends Component {
 					</div>
 				</div>
 				{candidateUpload}
-				<div className='p-grid'>
+				<div className='grid'>
 					<hr style={{ background: '#fff' }} />
-    				<div className='p-col admin-candidates'>
+    				<div className='col admin-candidates'>
     					<FormattedMessage
                     		id='app.insert'
                     		defaultMessage='Insert'>
@@ -237,8 +237,8 @@ export class ModalCandidates extends Component {
                 		</FormattedMessage>
 					</div>
 				</div>
-				<div className='p-grid'>
-					<div className='p-col'>
+				<div className='grid'>
+					<div className='col'>
 							<ListBox ref={this.boxCandidates} value={this.state.id} filter={true} options={this.state.candidates} onChange={(e) => {
 								let selectedCandidate = this.state.candidates.filter(f => f.id === parseInt(e.value, 10))[0]
 								if (e.value) {

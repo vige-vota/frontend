@@ -209,7 +209,7 @@ export class ModalVotingPaper extends Component {
 	render() {
 		let votingPaperValue = this.state.votingPaper.value
 		let deleteButton = ''
-		let zoneClass = 'p-grid'
+		let zoneClass = 'grid'
 		if (votingPaperValue && this.state.operation === 'update')
 			deleteButton = <FormattedMessage
                     id='app.delete'
@@ -217,11 +217,11 @@ export class ModalVotingPaper extends Component {
                     {(ok) => <Button label={ok[0]} icon='pi pi-check' onClick={this.delete} className='confirm' />}
                 </FormattedMessage>
 		if (this.state.type === 'little-nogroup' || this.state.type === 'little')
-			zoneClass = 'p-grid disabled'
+			zoneClass = 'grid disabled'
 		const zoneField = (
 				<div className={zoneClass} ref={this.zone}>
-    				<div className='p-col'>{this.state.zoneLabel}</div>
-    				<div className='p-col'>
+    				<div className='col'>{this.state.zoneLabel}</div>
+    				<div className='col'>
     				<FormattedMessage
             				id='app.configuration.choose.zone'
             				defaultMessage='Choose zone'>
@@ -279,62 +279,62 @@ export class ModalVotingPaper extends Component {
 						}} />
         return (
             <Dialog contentStyle={{'maxHeight': '620px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-voting-paper'>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.name}</div>
-    				<div className='p-col'>{inputText}</div>
+				<div className='grid'>
+    				<div className='col'>{this.state.name}</div>
+    				<div className='col'>{inputText}</div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.startingDateLabel}</div>
-    				<div className='p-col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={this.state.startingDate} 
+				<div className='grid'>
+    				<div className='col'>{this.state.startingDateLabel}</div>
+    				<div className='col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={this.state.startingDate} 
     					onChange={(e) => { 
 							this.setState(
 							{
 								startingDate: e.value
 							}) }}></Calendar></div>
     			</div>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.endingDateLabel}</div>
-    				<div className='p-col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={this.state.endingDate} 
+				<div className='grid'>
+    				<div className='col'>{this.state.endingDateLabel}</div>
+    				<div className='col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={this.state.endingDate} 
     					onChange={(e) => { 
 							this.setState(
 							{
 								endingDate: e.value
 							}) }}></Calendar></div>
     			</div>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.disjointedLabel}</div>
-    				<div className='p-col'><Checkbox onChange={(e) => { 
+				<div className='grid'>
+    				<div className='col'>{this.state.disjointedLabel}</div>
+    				<div className='col'><Checkbox onChange={(e) => { 
 						if (validateDisjointed(votingPaperValue)) this.setState(
 						{
 							disjointed: e.checked
 						}) }} checked={this.state.disjointed}></Checkbox></div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.maxCandidatesLabel}</div>
-    				<div className='p-col'><InputNumber showButtons onValueChange={(e) => this.setState(
+				<div className='grid'>
+    				<div className='col'>{this.state.maxCandidatesLabel}</div>
+    				<div className='col'><InputNumber showButtons onValueChange={(e) => this.setState(
 						{
 							maxCandidates: Number.isInteger(e.value) ? parseInt(e.value, 10) : 0
 						}) } value={this.state.maxCandidates} min={0} max={3}></InputNumber></div>
 				</div>
 				{ zoneField }
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.colorLabel}</div>
-    				<div className='p-col'><ColorPicker value={this.state.color} 
+				<div className='grid'>
+    				<div className='col'>{this.state.colorLabel}</div>
+    				<div className='col'><ColorPicker value={this.state.color} 
 						onChange={(e) => this.setState({color: e.value})} />
 					</div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.templatesLabel}</div>
+				<div className='grid'>
+    				<div className='col'>{this.state.templatesLabel}</div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>
+				<div className='grid'>
+    				<div className='col'>
 							<ListBox value={this.state.type} filter={true} options={types} onChange={(e) => {
 								if (e.value) {
 									this.setState({type: e.value})
 									if (e.value === 'little-nogroup' || e.value === 'little')
-										this.zone.current.className = 'p-grid disabled'
+										this.zone.current.className = 'grid disabled'
 									else
-										this.zone.current.className = 'p-grid'
+										this.zone.current.className = 'grid'
 								}
 							}} itemTemplate={this.imgTemplate} 
                                     style={{width: '20.5em'}} listStyle={{maxHeight: '250px'}} />
