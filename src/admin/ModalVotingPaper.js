@@ -137,8 +137,11 @@ export class ModalVotingPaper extends Component {
 				config.votingPapers.forEach((votingPaper) => {
 					if (votingPaper.id === this.state.votingPaper.value.id) {
 						votingPaper.name = this.state.votingPaper.value.label
-						votingPaper.dates[0].startingDate = Moment(this.state.dates[0].startingDate).format(DATE_FORMAT)
-						votingPaper.dates[0].endingDate = Moment(this.state.dates[0].endingDate).format(DATE_FORMAT)
+						votingPaper.dates = this.state.dates.map((e) => {
+							e.startingDate = Moment(e.startingDate).format(DATE_FORMAT);
+							e.endingDate = Moment(e.endingDate).format(DATE_FORMAT);
+							return e;
+						})
 						votingPaper.disjointed = this.state.disjointed
 						votingPaper.maxCandidates = this.state.maxCandidates
 						if (this.state.type === 'little-nogroup' || this.state.type === 'little')
@@ -172,12 +175,11 @@ export class ModalVotingPaper extends Component {
 					  name: this.state.votingPaper.value.label, 
 					  groups: groupsAr,
 					  parties: partiesAr,
-					  dates: [
-					  	{
-					  		startingDate: Moment(this.state.dates[0].startingDate).format(DATE_FORMAT),
-					  		endingDate: Moment(this.state.dates[0].endingDate).format(DATE_FORMAT)
-					  	}
-					  ],
+					  dates: this.state.dates.map((e) => {
+							e.startingDate = Moment(e.startingDate).format(DATE_FORMAT);
+							e.endingDate = Moment(e.endingDate).format(DATE_FORMAT);
+							return e;
+					  }),
 					  disjointed: this.state.disjointed,
 					  maxCandidates: this.state.maxCandidates,
 					  zone: zoneForPapers,

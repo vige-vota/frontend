@@ -124,12 +124,11 @@ class App extends Component {
 								votingPaper: e,
 								app: this,
 								operation: 'update',
-								dates: [
-									{
-										startingDate: new Date(currentVotingPaper.dates[0].startingDate),
-										endingDate: new Date(currentVotingPaper.dates[0].endingDate)
-									}
-								],
+								dates: currentVotingPaper.dates.map((e) => {
+									e.startingDate = new Date(e.startingDate);
+									e.endingDate = new Date(e.endingDate);
+									return e;
+								}),
 								disjointed: currentVotingPaper.disjointed,
 								maxCandidates: currentVotingPaper.maxCandidates,
 								zone: currentVotingPaper.zone,
