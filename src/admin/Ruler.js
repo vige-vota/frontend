@@ -16,10 +16,10 @@ export const validateDisjointed = (component) => {
 export const validateDate = (component) => {
 	if (component) {
 		let currentDate = new Date()
-		if (!component.startingDate || !component.endingDate) {
+		if (!component.dates || !component.dates[0].startingDate || !component.dates[0].endingDate) {
     		errors({name: 'name', message: <FormattedMessage id='app.admin.error.dateempty' defaultMessage='Dates must not be empty' values = {{ name: component.label }}/>})
     		return false
-		} else if (component.endingDate.getTime() < currentDate.getTime() || component.endingDate.getTime() < component.startingDate.getTime()) {
+		} else if (component.dates[0].endingDate.getTime() < currentDate.getTime() || component.dates[0].endingDate.getTime() < component.dates[0].startingDate.getTime()) {
     		errors({name: 'name', message: <FormattedMessage id='app.admin.error.endingdate' defaultMessage='Ending date must be older than current date and starting date' values = {{ name: component.label }}/>})
     		return false
 		}

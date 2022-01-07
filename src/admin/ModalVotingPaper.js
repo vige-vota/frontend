@@ -34,8 +34,10 @@ export class ModalVotingPaper extends Component {
 			votingPaper: '',
 			app: '',
 			operation: '',
-			startingDate: null,
-			endingDate: null,
+			dates: [
+				{
+				}
+			],
 			disjointed: false,
 			maxCandidates: 0,
 			color: '',
@@ -135,8 +137,8 @@ export class ModalVotingPaper extends Component {
 				config.votingPapers.forEach((votingPaper) => {
 					if (votingPaper.id === this.state.votingPaper.value.id) {
 						votingPaper.name = this.state.votingPaper.value.label
-						votingPaper.startingDate = Moment(this.state.startingDate).format(DATE_FORMAT)
-						votingPaper.endingDate = Moment(this.state.endingDate).format(DATE_FORMAT)
+						votingPaper.dates[0].startingDate = Moment(this.state.dates[0].startingDate).format(DATE_FORMAT)
+						votingPaper.dates[0].endingDate = Moment(this.state.dates[0].endingDate).format(DATE_FORMAT)
 						votingPaper.disjointed = this.state.disjointed
 						votingPaper.maxCandidates = this.state.maxCandidates
 						if (this.state.type === 'little-nogroup' || this.state.type === 'little')
@@ -170,8 +172,12 @@ export class ModalVotingPaper extends Component {
 					  name: this.state.votingPaper.value.label, 
 					  groups: groupsAr,
 					  parties: partiesAr,
-					  startingDate: Moment(this.state.startingDate).format(DATE_FORMAT),
-					  endingDate: Moment(this.state.endingDate).format(DATE_FORMAT),
+					  dates: [
+					  	{
+					  		startingDate: Moment(this.state.dates[0].startingDate).format(DATE_FORMAT),
+					  		endingDate: Moment(this.state.dates[0].endingDate).format(DATE_FORMAT)
+					  	}
+					  ],
 					  disjointed: this.state.disjointed,
 					  maxCandidates: this.state.maxCandidates,
 					  zone: zoneForPapers,
@@ -284,24 +290,6 @@ export class ModalVotingPaper extends Component {
     				<div className='col'>{inputText}</div>
 				</div>
 				<div className='grid'>
-    				<div className='col'>{this.state.startingDateLabel}</div>
-    				<div className='col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={this.state.startingDate} 
-    					onChange={(e) => { 
-							this.setState(
-							{
-								startingDate: e.value
-							}) }}></Calendar></div>
-    			</div>
-				<div className='grid'>
-    				<div className='col'>{this.state.endingDateLabel}</div>
-    				<div className='col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={this.state.endingDate} 
-    					onChange={(e) => { 
-							this.setState(
-							{
-								endingDate: e.value
-							}) }}></Calendar></div>
-    			</div>
-				<div className='grid'>
     				<div className='col'>{this.state.disjointedLabel}</div>
     				<div className='col'><Checkbox onChange={(e) => { 
 						if (validateDisjointed(votingPaperValue)) this.setState(
@@ -326,6 +314,38 @@ export class ModalVotingPaper extends Component {
 				<div className='grid'>
     				<div className='col'>{this.state.templatesLabel}</div>
 				</div>
+				<div className='dates'>
+					<div className='grid'>
+    					<div className='col'>{this.state.startingDateLabel}</div>
+    					<div className='col'>{this.state.endingDateLabel}</div>
+    					<div className='col md:col-1'></div>
+    				</div>
+					<div className='grid'>
+    					<div className='col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={this.state.dates[0].startingDate} 
+    						onChange={(e) => { 
+								this.setState({
+									dates: [
+										{
+											startingDate: e.value,
+											endingDate: this.state.dates[0].endingDate
+										}
+									]
+								})
+							 }}></Calendar></div>
+    					<div className='col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={this.state.dates[0].endingDate} 
+    						onChange={(e) => { 
+								this.setState({
+									dates: [
+										{
+											startingDate: this.state.dates[0].startingDate,
+											endingDate: e.value
+										}
+									]
+								})
+							}}></Calendar></div>
+    					<div className='col md:col-1'>-</div>
+    				</div>
+    			</div>
 				<div className='grid'>
     				<div className='col'>
 							<ListBox value={this.state.type} filter={true} options={types} onChange={(e) => {

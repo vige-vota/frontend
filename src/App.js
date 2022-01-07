@@ -81,8 +81,7 @@ class App extends Component {
 											let currentVotingPaper = config.votingPapers[i]
 											if (currentVotingPaper) {
 												currentVotingPaper.type = votingPaper.type
-												currentVotingPaper.startingDate = votingPaper.startingDate
-												currentVotingPaper.endingDate = votingPaper.endingDate
+												currentVotingPaper.dates = votingPaper.dates
 												currentVotingPaper.disjointed = votingPaper.disjointed
 												currentVotingPaper.color = votingPaper.color
 												currentVotingPaper.maxCandidates = votingPaper.maxCandidates
@@ -125,8 +124,12 @@ class App extends Component {
 								votingPaper: e,
 								app: this,
 								operation: 'update',
-								startingDate: new Date(currentVotingPaper.startingDate),
-								endingDate: new Date(currentVotingPaper.endingDate),
+								dates: [
+									{
+										startingDate: new Date(currentVotingPaper.dates[0].startingDate),
+										endingDate: new Date(currentVotingPaper.dates[0].endingDate)
+									}
+								],
 								disjointed: currentVotingPaper.disjointed,
 								maxCandidates: currentVotingPaper.maxCandidates,
 								zone: currentVotingPaper.zone,
