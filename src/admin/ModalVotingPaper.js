@@ -11,6 +11,7 @@ import {Calendar} from 'primereact/calendar'
 import {ListBox} from 'primereact/listbox'
 import 'primeflex/primeflex.css'
 import { validateVotingPaper, validateDisjointed } from './Ruler'
+import { Dates } from './Dates'
 import { config } from '../App'
 import './ModalVotingPaper.css'
 import { TreeSelect } from 'primereact/treeselect'
@@ -313,9 +314,6 @@ export class ModalVotingPaper extends Component {
 						onChange={(e) => this.setState({color: e.value})} />
 					</div>
 				</div>
-				<div className='grid'>
-    				<div className='col'>{this.state.templatesLabel}</div>
-				</div>
 				<div className='dates'>
 					<div className='grid'>
     					<div className='col'>{this.state.startingDateLabel}</div>
@@ -347,7 +345,11 @@ export class ModalVotingPaper extends Component {
 							}}></Calendar></div>
     					<div className='col md:col-1'>-</div>
     				</div>
+    				<Dates />
     			</div>
+				<div className='grid'>
+    				<div className='col'>{this.state.templatesLabel}</div>
+				</div>
 				<div className='grid'>
     				<div className='col'>
 							<ListBox value={this.state.type} filter={true} options={types} onChange={(e) => {
