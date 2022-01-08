@@ -139,8 +139,8 @@ export class ModalVotingPaper extends Component {
 					if (votingPaper.id === this.state.votingPaper.value.id) {
 						votingPaper.name = this.state.votingPaper.value.label
 						votingPaper.dates = this.state.dates.map((e) => {
-							e.startingDate = Moment(e.startingDate).format(DATE_FORMAT);
-							e.endingDate = Moment(e.endingDate).format(DATE_FORMAT);
+							e.startingDate = Moment(e.startingDate).format(DATE_FORMAT)
+							e.endingDate = Moment(e.endingDate).format(DATE_FORMAT)
 							return e;
 						})
 						votingPaper.disjointed = this.state.disjointed
@@ -345,7 +345,7 @@ export class ModalVotingPaper extends Component {
 							}}></Calendar></div>
     					<div className='col md:col-1'>-</div>
     				</div>
-    				<Dates />
+    				<Dates dates={this.state.dates} />
     			</div>
 				<div className='grid'>
     				<div className='col'>{this.state.templatesLabel}</div>
