@@ -139,9 +139,10 @@ export class ModalVotingPaper extends Component {
 					if (votingPaper.id === this.state.votingPaper.value.id) {
 						votingPaper.name = this.state.votingPaper.value.label
 						votingPaper.dates = this.datesRef.current.state.dates.map((e) => {
-							e.startingDate = Moment(e.startingDate).format(DATE_FORMAT)
-							e.endingDate = Moment(e.endingDate).format(DATE_FORMAT)
-							return e;
+							return {
+								startingDate: Moment(e.startingDate).format(DATE_FORMAT),
+								endingDate: Moment(e.endingDate).format(DATE_FORMAT)
+							}
 						})
 						votingPaper.disjointed = this.state.disjointed
 						votingPaper.maxCandidates = this.state.maxCandidates
@@ -177,9 +178,10 @@ export class ModalVotingPaper extends Component {
 					  groups: groupsAr,
 					  parties: partiesAr,
 					  dates: this.datesRef.current.state.dates.map((e) => {
-							e.startingDate = Moment(e.startingDate).format(DATE_FORMAT);
-							e.endingDate = Moment(e.endingDate).format(DATE_FORMAT);
-							return e;
+							return {
+								startingDate: Moment(e.startingDate).format(DATE_FORMAT),
+								endingDate: Moment(e.endingDate).format(DATE_FORMAT)
+							}
 					  }),
 					  disjointed: this.state.disjointed,
 					  maxCandidates: this.state.maxCandidates,
