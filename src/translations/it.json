@@ -26,6 +26,7 @@
 	"app.configuration.title": "Titolo",
 	"app.configuration.chooseimage": "Scegli l'Immagine",
 	"app.configuration.newdate": "Nuova data",
+	"app.configuration.datedetails": "Inserisci la data",
 	"app.configuration.startingdate": "Data d'inizio",
 	"app.configuration.endingdate": "Data di fine",
 	"app.configuration.disjointed": "Voto disgiunto",
@@ -61,5 +62,6 @@
     "app.admin.error.file.summary": "{0}: Dimensione non valida, ",
     "app.admin.error.file.detail": "la dimensione massima è {0}.",
     "app.admin.error.littlenogroup": "Non è possibile passare da un tipo di scheda a partito ad un tipo a coalizione o viceversa. Rimuovere e ricreare la scheda",
-    "app.admin.error.zonebigger": "La scheda deve avere la zona"
+    "app.admin.error.zonebigger": "La scheda deve avere la zona",
+    "app.admin.nodatesfound": "Non ci sono date"
 }

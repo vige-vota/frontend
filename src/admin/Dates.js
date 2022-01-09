@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Toast } from 'primereact/toast'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Dialog } from 'primereact/dialog'
@@ -23,12 +22,15 @@ export class Dates extends Component {
         this.state = {
             dates: null,
             dateDialog: false,
-            deleteDateDialog: false,
-            deleteDatesDialog: false,
             date: this.emptyDate,
             selectedDates: null,
             submitted: false
         }
+
+        this.state.dateDetailsLabel = <FormattedMessage
+            id='app.configuration.datedetails'
+            defaultMessage='Date Details'
+        />
 
         this.state.newDateLabel = <FormattedMessage
             id='app.configuration.newdate'
@@ -51,17 +53,18 @@ export class Dates extends Component {
         this.openNew = this.openNew.bind(this)
         this.hideDialog = this.hideDialog.bind(this)
         this.saveDate = this.saveDate.bind(this)
-        this.confirmDeleteDate = this.confirmDeleteDate.bind(this)
         this.deleteDate = this.deleteDate.bind(this)
         this.onInputChange = this.onInputChange.bind(this)
-        this.hideDeleteDateDialog = this.hideDeleteDateDialog.bind(this)
     }
 
     componentDidMount() {
         this.setState({
         	dates: this.props.dates.map((e) => {
-        		e.id = e.startingDate + e.endingDate
-        		return e
+        		return {
+        			id: e.startingDate + e.endingDate,
+        			startingDate: e.startingDate,
+        			endingDate: e.endingDate
+        		}
         	})
         })
     }
@@ -80,10 +83,6 @@ export class Dates extends Component {
             dateDialog: false
         })
     }
-
-    hideDeleteDateDialog() {
-        this.setState({ deleteDateDialog: false })
-    }
     
     saveDate() {
         let state = { submitted: true }
@@ -95,12 +94,10 @@ export class Dates extends Component {
                 const index = this.findIndexById(this.state.date.id)
 
                 dates[index] = date
-                this.toast.show({ severity: 'success', summary: 'Successful', detail: 'Date Updated', life: 3000 })
             }
             else {
                 date.id = this.createId()
                 dates.push(date)
-                this.toast.show({ severity: 'success', summary: 'Successful', detail: 'Date Created', life: 3000 })
             }
 
             state = {
@@ -112,13 +109,6 @@ export class Dates extends Component {
         }
 
         this.setState(state)
-    }
-
-    confirmDeleteDate(date) {
-        this.setState({
-            date,
-            deleteDateDialog: true
-        })
     }
 
     startingDateTemplate(rowData) {
@@ -139,14 +129,12 @@ export class Dates extends Component {
         )
     }
 
-    deleteDate() {
-        let dates = this.state.dates.filter(val => val.id !== this.state.date.id)
+    deleteDate(rowData) {
+        let dates = this.state.dates.filter(val => val.id !== rowData.id)
         this.setState({
             dates,
-            deleteDateDialog: false,
             date: this.emptyDate
         })
-        this.toast.show({ severity: 'success', summary: 'Successful', detail: 'Date Deleted', life: 3000 })
     }
 
     findIndexById(id) {
@@ -180,56 +168,61 @@ export class Dates extends Component {
 
     leftToolbarTemplate() {
         return (
-            <Button label={this.state.newDateLabel} icon='pi pi-plus' className='p-button-success p-mr-2' onClick={this.openNew} />
+            <Button label={this.state.newDateLabel} icon='pi pi-plus' className='confirm' onClick={this.openNew} />
         )
     }
 
     actionBodyTemplate(rowData) {
         return (
-            <Button icon='pi pi-trash' className='p-button-rounded p-button-warning' onClick={() => this.confirmDeleteDate(rowData)} />
+            <Button icon='pi pi-trash' className='p-button-rounded p-button-warning' onClick={() => this.deleteDate(rowData)} />
         )
     }
 
     render() {
         const dateDialogFooter = (
             <React.Fragment>
-                <Button label='Cancel' icon='pi pi-times' className='p-button-text' onClick={this.hideDialog} />
-                <Button label='Save' icon='pi pi-check' className='p-button-text' onClick={this.saveDate} />
-            </React.Fragment>
-        )
-        const deleteDateDialogFooter = (
-            <React.Fragment>
-                <Button label='No' icon='pi pi-times' className='p-button-text' onClick={this.hideDeleteDateDialog} />
-                <Button label='Yes' icon='pi pi-check' className='p-button-text' onClick={this.deleteDate} />
+                <FormattedMessage
+                    id='app.confirm'
+                    defaultMessage='Confirm'>
+                    {(yes) => <Button label={yes[0]} icon='pi pi-check' onClick={this.saveDate} className='confirm' />}
+                </FormattedMessage>
+				<FormattedMessage
+                    id='app.cancel'
+                    defaultMessage='Cancel'>
+                    {(no) => <Button label={no[0]} icon='pi pi-times' onClick={this.hideDialog} className='p-button-secondary confirm' />}
+                </FormattedMessage>
             </React.Fragment>
         )
         return (
-            <div className='datatable-crud-demo'>
-                <Toast ref={(el) => this.toast = el} />
+            <div className='datatable-crud-dates'>
 
                 <div className='card'>
                     <Toolbar className='p-mb-4' left={this.leftToolbarTemplate}></Toolbar>
-
-                    <DataTable ref={(el) => this.dt = el} value={this.state.dates} selection={this.state.selectedDates} onSelectionChange={(e) => this.setState({ selectedDates: e.value })}
-                        dataKey='id' responsiveLayout='scroll'>
-                        <Column field='startingDate' header={this.state.startingDateLabel} body={this.startingDateTemplate} style={{ width: '8.6rem' }}></Column>
-                        <Column field='endingDate' header={this.state.endingDateLabel} body={this.endingDateTemplate} style={{ width: '8.6rem' }}></Column>
-                        <Column body={this.actionBodyTemplate} exportable={false}></Column>
-                    </DataTable>
+					<FormattedMessage
+                    	id='app.admin.nodatesfound'
+                    	defaultMessage='No dates'>
+                        {(noRecordsFound) => 
+                    		<DataTable ref={(el) => this.dt = el} value={this.state.dates} selection={this.state.selectedDates} onSelectionChange={(e) => this.setState({ selectedDates: e.value })}
+                        		dataKey='id' responsiveLayout='scroll' emptyMessage={noRecordsFound[0]}>
+                        		<Column field='startingDate' header={this.state.startingDateLabel} body={this.startingDateTemplate} style={{ width: '8.6rem' }}></Column>
+                        		<Column field='endingDate' header={this.state.endingDateLabel} body={this.endingDateTemplate} style={{ width: '8.6rem' }}></Column>
+                        		<Column body={this.actionBodyTemplate} exportable={false}></Column>
+                    		</DataTable>
+                        }
+                	</FormattedMessage>
                 </div>
 
-                <Dialog visible={this.state.dateDialog} style={{ width: '450px' }} header='Date Details' modal className='p-fluid' footer={dateDialogFooter} onHide={this.hideDialog}>
-                    <div className='col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat='24' value={this.state.date.startingDate} 
-    					onChange={(e) => this.onInputChange(e, 'startingDate')}></Calendar></div>
-    				<div className='col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat='24' value={this.state.date.endingDate} 
-    					onChange={(e) => this.onInputChange(e, 'endingDate')}></Calendar></div>
-                </Dialog>
-
-                <Dialog visible={this.state.deleteDateDialog} style={{ width: '450px' }} header='Confirm' modal footer={deleteDateDialogFooter} onHide={this.hideDeleteDateDialog}>
-                    <div className='confirmation-content'>
-                        <i className='pi pi-exclamation-triangle p-mr-3' style={{ fontSize: '2rem'}} />
-                        {this.state.date && <span>Are you sure you want to delete <b>{this.state.date.id}</b>?</span>}
-                    </div>
+                <Dialog visible={this.state.dateDialog} header={this.state.dateDetailsLabel} modal className='p-fluid' footer={dateDialogFooter} onHide={this.hideDialog}>
+                	<div className='grid'>
+    					<div className='col'>{this.state.startingDateLabel}</div>
+                    	<div className='col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat='24' value={this.state.date.startingDate} 
+    						onChange={(e) => this.onInputChange(e, 'startingDate')}></Calendar></div>
+					</div>
+					<div className='grid'>
+    					<div className='col'>{this.state.endingDateLabel}</div>
+    					<div className='col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat='24' value={this.state.date.endingDate} 
+    						onChange={(e) => this.onInputChange(e, 'endingDate')}></Calendar></div>
+    				</div>
                 </Dialog>
             </div>
         )
