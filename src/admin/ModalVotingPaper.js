@@ -46,6 +46,7 @@ export class ModalVotingPaper extends Component {
         }
  		this.zone = React.createRef()
  		this.zoneSelect = React.createRef()
+    	this.datesRef = React.createRef()
         this.state.configurationHeader = <FormattedMessage
             id='app.configuration.header'
             defaultMessage='Configure your Voting Paper'
@@ -137,7 +138,7 @@ export class ModalVotingPaper extends Component {
 				config.votingPapers.forEach((votingPaper) => {
 					if (votingPaper.id === this.state.votingPaper.value.id) {
 						votingPaper.name = this.state.votingPaper.value.label
-						votingPaper.dates = this.state.dates.map((e) => {
+						votingPaper.dates = this.datesRef.current.state.dates.map((e) => {
 							e.startingDate = Moment(e.startingDate).format(DATE_FORMAT)
 							e.endingDate = Moment(e.endingDate).format(DATE_FORMAT)
 							return e;
@@ -175,7 +176,7 @@ export class ModalVotingPaper extends Component {
 					  name: this.state.votingPaper.value.label, 
 					  groups: groupsAr,
 					  parties: partiesAr,
-					  dates: this.state.dates.map((e) => {
+					  dates: this.datesRef.current.state.dates.map((e) => {
 							e.startingDate = Moment(e.startingDate).format(DATE_FORMAT);
 							e.endingDate = Moment(e.endingDate).format(DATE_FORMAT);
 							return e;
@@ -313,7 +314,7 @@ export class ModalVotingPaper extends Component {
 						onChange={(e) => this.setState({color: e.value})} />
 					</div>
 				</div>
-    			<Dates dates={this.state.dates} />
+    			<Dates ref={this.datesRef} dates={this.state.dates} />
 				<div className='grid'>
     				<div className='col'>{this.state.templatesLabel}</div>
 				</div>

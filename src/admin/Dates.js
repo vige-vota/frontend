@@ -61,7 +61,7 @@ export class Dates extends Component {
         this.setState({
         	dates: this.props.dates.map((e) => {
         		return {
-        			id: e.startingDate + e.endingDate,
+        			id: this.createId(),
         			startingDate: e.startingDate,
         			endingDate: e.endingDate
         		}
