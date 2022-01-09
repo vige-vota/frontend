@@ -11,17 +11,3 @@
 .modal-voting-paper .disabled {
     display: none;
 }
-
-.modal-voting-paper .dates {
-    border: 1px solid #a6a6a6;
-    text-align: center;
-}
-
-.modal-voting-paper .dates .col {
-    align-self: center
-}
-
-.modal-voting-paper .p-calendar .p-inputtext {
-    flex: 1 1 auto;
-    font-size: smaller;
-}

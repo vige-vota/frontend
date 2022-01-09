@@ -7,7 +7,6 @@ import {InputText} from 'primereact/inputtext'
 import {Checkbox} from 'primereact/checkbox'
 import {InputNumber} from 'primereact/inputnumber'
 import {ColorPicker} from 'primereact/colorpicker'
-import {Calendar} from 'primereact/calendar'
 import {ListBox} from 'primereact/listbox'
 import 'primeflex/primeflex.css'
 import { validateVotingPaper, validateDisjointed } from './Ruler'
@@ -314,39 +313,7 @@ export class ModalVotingPaper extends Component {
 						onChange={(e) => this.setState({color: e.value})} />
 					</div>
 				</div>
-				<div className='dates'>
-					<div className='grid'>
-    					<div className='col'>{this.state.startingDateLabel}</div>
-    					<div className='col'>{this.state.endingDateLabel}</div>
-    					<div className='col md:col-1'></div>
-    				</div>
-					<div className='grid'>
-    					<div className='col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={this.state.dates[0].startingDate} 
-    						onChange={(e) => { 
-								this.setState({
-									dates: [
-										{
-											startingDate: e.value,
-											endingDate: this.state.dates[0].endingDate
-										}
-									]
-								})
-							 }}></Calendar></div>
-    					<div className='col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={this.state.dates[0].endingDate} 
-    						onChange={(e) => { 
-								this.setState({
-									dates: [
-										{
-											startingDate: this.state.dates[0].startingDate,
-											endingDate: e.value
-										}
-									]
-								})
-							}}></Calendar></div>
-    					<div className='col md:col-1'>-</div>
-    				</div>
-    				<Dates dates={this.state.dates} />
-    			</div>
+    			<Dates dates={this.state.dates} />
 				<div className='grid'>
     				<div className='col'>{this.state.templatesLabel}</div>
 				</div>

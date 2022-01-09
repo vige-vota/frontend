@@ -41,10 +41,6 @@ body .p-tabmenu .p-tabmenu-nav {
     padding-right: 28%;
 }
 
-body .p-dialog-content .p-datatable-wrapper .p-datatable-thead {
-    display: none;
-}
-
 body .p-tabmenu.p-component.disabled {
     pointer-events: none;
     cursor: default;
@@ -80,4 +76,23 @@ body .p-button .pi {
 
 .p-datatable .p-datatable-tbody > tr > td {
   text-align: center;
+}
+
+body .p-dialog .p-dialog-footer button {
+    margin: 0 0.5em 0 0;
+    width: 100px;
+    height: 30px;
+}
+
+body .p-button.confirm.p-button-text-icon-left .p-button-text {
+    top: 0%;
+}
+
+body .p-rowgroup-footer {
+    display: none;
+}
+
+body .p-panel {
+    margin-right: 15%;
+    width: 400%;
 }

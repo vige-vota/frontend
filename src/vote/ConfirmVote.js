@@ -160,7 +160,7 @@ export class ConfirmVote extends Component {
             </div>
         )
 		return (
-            <Dialog contentStyle={{'maxHeight': '500px'}} header={this.state.confirmHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} onShow={this.show}>
+            <Dialog className='confirm-vote' contentStyle={{'maxHeight': '500px'}} header={this.state.confirmHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} onShow={this.show}>
                 {this.state.confirmBody}<br/><br/>
                 <FormattedMessage
                     id='app.confirm.norecordsfound'
