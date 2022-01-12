@@ -23,7 +23,6 @@ export class Dates extends Component {
             dates: null,
             dateDialog: false,
             date: this.emptyDate,
-            selectedDates: null,
             submitted: false
         }
 
@@ -202,8 +201,8 @@ export class Dates extends Component {
                     	id='app.admin.nodatesfound'
                     	defaultMessage='No dates'>
                         {(noRecordsFound) => 
-                    		<DataTable ref={(el) => this.dt = el} value={this.state.dates} selection={this.state.selectedDates} onSelectionChange={(e) => this.setState({ selectedDates: e.value })}
-                        		dataKey='id' responsiveLayout='scroll' emptyMessage={noRecordsFound[0]}>
+                    		<DataTable ref={(el) => this.dt = el} value={this.state.dates}
+                        		dataKey='id' emptyMessage={noRecordsFound[0]}>
                         		<Column field='startingDate' header={this.state.startingDateLabel} body={this.startingDateTemplate} style={{ width: '8.6rem' }}></Column>
                         		<Column field='endingDate' header={this.state.endingDateLabel} body={this.endingDateTemplate} style={{ width: '8.6rem' }}></Column>
                         		<Column body={this.actionBodyTemplate} exportable={false}></Column>
