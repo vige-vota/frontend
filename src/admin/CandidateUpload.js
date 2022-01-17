@@ -1,6 +1,6 @@
 import React from 'react'
 import {FileUpload} from 'primereact/fileupload';
-import {ObjectUtils} from 'primereact/core';
+import {ObjectUtils} from 'primereact/utils';
 import {Button} from 'primereact/button';
 import {base64ToFile} from '../Utilities'
 	
