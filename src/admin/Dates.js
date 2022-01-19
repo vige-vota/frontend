@@ -55,6 +55,7 @@ export class Dates extends Component {
         this.deleteDate = this.deleteDate.bind(this)
         this.onInputChange = this.onInputChange.bind(this)
         this.startingDateTemplate = this.startingDateTemplate.bind(this)
+        this.sendingDateTemplate = this.endingDateTemplate.bind(this)
     }
 
     componentDidMount() {
