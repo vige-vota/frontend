@@ -31,3 +31,8 @@
     top: 24%;
     position: absolute;
 }
+
+.p-dialog-content .date-modal .p-calendar .p-inputtext {
+    flex: 1 1 auto;
+    font-size: smaller;
+}
