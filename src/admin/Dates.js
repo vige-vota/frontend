@@ -6,9 +6,11 @@ import { Dialog } from 'primereact/dialog'
 import {Calendar} from 'primereact/calendar'
 import { Button } from 'primereact/button'
 import { Toolbar } from 'primereact/toolbar'
+import { addLocale } from 'primereact/api'
 import './Dates.css'
 
 const INTERNAL_DATE_FORMAT = 'dd/mm/yy';
+const LOCALE = navigator.language.split(/[-_]/)[0]
 
 export class Dates extends Component {
 
@@ -27,6 +29,35 @@ export class Dates extends Component {
             date: this.emptyDate,
             submitted: false
         }
+        let i18nMonths = <FormattedMessage id='app.admin.dates.months.january'/>
+        console.log(i18nMonths)
+       					 
+        addLocale(LOCALE, {
+            firstDayOfWeek: 1,
+            dayNamesMin: [
+             			 <FormattedMessage id='app.admin.dates.weeks.sunday' defaultMessage='Su' />,
+            			 <FormattedMessage id='app.admin.dates.weeks.monday' defaultMessage='Mo' />,
+            			 <FormattedMessage id='app.admin.dates.weeks.tuesday' defaultMessage='Tu' />,
+            			 <FormattedMessage id='app.admin.dates.weeks.wednesday' defaultMessage='We' />,
+            			 <FormattedMessage id='app.admin.dates.weeks.thursday' defaultMessage='Th' />,
+            			 <FormattedMessage id='app.admin.dates.weeks.friday' defaultMessage='Fr' />,
+            			 <FormattedMessage id='app.admin.dates.weeks.saturday' defaultMessage='Sa' />
+            			],
+            monthNames: [
+             			 <FormattedMessage id='app.admin.dates.months.january' defaultMessage='January' />,
+            			 <FormattedMessage id='app.admin.dates.months.february' defaultMessage='February' />,
+            			 <FormattedMessage id='app.admin.dates.months.march' defaultMessage='March' />,
+            			 <FormattedMessage id='app.admin.dates.months.april' defaultMessage='April' />,
+            			 <FormattedMessage id='app.admin.dates.months.may' defaultMessage='May' />,
+            			 <FormattedMessage id='app.admin.dates.months.june' defaultMessage='June' />,
+            			 <FormattedMessage id='app.admin.dates.months.july' defaultMessage='July' />,
+            			 <FormattedMessage id='app.admin.dates.months.august' defaultMessage='August' />,
+            			 <FormattedMessage id='app.admin.dates.months.september' defaultMessage='September' />,
+            			 <FormattedMessage id='app.admin.dates.months.october' defaultMessage='October' />,
+            			 <FormattedMessage id='app.admin.dates.months.november' defaultMessage='November' />,
+            			 <FormattedMessage id='app.admin.dates.months.december' defaultMessage='December' />
+            			]
+        });
 
         this.state.dateDetailsLabel = <FormattedMessage
             id='app.configuration.datedetails'
@@ -229,7 +260,7 @@ export class Dates extends Component {
 					</div>
 					<div className='grid'>
     					<div className='col'>{this.state.endingDateLabel}</div>
-    					<div className='col'><Calendar dateFormat={INTERNAL_DATE_FORMAT} showTime hourFormat='24' value={this.state.date.endingDate} 
+    					<div className='col'><Calendar locale={ LOCALE } dateFormat={INTERNAL_DATE_FORMAT} showTime hourFormat='24' value={this.state.date.endingDate} 
     						onChange={(e) => this.onInputChange(e, 'endingDate')}></Calendar></div>
     				</div>
                 </Dialog>
