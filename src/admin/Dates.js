@@ -55,7 +55,7 @@ export class Dates extends Component {
         this.deleteDate = this.deleteDate.bind(this)
         this.onInputChange = this.onInputChange.bind(this)
         this.startingDateTemplate = this.startingDateTemplate.bind(this)
-        this.sendingDateTemplate = this.endingDateTemplate.bind(this)
+        this.endingDateTemplate = this.endingDateTemplate.bind(this)
     }
 
     componentDidMount() {
@@ -129,6 +129,9 @@ export class Dates extends Component {
             <Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={rowData.endingDate} 
     					onChange={(e) => {
 							rowData.endingDate = e.value
+							this.setState({
+								date: rowData
+							})
 						}}></Calendar>
         )
     }
