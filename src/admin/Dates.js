@@ -116,7 +116,7 @@ export class Dates extends Component {
 
     startingDateTemplate(rowData) {
         return (
-            <Calendar dateFormat={INTERNAL_DATE_FORMAT} showTime showSeconds hourFormat="24" value={rowData.startingDate} 
+            <Calendar dateFormat={INTERNAL_DATE_FORMAT} showTime hourFormat="24" value={rowData.startingDate} 
     					onChange={(e) => {
 							rowData.startingDate = e.value
 							this.setState({
