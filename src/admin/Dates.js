@@ -8,6 +8,8 @@ import { Button } from 'primereact/button'
 import { Toolbar } from 'primereact/toolbar'
 import './Dates.css'
 
+const INTERNAL_DATE_FORMAT = 'dd/mm/yy';
+
 export class Dates extends Component {
 
     emptyDate = {
@@ -114,7 +116,7 @@ export class Dates extends Component {
 
     startingDateTemplate(rowData) {
         return (
-            <Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={rowData.startingDate} 
+            <Calendar dateFormat={INTERNAL_DATE_FORMAT} showTime showSeconds hourFormat="24" value={rowData.startingDate} 
     					onChange={(e) => {
 							rowData.startingDate = e.value
 							this.setState({
@@ -126,7 +128,7 @@ export class Dates extends Component {
 
     endingDateTemplate(rowData) {
         return (
-            <Calendar dateFormat='dd/mm/yy' showTime hourFormat="24" value={rowData.endingDate} 
+            <Calendar dateFormat={INTERNAL_DATE_FORMAT} showTime hourFormat="24" value={rowData.endingDate} 
     					onChange={(e) => {
 							rowData.endingDate = e.value
 							this.setState({
@@ -222,12 +224,12 @@ export class Dates extends Component {
                 <Dialog visible={this.state.dateDialog} header={this.state.dateDetailsLabel} modal className='p-fluid' footer={dateDialogFooter} onHide={this.hideDialog}>
                 	<div className='grid'>
     					<div className='col'>{this.state.startingDateLabel}</div>
-                    	<div className='col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat='24' value={this.state.date.startingDate} 
+                    	<div className='col'><Calendar dateFormat={INTERNAL_DATE_FORMAT} showTime hourFormat='24' value={this.state.date.startingDate} 
     						onChange={(e) => this.onInputChange(e, 'startingDate')}></Calendar></div>
 					</div>
 					<div className='grid'>
     					<div className='col'>{this.state.endingDateLabel}</div>
-    					<div className='col'><Calendar dateFormat='dd/mm/yy' showTime hourFormat='24' value={this.state.date.endingDate} 
+    					<div className='col'><Calendar dateFormat={INTERNAL_DATE_FORMAT} showTime hourFormat='24' value={this.state.date.endingDate} 
     						onChange={(e) => this.onInputChange(e, 'endingDate')}></Calendar></div>
     				</div>
                 </Dialog>
