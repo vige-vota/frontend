@@ -29,8 +29,6 @@ export class Dates extends Component {
             date: this.emptyDate,
             submitted: false
         }
-        let i18nMonths = <FormattedMessage id='app.admin.dates.months.january'/>
-        console.log(i18nMonths)
        					 
         addLocale(LOCALE, {
             firstDayOfWeek: 1,
