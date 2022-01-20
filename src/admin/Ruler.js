@@ -19,8 +19,11 @@ export const validateDate = (component) => {
 		if (!component.dates || component.dates.length <= 0 || component.dates.some((e) => !e.startingDate || !e.endingDate)) {
     		errors({name: 'name', message: <FormattedMessage id='app.admin.error.dateempty' defaultMessage='Dates must not be empty' values = {{ name: component.label }}/>})
     		return false
-		} else if (component.dates.every((f) => f.endingDate.getTime() < currentDate.getTime() || f.endingDate.getTime() < f.startingDate.getTime())) {
-    		errors({name: 'name', message: <FormattedMessage id='app.admin.error.endingdate' defaultMessage='Ending date must be older than current date and starting date' values = {{ name: component.label }}/>})
+		} else if (component.dates.some((f) => f.endingDate.getTime() < f.startingDate.getTime())) {
+    		errors({name: 'name', message: <FormattedMessage id='app.admin.error.endingdate.starting' defaultMessage='Ending date must be older than starting date' values = {{ name: component.label }}/>})
+    		return false
+		} else if (component.dates.every((f) => f.endingDate.getTime() < currentDate.getTime())) {
+    		errors({name: 'name', message: <FormattedMessage id='app.admin.error.endingdate.current' defaultMessage='Ending date must be older than current date' values = {{ name: component.label }}/>})
     		return false
 		}
 		return true

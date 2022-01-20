@@ -122,15 +122,12 @@ export class Dates extends Component {
         if (this.state.date) {
             let dates = [...this.state.dates]
             let date = {...this.state.date}
-            if (this.state.date.id) {
-                const index = this.findIndexById(this.state.date.id)
-
-                dates[index] = date
-            }
-            else {
-                date.id = this.createId()
-                dates.push(date)
-            }
+            date.id = this.createId()
+            dates.push(date)
+            this.props.dates.push({
+            	startingDate: date.startingDate,
+            	endingDate: date.endingDate
+            })
 
             state = {
                 ...state,
@@ -148,6 +145,9 @@ export class Dates extends Component {
             <Calendar locale={ LOCALE } dateFormat={INTERNAL_DATE_FORMAT} showTime hourFormat="24" value={rowData.startingDate} 
     					onChange={(e) => {
 							rowData.startingDate = e.value
+							console.log(this.props.dates)
+							let index = this.state.dates.indexOf(rowData)
+							this.props.dates[index].startingDate = e.value
 							this.setState({
 								date: rowData
 							})
@@ -160,6 +160,8 @@ export class Dates extends Component {
             <Calendar locale={ LOCALE } dateFormat={INTERNAL_DATE_FORMAT} showTime hourFormat="24" value={rowData.endingDate} 
     					onChange={(e) => {
 							rowData.endingDate = e.value
+							let index = this.state.dates.indexOf(rowData)
+							this.props.dates[index].endingDate = e.value
 							this.setState({
 								date: rowData
 							})
@@ -168,6 +170,8 @@ export class Dates extends Component {
     }
 
     deleteDate(rowData) {
+		let index = this.state.dates.indexOf(rowData)
+		this.props.dates.splice(index, 1)
         let dates = this.state.dates.filter(val => val.id !== rowData.id)
         this.setState({
             dates,
