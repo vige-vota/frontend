@@ -145,7 +145,6 @@ export class Dates extends Component {
             <Calendar locale={ LOCALE } dateFormat={INTERNAL_DATE_FORMAT} showTime hourFormat="24" value={rowData.startingDate} 
     					onChange={(e) => {
 							rowData.startingDate = e.value
-							console.log(this.props.dates)
 							let index = this.state.dates.indexOf(rowData)
 							this.props.dates[index].startingDate = e.value
 							this.setState({
