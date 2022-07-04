@@ -10,7 +10,7 @@ import { Validator } from './vote/Validator'
 import { Ruler } from './admin/Ruler'
 import background from './images/background.png'
 import {Panel} from 'primereact/panel';
-import {getTabs, createTabs, colorTabs, removeTab, getVotingPaperById, addToList, isValid, updateSelections} from './Utilities'
+import {hasVoted, getTabs, createTabs, colorTabs, removeTab, getVotingPaperById, addToList, isValid, updateSelections} from './Utilities'
 import SockJsClient from './SockJsClient'
 import UserService from './services/UserService'
 import {ProgressSpinner} from 'primereact/progressspinner'
@@ -51,6 +51,9 @@ class App extends Component {
 			colorTabs(this)
 			this.setState({operation: undefined})
 		}
+		if (this.state.visible && hasVoted()) {
+    		this.setState({ visible: false })
+    	}
 	}
 
     render() {

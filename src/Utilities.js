@@ -314,3 +314,22 @@ export const base64ToFile = (component) => {
    let file = new File([blob], component.name, {type: type})
    return file
 }
+
+export const hasVoted = () => {
+	let stamps = config.profile.attributes['stamps']
+	let stampDate = new Date(stamps[stamps.length -1])
+	let result = false
+	config.votingPapers.forEach(e => {
+		let dates = e.dates
+		dates.forEach(f => {
+			let startingDate = new Date(f.startingDate)
+			let endingDate = new Date(f.endingDate)
+			console.log(f)
+			if (startingDate <= stampDate && endingDate >= stampDate) {
+				result = true
+			}
+		})
+	})
+	console.log(stamps)
+	return result
+}
