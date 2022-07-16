@@ -4,7 +4,7 @@ import {ObjectUtils} from 'primereact/utils';
 import {Button} from 'primereact/button';
 import {base64ToFile} from '../Utilities'
 	
-export class CandidateUpload extends FileUpload {
+export class CandidateUpload extends React.Component {
 	
 	onFileSelect(event) {
 		super.onFileSelect(event)
@@ -80,4 +80,10 @@ export class CandidateUpload extends FileUpload {
 				this.state.files.pop()
 		}
 	}
+	
+	render() {
+    	return (
+     		<FileUpload />
+    	)
+  	}
 }

@@ -195,17 +195,18 @@ export const createTabs = (appContainer) => {
 			else
 				return appContainer.state.items.push({ id: votingPaper.id, label: votingPaper.name })
         })
-        appContainer.setState({confirmButtonLabel : <FormattedMessage
+        let confirmButtonLabel = <FormattedMessage
             		id='app.confirm'
             		defaultMessage='Confirm'
-        			/>})
+        			/>
+        appContainer.setState({confirmButtonLabel : confirmButtonLabel })
 		if (config.state === 'PREPARE' && UserService.getRoles().includes('admin'))
 			 appContainer.state.items.push({ label: '+' })
 	    if (config.votingPapers.length > 0 || config.state === 'PREPARE')
-	    	 appContainer.state.items.push({ label: appContainer.state.confirmButtonLabel })
-		const tabs = colorTabs(appContainer)
-		if (tabs && tabs[0])
-			tabs[0].click()
+	    	 appContainer.state.items.push({ label: confirmButtonLabel })
+	    appContainer.setState({
+			operation: 'created-tabs'
+		})
 }
 
 export const colorTabs = (component) => {
@@ -324,12 +325,10 @@ export const hasVoted = () => {
 		dates.forEach(f => {
 			let startingDate = new Date(f.startingDate)
 			let endingDate = new Date(f.endingDate)
-			console.log(f)
 			if (startingDate <= stampDate && endingDate >= stampDate) {
 				result = true
 			}
 		})
 	})
-	console.log(stamps)
 	return result
 }

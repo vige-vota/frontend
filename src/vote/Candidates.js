@@ -58,7 +58,7 @@ export class Candidates extends Component {
 
     onDropdownClick(e, i) {
         let dropDown = this.refs['autocomplete-candidate-' + i]
-        dropDown.onDropdownClick(e)
+        dropDown.search(e, '', 'dropdown')
         e.stopPropagation()
     }
 
@@ -113,7 +113,7 @@ export class Candidates extends Component {
         let candidates = []
         if (this.props.config.length > 0)
         	for (let i = 0; i < this.props.maxcandidates; i++) {
-        		candidates.push(<AutoComplete className='excludeSelect' key={'autocomplete-'+candidate+'-' + i} ref={'autocomplete-'+candidate+'-' + i}  value={this.state[candidate + i]} suggestions={this.state.filteredCandidates} completeMethod={this.filterCandidates} size={30} minLength={1}
+        		candidates.push(<AutoComplete className='excludeSelect' key={'autocomplete-'+candidate+'-' + i} ref={'autocomplete-'+candidate+'-' + i} value={this.state[candidate + i]} suggestions={this.state.filteredCandidates} completeMethod={this.filterCandidates} size={30} minLength={1}
                 	placeholder={(i + 1) + placeHolderChars} itemTemplate={this.itemTemplate.bind(this)} selectedItemTemplate={(e) => (i + 1) + ' ' + e} onClick={(e) => { this.onDropdownClick(e, i) }} onChange={(e) => this.onAutocompleteChange(e, i)} onKeyUp={(e) => this.onUnselect(e, i)}>
         		</AutoComplete>)
         	}

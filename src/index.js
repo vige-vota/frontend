@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client';
 import './index.css'
 import App from './App'
 import './templates/little-nogroup.css'
@@ -17,7 +17,8 @@ const messages = {
 }
 const language = navigator.language.split(/[-_]/)[0]  // language without region code
 
-const renderApp = () => ReactDOM.render(<IntlProvider locale={language} messages={messages[language]}><App /></IntlProvider>, document.getElementById('root'))
+const root = createRoot(document.getElementById('root'));
+const renderApp = () => root.render(<IntlProvider locale={language} messages={messages[language]}><App /></IntlProvider>)
 UserService.initKeycloak(renderApp)
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

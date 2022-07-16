@@ -2,8 +2,8 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import {FileUpload} from 'primereact/fileupload';
 import {base64ToFile} from '../Utilities'
-	
-export class PartyUpload extends FileUpload {
+
+export class PartyUpload extends React.Component {
 	
 	onFileSelect(event) {
 		super.onFileSelect(event)
@@ -74,4 +74,10 @@ export class PartyUpload extends FileUpload {
 	componentDidUpdate() {
 		this.show()
 	}
+	
+	render() {
+    	return (
+     		<FileUpload />
+    	)
+  	}
 }

@@ -47,6 +47,12 @@ class App extends Component {
     }
 
 	componentDidUpdate() {
+		if (this.state.operation === 'created-tabs') {
+			const tabs = colorTabs(appContainer)
+			if (tabs && tabs[0])
+				tabs[0].click()
+			this.setState({operation: undefined})
+		}
 		if (this.state.operation === 'websocket') {
 			colorTabs(this)
 			this.setState({operation: undefined})
@@ -120,7 +126,7 @@ class App extends Component {
                 <div className='content-section implementation'>
                     <Validator ref='validator' />
 					{ruler}
-                    <TabMenu ref='tabMenu' className={this.state.visible ? '' : 'disabled'}  model={this.state.items} activeItem={this.state.activeItem} onTabChange={(e) => {
+                    <TabMenu ref='tabMenu' className={this.state.visible ? '' : 'disabled'}  model={this.state.items} activeIndex={this.state.activeItem} onTabChange={(e) => {
                     	if (config.state === 'PREPARE' && e.originalEvent.target.className.startsWith('p-menuitem-icon')) {
 							let currentVotingPaper = getVotingPaperById(e.value)
 							this.modalVotingPaper.current.setState({

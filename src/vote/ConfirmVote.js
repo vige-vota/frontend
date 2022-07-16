@@ -165,7 +165,7 @@ export class ConfirmVote extends Component {
                 <FormattedMessage
                     id='app.confirm.norecordsfound'
                     defaultMessage='Empty selection'>
-                        {(noRecordsFound) => <DataTable value={this.sort(selections)} rowGroupMode='subheader' sortField='votingPaper' sortOrder={1} groupField='votingPaper'
+                        {(noRecordsFound) => <DataTable value={this.sort(selections)} rowGroupMode='subheader' sortField='votingPaper' sortOrder={1}
                             rowGroupHeaderTemplate={this.headerTemplate} rowGroupFooterTemplate={this.footerTemplate} emptyMessage={noRecordsFound[0]}>
                                 <Column field='type' body={(e) =>
 
