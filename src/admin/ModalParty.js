@@ -6,7 +6,7 @@ import {InputText} from 'primereact/inputtext'
 import 'primeflex/primeflex.css'
 import './ModalParty.css'
 import {PartyUpload} from './PartyUpload'
-import {addImage, isParty, isGroup, getParent, generateId} from '../Utilities'
+import {isParty, isGroup, getParent, generateId} from '../Utilities'
 import { validateParty, validateGroup } from './Ruler'
 
 export class ModalParty extends Component {
@@ -59,7 +59,6 @@ export class ModalParty extends Component {
         this.confirm = this.confirm.bind(this)
         this.delete = this.delete.bind(this)
         this.onHide = this.onHide.bind(this)
-		this.onSelect = this.onSelect.bind(this);
 
     }
 	
@@ -123,11 +122,6 @@ export class ModalParty extends Component {
 
     onHide() {
         this.setState({ visible: false })
-    }
-
-    onSelect(event) {
-		if (event.files[0].objectURL)
-        	addImage(event.files[0].objectURL, this)
     }
 
 	render() {
@@ -201,8 +195,7 @@ export class ModalParty extends Component {
     				<div className='col'>
 						<FormattedMessage id='app.configuration.chooseimage'
             					defaultMessage='Choose Image'>
-								{(chooseImage) => <PartyUpload accept='image/*' maxFileSize={60000} 
-													onSelect={this.onSelect}
+								{(chooseImage) => <PartyUpload accept='image/*' maxFileSize={60000}
 													chooseLabel={chooseImage[0]} 
 													party={this} previewWidth={150} />}
 						</FormattedMessage>

@@ -1,19 +1,19 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import {FileUpload} from 'primereact/fileupload';
-import {base64ToFile} from '../Utilities'
+import {addImage, base64ToFile} from '../Utilities'
+
+let fileUpload
 
 export class PartyUpload extends React.Component {
 	
-	onFileSelect(event) {
-		super.onFileSelect(event)
-		if (this.state.files.length > 1)
-			this.state.files.shift()
-	}
-	
-	remove(index) {
-		super.remove(index)
-		this.props.party.setState({ image: '' })
+    onSelect(event) {
+		if (event.files[0].objectURL)
+        	addImage(event.files[0].objectURL, this.props.party)
+    }
+    
+	onFileSelect(files) {
+		console.log(fileUpload)
 	}
 	
 	validate(file){
@@ -51,19 +51,16 @@ export class PartyUpload extends React.Component {
 	show() {
 		if (this.props.party.state.opened) {
 			let party = this.props.party.props.party
+			let files = [
+						base64ToFile(party)
+					]
 			if (party && party.image)
-				this.onFileSelect({
-					target: {
-						files: [
-							base64ToFile(party)
-						]
-					}
-				}) 
-			else this.state.files.pop()
+				this.onFileSelect(files) 
+			else files.pop()
 			this.props.party.setState({ opened: false})
 			if (this.props.party.state.operation === 'insert' && 
 				!this.props.party.state.image)
-				this.state.files.pop()
+				files.pop()
 		}
 	}
 
@@ -77,7 +74,8 @@ export class PartyUpload extends React.Component {
 	
 	render() {
     	return (
-     		<FileUpload />
+     		fileUpload = <FileUpload accept={this.props.accept} maxFileSize={this.props.maxFileSize} customUpload 
+     		chooseLabel={this.props.chooseLabel} previewWidth={this.props.previewWidth} onSelect={(e) => this.onSelect(e)} />
     	)
   	}
 }
