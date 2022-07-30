@@ -74,7 +74,7 @@ export class PartyUpload extends React.Component {
 	
 	render() {
     	return (
-     		fileUpload = <FileUpload accept={this.props.accept} maxFileSize={this.props.maxFileSize} customUpload 
+     		fileUpload = <FileUpload accept={this.props.accept} maxFileSize={this.props.maxFileSize} 
      		chooseLabel={this.props.chooseLabel} previewWidth={this.props.previewWidth} onSelect={(e) => this.onSelect(e)} />
     	)
   	}
