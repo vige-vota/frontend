@@ -10,49 +10,23 @@ let files
 export class PartyUpload extends React.Component {
 	
     onSelect(event) {
+	    files = []
 		if (event.files[0].objectURL)
         	addImage(event.files[0].objectURL, this.props.party)
     }
     
     onRemove(event) {
-		event.stopPropagation()
+		if (typeof event.stopPropagation !== 'undefined')
+			event.stopPropagation()
 		if (files && files.length > 0) {
 			files.pop()
 			this.props.party.setState({ image: ''})
 		}
+		if (event.file) {
+			event.file = null
+			this.props.party.setState({ image: ''})
+		}
 	}
-	
-	validate(file){
-	    if (this.props.maxFileSize && file.size > this.props.maxFileSize) {
-	    	let invalidFileSizeMessageSummary = <FormattedMessage
-            	id='app.admin.error.file.summary'
-                defaultMessage={this.props.invalidFileSizeMessageSummary}
-	    		values = {{0: file.name}}
-            />
-	    	let invalidFileSizeMessageDetail = <FormattedMessage
-            	id='app.admin.error.file.detail'
-                defaultMessage={this.props.invalidFileSizeMessageDetail}
-	    		values = {{0: this.formatSize(this.props.maxFileSize)}}
-            />
-	        var message = {
-	            severity: 'error',
-	            summary: invalidFileSizeMessageSummary,
-	            detail: invalidFileSizeMessageDetail
-	        }
-
-	        if (this.props.mode === 'advanced') {
-	            this.messagesUI.show(message);
-	        }
-
-	        if (this.props.onValidationFail) {
-	            this.props.onValidationFail(file);
-	        }
-
-	        return false;
-	    }
-
-	    return true;
-	} 
 	
 	show() {
 		if (this.props.party.state.opened) {
@@ -98,8 +72,13 @@ export class PartyUpload extends React.Component {
 	
 	render() {
     	return (
-     		fileUpload = <FileUpload accept={this.props.accept} maxFileSize={this.props.maxFileSize} emptyTemplate={this.emptyTemplate}
-     		chooseLabel={this.props.chooseLabel} previewWidth={this.props.previewWidth} onSelect={(e) => this.onSelect(e)} parent={this} />
+     		<FormattedMessage
+            	id= 'app.admin.error.file.detail'
+                defaultMessage= 'Maximum dimension is {0}.'>
+	    					{(invalidFileSizeMessageDetail) => fileUpload = <FileUpload accept={this.props.accept} maxFileSize={this.props.maxFileSize} emptyTemplate={this.emptyTemplate}
+     							chooseLabel={this.props.chooseLabel} previewWidth={this.props.previewWidth} onSelect={(e) => this.onSelect(e)} parent={this} 
+     							invalidFileSizeMessageSummary='' invalidFileSizeMessageDetail={invalidFileSizeMessageDetail + ''} onRemove={(e) => this.onRemove(e)} />}
+	    	</FormattedMessage>
     	)
   	}
 }
