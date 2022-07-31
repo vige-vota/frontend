@@ -306,14 +306,21 @@ export const addImage = (url, component) => {
 export const base64ToFile = (component) => {
    const type = 'image/jpeg'
    const byteCharacters = atob(component.image);
-   const byteNumbers = new Array(byteCharacters.length);
+   const byteNumbers = new Array(byteCharacters.length)
    for (let i = 0; i < byteCharacters.length; i++) {
-    	byteNumbers[i] = byteCharacters.charCodeAt(i);
+    	byteNumbers[i] = byteCharacters.charCodeAt(i)
    }
-   const byteArray = new Uint8Array(byteNumbers);
-   const blob = new Blob([byteArray], {type: type});   
+   const byteArray = new Uint8Array(byteNumbers)
+   const blob = new Blob([byteArray], {type: type})
    let file = new File([blob], component.name, {type: type})
    return file
+}
+
+export const fileSize = (files) => {
+	let fileSize = files[0].size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+	while (fileSize.includes('.') && fileSize.endsWith('0'))
+		fileSize = fileSize.slice(0, -1)
+	return fileSize + ' KB'
 }
 
 export const hasVoted = () => {
