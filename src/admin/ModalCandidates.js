@@ -164,8 +164,8 @@ export class ModalCandidates extends Component {
 					</div>
 				</div>
 				{candidateUpload}
+				<hr style={{ background: '#fff' }} />
 				<div className='grid'>
-					<hr style={{ background: '#fff' }} />
     				<div className='col admin-candidates'>
     					<FormattedMessage
                     		id='app.insert'
