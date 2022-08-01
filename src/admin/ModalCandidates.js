@@ -186,8 +186,7 @@ export class ModalCandidates extends Component {
 									})
 									value.id = generatedId
 									value.value = generatedId
-									this.state.candidates.push(value)
-									this.boxCandidates.forceUpdate()}
+									this.state.candidates.push(value)}
 								}
 							}
 							className='confirm' />}
@@ -212,8 +211,7 @@ export class ModalCandidates extends Component {
 											f.image = this.state.image
 											f.sex = this.state.sex
 										}
-									})
-									this.boxCandidates.current.forceUpdate()}
+									})}
 								}
 							}
 							className='confirm' />}
@@ -230,8 +228,8 @@ export class ModalCandidates extends Component {
 									image: '',
 									sex: ''
 								})
-								this.candidateUpload.current.state.files.pop()
-								this.candidatesDialog.current.forceUpdate()}
+								this.candidateUpload.current.onRemove({})
+								}
 							}
 							className='confirm' />}
                 		</FormattedMessage>
