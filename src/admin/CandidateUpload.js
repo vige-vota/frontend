@@ -12,6 +12,7 @@ export class CandidateUpload extends React.Component {
     constructor(data) {
         super(data)
 		this.fileUpload = createRef()
+		files = []
     }
     
     onRemove(event) {
@@ -42,6 +43,7 @@ export class CandidateUpload extends React.Component {
 	}
 	
 	emptyTemplate() {
+		console.log(files)
 		if (files && files.length > 0)
 			return <>
 			<div role='progressbar' className='p-progressbar p-component p-progressbar-determinate' aria-valuemin='0' aria-valuenow='0' aria-valuemax='100'>
