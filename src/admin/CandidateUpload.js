@@ -1,7 +1,7 @@
 import React, {createRef} from 'react'
 import {FormattedMessage} from 'react-intl'
 import {FileUpload} from 'primereact/fileupload';
-import {base64ToFile, fileSize} from '../Utilities'
+import {base64ToFile, fileSize, addImage} from '../Utilities'
 import {Button} from 'primereact/button';
 	
 let fileUploadz
@@ -13,6 +13,11 @@ export class CandidateUpload extends React.Component {
         super(data)
 		this.fileUpload = createRef()
 		files = []
+    }
+
+    onSelect(event) {
+		if (event.files[0].objectURL)
+        	addImage(event.files[0].objectURL, this.parent.props.party)
     }
     
     onRemove(event) {
@@ -68,7 +73,7 @@ export class CandidateUpload extends React.Component {
      	let invalidFileSizeMessageDetail = <FormattedMessage
             	id= 'app.admin.error.file.detail'
                 defaultMessage= 'Maximum dimension is {0}.' />
-    	return fileUploadz = <FileUpload ref={this.fileUpload} accept={this.props.accept} maxFileSize={this.props.maxFileSize}
+    	return fileUploadz = <FileUpload ref={this.fileUpload} accept={this.props.accept} maxFileSize={this.props.maxFileSize} onSelect={this.onSelect}
      							chooseLabel={this.props.chooseLabel} previewWidth={this.props.previewWidth} emptyTemplate={this.emptyTemplate}
      							invalidFileSizeMessageSummary='' invalidFileSizeMessageDetail={invalidFileSizeMessageDetail + ''} parent={this} />
   	}

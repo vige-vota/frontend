@@ -8,7 +8,7 @@ import {ListBox} from 'primereact/listbox'
 import 'primeflex/primeflex.css'
 import './ModalCandidates.css'
 import {CandidateUpload} from './CandidateUpload'
-import {addImage, generateId, hasIdInTheTree, getValueById} from '../Utilities'
+import {generateId, hasIdInTheTree, getValueById} from '../Utilities'
 import {M, F} from '../vote/Validator'
 import { validateCandidate } from './Ruler'
 import { config } from '../App'
@@ -55,7 +55,6 @@ export class ModalCandidates extends Component {
         this.open = this.open.bind(this)
         this.confirm = this.confirm.bind(this)
         this.onHide = this.onHide.bind(this)
-		this.onSelect = this.onSelect.bind(this);
 		this.imgTemplate = this.imgTemplate.bind(this);
 
     }
@@ -88,11 +87,6 @@ export class ModalCandidates extends Component {
 
     onHide() {
         this.setState({ visible: false })
-    }
-
-    onSelect(event) {
-		if (event.files[0].objectURL)
-        	addImage(event.files[0].objectURL, this)
     }
 
     imgTemplate(option) {
@@ -132,8 +126,7 @@ export class ModalCandidates extends Component {
     				<div className='col'>
     					<FormattedMessage id='app.configuration.chooseimage'
             				defaultMessage='Choose Image'>
-							{(chooseImage) => <CandidateUpload ref={this.candidateUpload} accept='image/*' maxFileSize={60000} 
-													onSelect={this.onSelect}
+							{(chooseImage) => <CandidateUpload ref={this.candidateUpload} accept='image/*' maxFileSize={60000}
 													chooseLabel={chooseImage[0]} 
 													party={this} candidate={selectedCandidate} 
 													previewWidth={150} disabled={!isIdInTheTree} />}
