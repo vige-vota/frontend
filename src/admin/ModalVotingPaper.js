@@ -21,7 +21,8 @@ const types = [
     {label: 'Bigger', value: 'bigger'},
     {label: 'Bigger party groups', value: 'bigger-partygroup'},
     {label: 'Little', value: 'little'},
-    {label: 'Little no groups', value: 'little-nogroup'}
+    {label: 'Little no groups', value: 'little-nogroup'},
+    {label: 'Referendum', value: 'referendum'}
 ];
 
 const DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
