@@ -1,13 +1,13 @@
-body .referendum .content-party.resize-0 {
-	max-width: 65em;
-	margin-left: 14%;
+body .referendum  .content-party {
+	max-width: inherit;
 }
 
 body .referendum .first-row {
-    font-size: 22px;
-    margin-right: 0.1em;
-    margin-bottom: 0.1em;
+    font-size: 32px;
+    margin-bottom: 3% !important;
     background-color: white;
+	max-width: 30em;
+    margin: auto;
 }
 
 body .referendum .second-row {
@@ -15,12 +15,30 @@ body .referendum .second-row {
 	min-width: 110px;
     min-height: 105px;
     border: none;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin: auto;
+    margin-left: 28.5% !important;
+    float: left;
+}
+
+body .referendum .referendum-title {
+    background-color: white;
+    margin: auto;
+    margin-top: 2%;
+    width: 55%;
+    margin-bottom: 2%;
+    font-size: 40px;
+}
+
+body .referendum .p-button-subtext {
+	font-size: 25px;
+    background-color: white;
+    max-width: 90%;
+    margin-left: 5%;
 }
 
 body .referendum .content-party .p-button {
     height: 50%;
+    margin-top: 1%;
 }
 
 body .referendum .p-button.p-button-icon-only .p-button-icon-left, .p-button.p-button-icon-only .p-button-icon-right {

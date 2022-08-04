@@ -77,12 +77,26 @@ export class Party extends React.Component {
             let buttonSublabel = ''
             if (this.props.party.subtitle !== 'undefined')
                 buttonSublabel = this.props.party.subtitle
+            let subLabel = ''
+            if (this.props.party.votingPaper.type !== 'referendum')
+            	subLabel = <span className='p-button-subtext p-c'>{buttonSublabel}</span>
             return (<span className='p-button-text p-c'>{buttonLabel}
-                        <span className='p-button-subtext p-c'>{buttonSublabel}</span>
+                        {subLabel}
                     </span>
             )
         }
     }
+    
+    renderSubLabel() {
+		let subLabel = ''
+		if (this.props.party.votingPaper.type === 'referendum') {
+			let buttonSublabel = ''
+            if (this.props.party.subtitle !== 'undefined')
+                buttonSublabel = this.props.party.subtitle
+			subLabel = <div className='p-button-subtext p-c'>{buttonSublabel}</div>
+		}
+		return subLabel
+	}
 
     renderCandidates() {
         if (this.props.party.candidates)
@@ -101,18 +115,22 @@ export class Party extends React.Component {
         })
         let icon = this.renderIcon()
         let label = this.renderLabel()
+        let subLabel = this.renderSubLabel()
         let candidates = this.renderCandidates()
 
         let buttonProps = ObjectUtils.findDiffKeys(this.props, Button.defaultProps)
 
         return (
-            <div ref={(el) => this.element = el} {...buttonProps} className={className}>
-				<AdminButtons party={this.props.party} partyComponent={this} votingPaper={this.props.votingpaper} ref={this.adminButtons}/>
-				{icon}
-                {label}
-                {candidates}
-                {this.props.children}
-            </div>
+			<>
+            	<div ref={(el) => this.element = el} {...buttonProps} className={className}>
+					<AdminButtons party={this.props.party} partyComponent={this} votingPaper={this.props.votingpaper} ref={this.adminButtons}/>
+					{icon}
+                	{label}
+                	{candidates}
+                	{this.props.children}
+            	</div>
+            	{subLabel}
+            </>
         )
     }
 }

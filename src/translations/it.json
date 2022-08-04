@@ -17,6 +17,7 @@
 	"app.configuration.header": "Configura la scheda",
 	"app.configuration.headerparty": "Configura il partito",
 	"app.configuration.headergroup": "Configura la coalizione",
+	"app.configuration.referendum": "REFERENDUM POPOLARE",
 	"app.configuration.headercandidates": "Gestione dei candidati",
 	"app.configuration.headerinsertparty": "Inserisci il partito",
 	"app.configuration.headerinsertgroup": "Inserisci la coalizione",

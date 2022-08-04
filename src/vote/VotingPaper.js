@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 import { Party } from './Party'
 import 'primereact/resources/themes/nova/theme.css'
 import 'primereact/resources/primereact.min.css'
@@ -14,6 +15,16 @@ export class VotingPaper extends Component {
         super(data)
         this.jsonData = data
     }
+    
+    renderTitle() {
+		let title = ''
+		if (this.jsonData.config.type === 'referendum')
+			title = <div className='referendum-title'><FormattedMessage
+            			id='app.configuration.referendum'
+            			defaultMessage='POPULAR REFERENDUM'
+        			/></div>
+		return title
+	}
 
     renderPartiesByGroup(group) {
         return group.parties.map((party) => {
@@ -76,9 +87,11 @@ export class VotingPaper extends Component {
 
     render() {
         if (this.props.visible) {
+			let title = this.renderTitle()
         	if (this.jsonData.config.groups)
         		return (
         			<div className='page'>
+        				{title}
         				{this.jsonData.config.groups.map((group, j) => {
         					let party, candidate;
         					party = this.renderPartiesByGroup(group)
