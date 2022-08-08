@@ -70,7 +70,9 @@ export class ModalParty extends Component {
 		let value = {
 			name: this.state.partyName,
 			subtitle: this.state.partyTitle,
-			image: this.state.image
+			image: this.state.image,
+			votingPaper: this.props.votingPaper.props.config,
+			parties: this.props.party.parties
 		}
 		if (this.state.operation === 'update') {
 			if ((isParty(this.props.party) && validateParty(value)) ||

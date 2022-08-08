@@ -43,6 +43,7 @@ export class ModalVotingPaper extends Component {
 			maxCandidates: 0,
 			color: '',
 			type: '',
+			zone: null,
 			zones: null
         }
  		this.zone = React.createRef()
@@ -147,7 +148,7 @@ export class ModalVotingPaper extends Component {
 						})
 						votingPaper.disjointed = this.state.disjointed
 						votingPaper.maxCandidates = this.state.maxCandidates
-						if (this.state.type === 'little-nogroup' || this.state.type === 'little')
+						if (this.state.type === 'little-nogroup' || this.state.type === 'little' || this.state.type === 'referendum')
 							votingPaper.zone = null
 						else
 							votingPaper.zone = this.state.zone
@@ -171,7 +172,7 @@ export class ModalVotingPaper extends Component {
 				} else {
 					groupsAr = []
 				}
-				if (this.state.type === 'little-nogroup' || this.state.type === 'little')
+				if (this.state.type === 'little-nogroup' || this.state.type === 'little' || this.state.type === 'referendum')
 					zoneForPapers = null
 				config.votingPapers.push(
 					{ id: generatedId, 
@@ -222,14 +223,20 @@ export class ModalVotingPaper extends Component {
 		let votingPaperValue = this.state.votingPaper.value
 		let deleteButton = ''
 		let zoneClass = 'grid'
+		let maxCandidatesClass = 'grid'
+		let disjointedClass = 'grid'
 		if (votingPaperValue && this.state.operation === 'update')
 			deleteButton = <FormattedMessage
                     id='app.delete'
                     defaultMessage='Delete'>
                     {(ok) => <Button label={ok[0]} icon='pi pi-check' onClick={this.delete} className='confirm' />}
                 </FormattedMessage>
-		if (this.state.type === 'little-nogroup' || this.state.type === 'little')
+		if (this.state.type === 'little-nogroup' || this.state.type === 'little' || this.state.type === 'referendum')
 			zoneClass = 'grid disabled'
+		if (this.state.type === 'referendum') {
+			maxCandidatesClass = 'grid disabled'
+			disjointedClass = 'grid disabled'
+		}
 		const zoneField = (
 				<div className={zoneClass} ref={this.zone}>
     				<div className='col'>{this.state.zoneLabel}</div>
@@ -295,7 +302,7 @@ export class ModalVotingPaper extends Component {
     				<div className='col'>{this.state.name}</div>
     				<div className='col'>{inputText}</div>
 				</div>
-				<div className='grid'>
+				<div className={disjointedClass}>
     				<div className='col'>{this.state.disjointedLabel}</div>
     				<div className='col'><Checkbox onChange={(e) => { 
 						if (validateDisjointed(votingPaperValue)) this.setState(
@@ -303,7 +310,7 @@ export class ModalVotingPaper extends Component {
 							disjointed: e.checked
 						}) }} checked={this.state.disjointed}></Checkbox></div>
 				</div>
-				<div className='grid'>
+				<div className={maxCandidatesClass}>
     				<div className='col'>{this.state.maxCandidatesLabel}</div>
     				<div className='col'><InputNumber showButtons onValueChange={(e) => this.setState(
 						{
@@ -326,7 +333,7 @@ export class ModalVotingPaper extends Component {
 							<ListBox value={this.state.type} filter={true} options={types} onChange={(e) => {
 								if (e.value) {
 									this.setState({type: e.value})
-									if (e.value === 'little-nogroup' || e.value === 'little')
+									if (e.value === 'little-nogroup' || e.value === 'little' || e.value === 'referendum')
 										this.zone.current.className = 'grid disabled'
 									else
 										this.zone.current.className = 'grid'

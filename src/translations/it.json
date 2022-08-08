@@ -32,6 +32,7 @@
 	"app.configuration.endingdate": "Data di fine",
 	"app.configuration.disjointed": "Voto disgiunto",
 	"app.configuration.maxcandidates": "Numero di candidati",
+	"app.admin.error.maxsubgroups": "Puoi specificare un numero massimo di {number} risposte per il referendum",
 	"app.configuration.zone": "Zona",
 	"app.configuration.choose.zone": "Scegli la zona",
 	"app.configuration.color": "Colore della scheda",
