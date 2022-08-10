@@ -60,7 +60,7 @@ export const validateParty = (component) => {
 	} else if (!component || component.name.length > 40) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.maxname' defaultMessage='You can specify a maximum length of {number} characters for the name' values = {{ number: 40 }}/>})
     	return false
-	} else if (!component || (component.votingPaper.type === 'referendum' && component.parties.length === 2)) {
+	} else if (!component || (component.votingPaper.type === 'referendum' && component.parties.length >= 2)) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.maxsubgroups' defaultMessage='You can specify a maximum length of {number} subgroups' values = {{ number: 2 }}/>})
     	return false
 	} else return true
