@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Toast} from 'primereact/toast'
 import { FormattedMessage } from 'react-intl'
 import {getParent} from '../Utilities'
-import {party, group} from './Party'
+import {party, group, referendum} from './Party'
 import {candidate} from './Candidates'
 
 export const M = 'M'
@@ -33,7 +33,10 @@ export const validate = (e) => {
             (votingPaper.disjointed || selectionsInVotingPaper.filter(e => e === parent).length > 0 || selectionsInVotingPaper.length === 0)))
             return true
         else {
-            errors({name: e.value.name, type: <FormattedMessage id='app.error.party' defaultMessage={'the '+ party}/>})
+			if (e.value.votingPaper.type === referendum)
+           		errors({name: e.value.name, type: <FormattedMessage id='app.error.referendum' defaultMessage={'the '+ referendum}/>})
+           	else
+           		errors({name: e.value.name, type: <FormattedMessage id='app.error.party' defaultMessage={'the '+ party}/>})
             return false
         }
     } else {

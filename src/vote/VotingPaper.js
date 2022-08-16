@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Party } from './Party'
+import { Party, referendum } from './Party'
 import 'primereact/resources/themes/nova/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
@@ -18,7 +18,7 @@ export class VotingPaper extends Component {
     
     renderTitle() {
 		let title = ''
-		if (this.jsonData.config.type === 'referendum')
+		if (this.jsonData.config.type === referendum)
 			title = <div className='referendum-title'><FormattedMessage
             			id='app.configuration.referendum'
             			defaultMessage='POPULAR REFERENDUM'
@@ -74,6 +74,8 @@ export class VotingPaper extends Component {
             buttonProps.style = gridRow
             buttonProps.ref = buttonProps.key
             buttonProps.id = buttonProps.key
+            if (this.jsonData.config.type === referendum)
+            	buttonProps.disabled = true
 			buttonProps.votingpaper = this
             return (
                 <Party {...buttonProps} onClick={(e) => {

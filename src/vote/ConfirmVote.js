@@ -9,7 +9,7 @@ import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import { config } from '../App'
 import UserService from '../services/UserService'
-import { party, group } from './Party'
+import { party, group, referendum } from './Party'
 import { candidate } from './Candidates'
 
 const ASC = 'ascending'
@@ -167,12 +167,20 @@ export class ConfirmVote extends Component {
                     defaultMessage='Empty selection'>
                         {(noRecordsFound) => <DataTable value={this.sort(selections)} rowGroupMode='subheader' sortField='votingPaper' sortOrder={1} groupRowsBy='votingPaper'
                             rowGroupHeaderTemplate={this.headerTemplate} rowGroupFooterTemplate={this.footerTemplate} emptyMessage={noRecordsFound[0]}>
-                                <Column field='type' body={(e) =>
-
-                                (<b><FormattedMessage
-                                    id={'app.confirm.'+e.type}
-                                    defaultMessage={e.type} /></b>)
-
+                                <Column field='type' body={(e) => {
+										let type = e.type
+										let tText = 'app.confirm.'
+										if (e.votingPaper.type === referendum) {
+											tText = tText + referendum + '.';
+											if (e.type === group)
+												type = referendum
+											else
+												type = 'vote'
+										}
+                                		return (<b><FormattedMessage
+                                    		id={tText + e.type}
+                                    		defaultMessage={type} /></b>)
+									}
                                 }/>
                                 <Column field='name' />
                          </DataTable>

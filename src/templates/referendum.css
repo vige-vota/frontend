@@ -41,6 +41,10 @@ body .referendum .content-party .p-button {
     margin-top: 1%;
 }
 
+body .referendum .content-party .p-button.p-disabled {
+    opacity: inherit;
+}
+
 body .referendum .p-button.p-button-icon-only .p-button-icon-left, .p-button.p-button-icon-only .p-button-icon-right {
     margin: 0;
     width: 90%;
