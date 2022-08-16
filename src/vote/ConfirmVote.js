@@ -61,8 +61,8 @@ export class ConfirmVote extends Component {
     			value.id = votingPaper.id
     			vote.votingPapers.push(value)
     		}
-    			
-    		if (e.type === group)
+    		
+    		if (e.type === group && e.votingPaper.type !== referendum)
     			value.group = { id: e.id }
     		else if (e.type === party)
     			value.party = { id: e.id }

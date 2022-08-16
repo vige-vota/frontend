@@ -24,7 +24,7 @@ body .referendum .referendum-title {
     background-color: white;
     margin: auto;
     margin-top: 2%;
-    width: 55%;
+    width: fit-content;
     margin-bottom: 2%;
     font-size: 40px;
 }
