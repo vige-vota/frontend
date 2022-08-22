@@ -6,6 +6,7 @@ import {InputText} from 'primereact/inputtext'
 import 'primeflex/primeflex.css'
 import './ModalParty.css'
 import {PartyUpload} from './PartyUpload'
+import {referendum} from '../vote/Party'
 import {isParty, isGroup, getParent, generateId} from '../Utilities'
 import { validateParty, validateGroup } from './Ruler'
 
@@ -20,25 +21,6 @@ export class ModalParty extends Component {
 			operation: '',
 			opened: false
         }
-        this.state.configurationHeader = <FormattedMessage
-            id='app.configuration.headerparty'
-            defaultMessage='Configure your Party'
-        />
-
-        this.state.configurationGroupHeader = <FormattedMessage
-            id='app.configuration.headergroup'
-            defaultMessage='Configure your Group'
-        />
-
-        this.state.configurationInsertPartyHeader = <FormattedMessage
-            id='app.configuration.headerinsertparty'
-            defaultMessage='Insert your Party'
-        />
-
-        this.state.configurationInsertGroupHeader = <FormattedMessage
-            id='app.configuration.headerinsertgroup'
-            defaultMessage='Insert your Group'
-        />
 
         this.state.name = <FormattedMessage
             id='app.configuration.name'
@@ -63,6 +45,63 @@ export class ModalParty extends Component {
     }
 	
     open() {
+        if (this.props.party.votingPaper.type !== referendum) {
+        	this.setState({ 
+				configurationHeader: <FormattedMessage
+           			id='app.configuration.headerparty'
+            		defaultMessage='Configure your Party'
+        		/>
+        	})
+        	
+			this.setState({ 
+				configurationGroupHeader: <FormattedMessage
+            		id='app.configuration.headergroup'
+            		defaultMessage='Configure your Group'
+        		/>
+        	})
+
+			this.setState({ 
+        		configurationInsertPartyHeader: <FormattedMessage
+            		id='app.configuration.headerinsertparty'
+            		defaultMessage='Insert your Party'
+        		/>
+        	})
+
+			this.setState({ 
+        		configurationInsertGroupHeader: <FormattedMessage
+            		id='app.configuration.headerinsertgroup'
+            		defaultMessage='Insert your Group'
+        		/>
+        	})
+        } else {
+			this.setState({ 
+        		configurationHeader: <FormattedMessage
+           			id='app.configuration.referendum.headerparty'
+            		defaultMessage='Configure your Vote'
+        		/>
+        	})
+
+			this.setState({ 
+       	    	configurationGroupHeader: <FormattedMessage
+            		id='app.configuration.referendum.headergroup'
+            		defaultMessage='Configure your Referendum'
+        		/>
+        	})
+
+			this.setState({ 
+        		configurationInsertPartyHeader: <FormattedMessage
+            		id='app.configuration.referendum.headerinsertparty'
+            		defaultMessage='Insert your Vote'
+        		/>
+        	})
+
+			this.setState({ 
+        		configurationInsertGroupHeader: <FormattedMessage
+            		id='app.configuration.referendum.headerinsertgroup'
+            		defaultMessage='Insert your Referendum'
+        		/>
+        	})
+		}
 		this.setState({ visible: true })
     }
 

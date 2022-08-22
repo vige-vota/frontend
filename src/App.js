@@ -57,7 +57,7 @@ class App extends Component {
 			colorTabs(this)
 			this.setState({operation: undefined})
 		}
-		if (this.state.visible && hasVoted()) {
+		if (this.state.visible && config.state !== 'PREPARE' && hasVoted()) {
     		this.setState({ visible: false })
     	}
 	}

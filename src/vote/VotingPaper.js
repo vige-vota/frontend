@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Party, referendum } from './Party'
+import { config } from '../App'
 import 'primereact/resources/themes/nova/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
@@ -74,16 +75,21 @@ export class VotingPaper extends Component {
             buttonProps.style = gridRow
             buttonProps.ref = buttonProps.key
             buttonProps.id = buttonProps.key
-            if (this.jsonData.config.type === referendum)
-            	buttonProps.disabled = true
 			buttonProps.votingpaper = this
-            return (
-                <Party {...buttonProps} onClick={(e) => {
-                    let button = this.refs[buttonProps.ref]
-                    button.putX(e)
-                }}>
-                </Party>
-            )
+            if (this.jsonData.config.type === referendum) {
+				if (config.state !== 'PREPARE')
+            		buttonProps.disabled = true
+            	return (
+                	<Party {...buttonProps} />
+            	)
+            } else
+            	return (
+                	<Party {...buttonProps} onClick={(e) => {
+                    	let button = this.refs[buttonProps.ref]
+                    	button.putX(e)
+                	}}>
+                	</Party>
+            	)
         }
     }
 

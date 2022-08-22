@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Toast} from 'primereact/toast'
 import { FormattedMessage } from 'react-intl'
 import { selections } from '../vote/Validator'
+import { referendum } from '../vote/Party'
 
 export const validateDisjointed = (component) => {
 	if (component) {
@@ -60,7 +61,7 @@ export const validateParty = (component) => {
 	} else if (!component || component.name.length > 40) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.maxname' defaultMessage='You can specify a maximum length of {number} characters for the name' values = {{ number: 40 }}/>})
     	return false
-	} else if (!component || (component.votingPaper.type === 'referendum' && component.parties.length >= 2)) {
+	} else if (!component || (component.votingPaper.type === referendum && component.parties.length >= 2)) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.maxsubgroups' defaultMessage='You can specify a maximum length of {number} subgroups' values = {{ number: 2 }}/>})
     	return false
 	} else return true
@@ -70,7 +71,7 @@ export const validateGroup = (component) => {
 	if (!component || !component.name) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.group.name' defaultMessage='The name of the group is mandatory'/>})
     	return false
-	} else if (!component || (component.votingPaper.type !== 'referendum' && component.name.length > 40)) {
+	} else if (!component || (component.votingPaper.type !== referendum && component.name.length > 40)) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.maxname' defaultMessage='You can specify a maximum length of {number} characters for the name' values = {{ number: 40 }}/>})
     	return false
 	} else return true
