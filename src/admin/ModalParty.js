@@ -123,7 +123,8 @@ export class ModalParty extends Component {
 				this.props.votingPaper.forceUpdate()
 			}
 		} else {
-			if (validateParty(value)) {
+			if ((!this.props.party.name && validateGroup(value)) ||
+				(this.props.party.name && validateParty(value))) {
 				let generatedId = generateId()
 				value.id = generatedId
 				if (this.props.party.name)
