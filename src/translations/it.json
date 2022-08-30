@@ -50,7 +50,7 @@
     "app.error.candidate": "la candidatura di",
     "app.error.party": "il partito",
     "app.error.group": "la coalizione",
-    "app.error.referendum": "il referendum",
+    "app.error.referendum.vote": "il voto",
     "app.error.message": "Non è possibile selezionare {type} {value}",
     "app.admin.error.name": "Il nome della scheda è obbligatorio",
     "app.admin.error.zone": "La zona è obbligatoria",

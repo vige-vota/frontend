@@ -97,7 +97,6 @@ export class ConfirmVote extends Component {
     		.catch(error => {
     	    	button.className = 'pi pi-check p-c p-button-icon-left'
     			this.errors(error)
-    			console.log(error)
     		});
     }
 
