@@ -11,6 +11,7 @@ import { config } from '../App'
 import UserService from '../services/UserService'
 import { party, group, referendum } from './Party'
 import { candidate } from './Candidates'
+import { getParent } from '../Utilities'
 
 const ASC = 'ascending'
 const DSC = 'descending'
@@ -53,6 +54,7 @@ export class ConfirmVote extends Component {
     	selections.forEach(e => {
     		let votingPaper = e.votingPaper
     		let value = {}
+    		let partyV = {}
     		for (let i = 0; i< vote.votingPapers.length;i++)
     			if (vote.votingPapers[i].id === votingPaper.id)
     				value = vote.votingPapers[i]
@@ -64,12 +66,15 @@ export class ConfirmVote extends Component {
     		
     		if (e.type === group && e.votingPaper.type !== referendum)
     			value.group = { id: e.id }
-    		else if (e.type === party)
-    			value.party = { id: e.id }
-    		else if (e.type === candidate) {
-    			if (!value.party.candidates)
-    				value.party.candidates = []
-    			value.party.candidates.push({ id: e.id })
+    		else if (e.type === party) {
+				if (!value.parties)
+					value.parties = []
+    			partyV.id = e.id
+    			value.parties.push(partyV)
+    		} else if (e.type === candidate) {
+    			if (!partyV.candidates)
+    				partyV.candidates = []
+    			partyV.candidates.push({ id: e.id })
     		}
     	})
     	return vote
@@ -158,6 +163,7 @@ export class ConfirmVote extends Component {
                 </FormattedMessage>
             </div>
         )
+        
 		return (
             <Dialog className='confirm-vote' contentStyle={{'maxHeight': '500px'}} header={this.state.confirmHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} onShow={this.show}>
                 {this.state.confirmBody}<br/><br/>
@@ -166,22 +172,21 @@ export class ConfirmVote extends Component {
                     defaultMessage='Empty selection'>
                         {(noRecordsFound) => <DataTable value={this.sort(selections)} rowGroupMode='subheader' sortField='votingPaper' sortOrder={1} groupRowsBy='votingPaper'
                             rowGroupHeaderTemplate={this.headerTemplate} rowGroupFooterTemplate={this.footerTemplate} emptyMessage={noRecordsFound[0]}>
-                                <Column field='type' body={(e) => {
-										let type = e.type
-										let tText = 'app.confirm.'
-										if (e.votingPaper.type === referendum) {
-											tText = tText + referendum + '.';
-											if (e.type === group)
-												type = referendum
-											else
-												type = 'vote'
-										}
-                                		return (<b><FormattedMessage
-                                    		id={tText + e.type}
-                                    		defaultMessage={type} /></b>)
+                                <Column body={(e) => {
+										if (e.votingPaper.type === referendum)
+											return (<b>{e.name}</b>)
+										else
+                                			return (<b><FormattedMessage
+                                    			id={'app.confirm.' + e.type}
+                                    			defaultMessage={e.type} /></b>)
 									}
-                                }/>
-                                <Column field='name' />
+                                } />
+                                <Column body={(e) => {
+									if (e.votingPaper.type === referendum) {
+										let parent = getParent(e)
+										return parent.name
+									} else return e.name
+								}}/>
                          </DataTable>
                         }
                 </FormattedMessage>

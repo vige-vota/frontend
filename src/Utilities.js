@@ -3,6 +3,7 @@ import { config } from './App'
 import ReactDOM from 'react-dom'
 import { FormattedMessage } from 'react-intl'
 import UserService from './services/UserService'
+import { referendum } from './vote/Party'
 
 export const isValid = (votingPaper, msg) => {
  	if (msg.state === 'PREPARE') {
@@ -161,7 +162,7 @@ export const add = (value, list) => {
     if (list.filter(e => e === value).length === 0)
         list.push(value)
     let parent = getParent(value)
-    if (parent.votingPaper && (!isGroup(parent) || !parent.votingPaper.disjointed)) {
+    if (parent.votingPaper && (!isGroup(parent) || !parent.votingPaper.disjointed) && parent.votingPaper.type !== referendum) {
         add(parent, list)
     }
 }
