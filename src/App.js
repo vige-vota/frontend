@@ -78,6 +78,8 @@ class App extends Component {
     							});
 								msg.votingPapers = msg.votingPapers.filter(votingPaper => isValid(votingPaper, msg))
 								if (msg.state === config.state) {
+									let toRemove = config.votingPapers.filter(value => -1 === msg.votingPapers.map(e => e.id).indexOf(value.id))
+									toRemove.forEach(item => removeTab(item, this))
 									msg.votingPapers.forEach((votingPaper, i) => {
 										let currentItem = this.state.items[i]
 										if (this.state.items.filter(e => e.id === votingPaper.id).length === 0) {
@@ -102,14 +104,14 @@ class App extends Component {
 											}
 										}
 									})
-									let toRemove = config.votingPapers.filter(value => -1 === msg.votingPapers.map(e => e.id).indexOf(value.id))
-									toRemove.forEach(item => removeTab(item, this))
 									const tabs = getTabs(this)
 									let index = this.state.items.map((e) => e.id).indexOf(this.state.activeItem.id)
 									if (index >= 0)
 										tabs[index].click()
 								}
 								config.state = msg.state
+								console.log('1')
+								console.log(this.state.items)
 								this.setState({operation: 'websocket'})
 							}
 					 }} />
