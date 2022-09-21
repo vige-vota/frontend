@@ -110,8 +110,6 @@ class App extends Component {
 										tabs[index].click()
 								}
 								config.state = msg.state
-								console.log('1')
-								console.log(this.state.items)
 								this.setState({operation: 'websocket'})
 							}
 					 }} />
