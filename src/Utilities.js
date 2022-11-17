@@ -3,6 +3,7 @@ import { config } from './App'
 import ReactDOM from 'react-dom'
 import { FormattedMessage } from 'react-intl'
 import UserService from './services/UserService'
+import { referendum } from './vote/Party'
 
 export const isValid = (votingPaper, msg) => {
  	if (msg.state === 'PREPARE') {
@@ -161,7 +162,7 @@ export const add = (value, list) => {
     if (list.filter(e => e === value).length === 0)
         list.push(value)
     let parent = getParent(value)
-    if (parent.votingPaper && (!isGroup(parent) || !parent.votingPaper.disjointed)) {
+    if (parent.votingPaper && (!isGroup(parent) || !parent.votingPaper.disjointed) && parent.votingPaper.type !== referendum) {
         add(parent, list)
     }
 }
@@ -195,17 +196,18 @@ export const createTabs = (appContainer) => {
 			else
 				return appContainer.state.items.push({ id: votingPaper.id, label: votingPaper.name })
         })
-        appContainer.setState({confirmButtonLabel : <FormattedMessage
+        let confirmButtonLabel = <FormattedMessage
             		id='app.confirm'
             		defaultMessage='Confirm'
-        			/>})
+        			/>
+        appContainer.setState({confirmButtonLabel : confirmButtonLabel })
 		if (config.state === 'PREPARE' && UserService.getRoles().includes('admin'))
 			 appContainer.state.items.push({ label: '+' })
 	    if (config.votingPapers.length > 0 || config.state === 'PREPARE')
-	    	 appContainer.state.items.push({ label: appContainer.state.confirmButtonLabel })
-		const tabs = colorTabs(appContainer)
-		if (tabs && tabs[0])
-			tabs[0].click()
+	    	 appContainer.state.items.push({ label: confirmButtonLabel })
+	    appContainer.setState({
+			operation: 'created-tabs'
+		})
 }
 
 export const colorTabs = (component) => {
@@ -305,12 +307,36 @@ export const addImage = (url, component) => {
 export const base64ToFile = (component) => {
    const type = 'image/jpeg'
    const byteCharacters = atob(component.image);
-   const byteNumbers = new Array(byteCharacters.length);
+   const byteNumbers = new Array(byteCharacters.length)
    for (let i = 0; i < byteCharacters.length; i++) {
-    	byteNumbers[i] = byteCharacters.charCodeAt(i);
+    	byteNumbers[i] = byteCharacters.charCodeAt(i)
    }
-   const byteArray = new Uint8Array(byteNumbers);
-   const blob = new Blob([byteArray], {type: type});   
+   const byteArray = new Uint8Array(byteNumbers)
+   const blob = new Blob([byteArray], {type: type})
    let file = new File([blob], component.name, {type: type})
    return file
+}
+
+export const fileSize = (files) => {
+	let fileSize = files[0].size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+	while (fileSize.includes('.') && fileSize.endsWith('0'))
+		fileSize = fileSize.slice(0, -1)
+	return fileSize + ' KB'
+}
+
+export const hasVoted = () => {
+	let stamps = config.profile.attributes['stamps']
+	let stampDate = new Date(stamps[stamps.length -1])
+	let result = false
+	config.votingPapers.forEach(e => {
+		let dates = e.dates
+		dates.forEach(f => {
+			let startingDate = new Date(f.startingDate)
+			let endingDate = new Date(f.endingDate)
+			if (startingDate <= stampDate && endingDate >= stampDate) {
+				result = true
+			}
+		})
+	})
+	return result
 }

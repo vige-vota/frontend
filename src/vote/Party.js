@@ -1,5 +1,5 @@
 import React from 'react'
-import { ButtonComponent } from 'primereact/button'
+import { Button } from 'primereact/button'
 import { Candidates } from './Candidates'
 import { isGroup, getVotingPaper, add, remove } from '../Utilities'
 import classNames from 'classnames'
@@ -11,11 +11,12 @@ import { ObjectUtils } from 'primereact/utils';
 
 export const group = 'group'
 export const party = 'party'
+export const referendum = 'referendum'
 
-export class Party extends ButtonComponent {
+export class Party extends React.Component {
 
     constructor(props) {
-        super(props)
+		super(props)
  		this.adminButtons = React.createRef()
     }
 
@@ -50,8 +51,8 @@ export class Party extends ButtonComponent {
     renderIcon() {
         if (this.props.icon) {
             let className = classNames(this.props.icon, 'p-c', {
-                'p-button-icon-left': this.props.iconPos !== 'right',
-                'p-button-icon-right': this.props.iconPos === 'right'
+                'p-button-icon-left': true,
+                'p-button-icon-right': false
             })
 
             let altLabel = this.props.party.name
@@ -77,12 +78,26 @@ export class Party extends ButtonComponent {
             let buttonSublabel = ''
             if (this.props.party.subtitle !== 'undefined')
                 buttonSublabel = this.props.party.subtitle
+            let subLabel = ''
+            if (this.props.party.votingPaper.type !== 'referendum')
+            	subLabel = <span className='p-button-subtext p-c'>{buttonSublabel}</span>
             return (<span className='p-button-text p-c'>{buttonLabel}
-                        <span className='p-button-subtext p-c'>{buttonSublabel}</span>
+                        {subLabel}
                     </span>
             )
         }
     }
+    
+    renderSubLabel() {
+		let subLabel = ''
+		if (this.props.party.votingPaper.type === 'referendum') {
+			let buttonSublabel = ''
+            if (this.props.party.subtitle !== 'undefined')
+                buttonSublabel = this.props.party.subtitle
+			subLabel = <div className='p-button-subtext p-c'>{buttonSublabel}</div>
+		}
+		return subLabel
+	}
 
     renderCandidates() {
         if (this.props.party.candidates)
@@ -94,28 +109,29 @@ export class Party extends ButtonComponent {
         this.props.party.votingPaper = getVotingPaper(this.props.party)
         let className = classNames('p-button p-component', this.props.className, {
             'p-button-icon-only': this.props.icon && !this.props.party.name && !this.props.party.candidates,
-            'p-button-text-icon-left': this.props.icon && (this.props.party.name || this.props.party.candidates) && this.props.iconPos === 'left',
-            'p-button-text-icon-right': this.props.icon && (this.props.party.name || this.props.party.candidates) && this.props.iconPos === 'right',
+            'p-button-text-icon-left': this.props.icon && (this.props.party.name || this.props.party.candidates),
+            'p-button-text-icon-right': false,
             'p-button-text-only': !this.props.icon && (this.props.party.name || this.props.party.candidates),
             'p-disabled': this.props.disabled
         })
         let icon = this.renderIcon()
         let label = this.renderLabel()
-        let badge = this.renderBadge()
+        let subLabel = this.renderSubLabel()
         let candidates = this.renderCandidates()
 
-        let buttonProps = ObjectUtils.findDiffKeys(this.props, ButtonComponent.defaultProps);
+        let buttonProps = ObjectUtils.findDiffKeys(this.props, Button.defaultProps)
 
         return (
-            <div ref={(el) => this.element = el} {...buttonProps} className={className}>
-				<AdminButtons party={this.props.party} partyComponent={this} votingPaper={this.props.votingpaper} ref={this.adminButtons}/>
-				{this.props.iconPos === 'left' && icon}
-                {label}
-                {candidates}
-                {this.props.iconPos === 'right' && icon}
-                {this.props.children}
-                {badge}
-            </div>
+			<>
+            	<div ref={(el) => this.element = el} {...buttonProps} className={className}>
+					<AdminButtons party={this.props.party} partyComponent={this} votingPaper={this.props.votingpaper} ref={this.adminButtons}/>
+					{icon}
+                	{label}
+                	{candidates}
+                	{this.props.children}
+            	</div>
+            	{subLabel}
+            </>
         )
     }
 }

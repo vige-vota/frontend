@@ -3,10 +3,6 @@
 	overflow: hidden;
 }
 
-.modal-party .p-grid {
-	padding-bottom: 10px;
-}
-
 .modal-party .p-dialog-footer .p-component.confirm {
     background-color: #007ad9 !important;
 }

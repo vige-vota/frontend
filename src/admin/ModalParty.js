@@ -6,7 +6,8 @@ import {InputText} from 'primereact/inputtext'
 import 'primeflex/primeflex.css'
 import './ModalParty.css'
 import {PartyUpload} from './PartyUpload'
-import {addImage, isParty, isGroup, getParent, generateId} from '../Utilities'
+import {referendum} from '../vote/Party'
+import {isParty, isGroup, getParent, generateId} from '../Utilities'
 import { validateParty, validateGroup } from './Ruler'
 
 export class ModalParty extends Component {
@@ -20,25 +21,6 @@ export class ModalParty extends Component {
 			operation: '',
 			opened: false
         }
-        this.state.configurationHeader = <FormattedMessage
-            id='app.configuration.headerparty'
-            defaultMessage='Configure your Party'
-        />
-
-        this.state.configurationGroupHeader = <FormattedMessage
-            id='app.configuration.headergroup'
-            defaultMessage='Configure your Group'
-        />
-
-        this.state.configurationInsertPartyHeader = <FormattedMessage
-            id='app.configuration.headerinsertparty'
-            defaultMessage='Insert your Party'
-        />
-
-        this.state.configurationInsertGroupHeader = <FormattedMessage
-            id='app.configuration.headerinsertgroup'
-            defaultMessage='Insert your Group'
-        />
 
         this.state.name = <FormattedMessage
             id='app.configuration.name'
@@ -59,11 +41,67 @@ export class ModalParty extends Component {
         this.confirm = this.confirm.bind(this)
         this.delete = this.delete.bind(this)
         this.onHide = this.onHide.bind(this)
-		this.onSelect = this.onSelect.bind(this);
 
     }
 	
     open() {
+        if (this.props.party.votingPaper.type !== referendum) {
+        	this.setState({ 
+				configurationHeader: <FormattedMessage
+           			id='app.configuration.headerparty'
+            		defaultMessage='Configure your Party'
+        		/>
+        	})
+        	
+			this.setState({ 
+				configurationGroupHeader: <FormattedMessage
+            		id='app.configuration.headergroup'
+            		defaultMessage='Configure your Group'
+        		/>
+        	})
+
+			this.setState({ 
+        		configurationInsertPartyHeader: <FormattedMessage
+            		id='app.configuration.headerinsertparty'
+            		defaultMessage='Insert your Party'
+        		/>
+        	})
+
+			this.setState({ 
+        		configurationInsertGroupHeader: <FormattedMessage
+            		id='app.configuration.headerinsertgroup'
+            		defaultMessage='Insert your Group'
+        		/>
+        	})
+        } else {
+			this.setState({ 
+        		configurationHeader: <FormattedMessage
+           			id='app.configuration.referendum.headerparty'
+            		defaultMessage='Configure your Vote'
+        		/>
+        	})
+
+			this.setState({ 
+       	    	configurationGroupHeader: <FormattedMessage
+            		id='app.configuration.referendum.headergroup'
+            		defaultMessage='Configure your Referendum'
+        		/>
+        	})
+
+			this.setState({ 
+        		configurationInsertPartyHeader: <FormattedMessage
+            		id='app.configuration.referendum.headerinsertparty'
+            		defaultMessage='Insert your Vote'
+        		/>
+        	})
+
+			this.setState({ 
+        		configurationInsertGroupHeader: <FormattedMessage
+            		id='app.configuration.referendum.headerinsertgroup'
+            		defaultMessage='Insert your Referendum'
+        		/>
+        	})
+		}
 		this.setState({ visible: true })
     }
 
@@ -71,7 +109,10 @@ export class ModalParty extends Component {
 		let value = {
 			name: this.state.partyName,
 			subtitle: this.state.partyTitle,
-			image: this.state.image
+			image: this.state.image,
+			votingPaper: this.props.votingPaper.props.config,
+			parties: this.props.party.parties,
+			state: this.state.operation
 		}
 		if (this.state.operation === 'update') {
 			if ((isParty(this.props.party) && validateParty(value)) ||
@@ -83,7 +124,8 @@ export class ModalParty extends Component {
 				this.props.votingPaper.forceUpdate()
 			}
 		} else {
-			if (validateParty(value)) {
+			if ((!this.props.party.name && validateGroup(value)) ||
+				(this.props.party.name && validateParty(value))) {
 				let generatedId = generateId()
 				value.id = generatedId
 				if (this.props.party.name)
@@ -123,11 +165,6 @@ export class ModalParty extends Component {
 
     onHide() {
         this.setState({ visible: false })
-    }
-
-    onSelect(event) {
-		if (event.files[0].objectURL)
-        	addImage(event.files[0].objectURL, this)
     }
 
 	render() {
@@ -186,23 +223,22 @@ export class ModalParty extends Component {
 						}} />
         return (
             <Dialog contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-party'>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.name}</div>
-    				<div className='p-col'>{inputText}</div>
+				<div className='grid'>
+    				<div className='col'>{this.state.name}</div>
+    				<div className='col'>{inputText}</div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.title}</div>
-    				<div className='p-col'><InputText ref={(input) => { this.title = input; }} value={this.state.partyTitle ? this.state.partyTitle : ''} onChange={(e) => this.setState(
+				<div className='grid'>
+    				<div className='col'>{this.state.title}</div>
+    				<div className='col'><InputText ref={(input) => { this.title = input; }} value={this.state.partyTitle ? this.state.partyTitle : ''} onChange={(e) => this.setState(
 						{
 							partyTitle: e.target.value
 						})} /></div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>
+				<div className='grid'>
+    				<div className='col'>
 						<FormattedMessage id='app.configuration.chooseimage'
             					defaultMessage='Choose Image'>
-								{(chooseImage) => <PartyUpload accept='image/*' maxFileSize={60000} 
-													onSelect={this.onSelect}
+								{(chooseImage) => <PartyUpload accept='image/*' maxFileSize={60000}
 													chooseLabel={chooseImage[0]} 
 													party={this} previewWidth={150} />}
 						</FormattedMessage>

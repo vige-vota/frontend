@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Toast} from 'primereact/toast'
 import { FormattedMessage } from 'react-intl'
 import { selections } from '../vote/Validator'
+import { referendum } from '../vote/Party'
 
 export const validateDisjointed = (component) => {
 	if (component) {
@@ -10,6 +11,23 @@ export const validateDisjointed = (component) => {
     		errors({name: 'name', message: <FormattedMessage id='app.admin.error.disjointed' defaultMessage='You must deselect all votes of the voting paper before to change the disjointed vote &#39;{name}&#39;' values = {{ name: component.label }}/>})
     		return false
 		} else return true
+	} else return true
+}
+
+export const validateDate = (component) => {
+	if (component) {
+		let currentDate = new Date()
+		if (!component.dates || component.dates.length <= 0 || component.dates.some((e) => !e.startingDate || !e.endingDate)) {
+    		errors({name: 'name', message: <FormattedMessage id='app.admin.error.dateempty' defaultMessage='Dates must not be empty' values = {{ name: component.label }}/>})
+    		return false
+		} else if (component.dates.some((f) => f.endingDate.getTime() < f.startingDate.getTime())) {
+    		errors({name: 'name', message: <FormattedMessage id='app.admin.error.endingdate.starting' defaultMessage='Ending date must be older than starting date' values = {{ name: component.label }}/>})
+    		return false
+		} else if (component.dates.every((f) => f.endingDate.getTime() < currentDate.getTime())) {
+    		errors({name: 'name', message: <FormattedMessage id='app.admin.error.endingdate.current' defaultMessage='Ending date must be older than current date' values = {{ name: component.label }}/>})
+    		return false
+		}
+		return true
 	} else return true
 }
 
@@ -30,6 +48,8 @@ export const validateVotingPaper = (component, list) => {
 	} else if (!value || list.filter(e => ((component.type === 'little-nogroup' && e.type !== 'little-nogroup') || (component.type !== 'little-nogroup' && e.type === 'little-nogroup')) && e.id === value.id).length > 0) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.littlenogroup' defaultMessage='You cannot pass from a party voting paper to a group voting paper. Remove and create again the voting paper'/>})
     	return false
+	} else if (!value || !validateDate(component)) {
+    	return false
 	}
     return true
 }
@@ -41,6 +61,9 @@ export const validateParty = (component) => {
 	} else if (!component || component.name.length > 40) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.maxname' defaultMessage='You can specify a maximum length of {number} characters for the name' values = {{ number: 40 }}/>})
     	return false
+	} else if (!component || (component.votingPaper.type === referendum && component.parties && (component.state === 'update' ? component.parties.length > 2 : component.parties.length >= 2 ))) {
+    	errors({name: 'name', message: <FormattedMessage id='app.admin.error.maxsubgroups' defaultMessage='You can specify a maximum length of {number} subgroups' values = {{ number: 2 }}/>})
+    	return false
 	} else return true
 }
 
@@ -48,7 +71,7 @@ export const validateGroup = (component) => {
 	if (!component || !component.name) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.group.name' defaultMessage='The name of the group is mandatory'/>})
     	return false
-	} else if (!component || component.name.length > 40) {
+	} else if (!component || (component.votingPaper.type !== referendum && component.name.length > 40)) {
     	errors({name: 'name', message: <FormattedMessage id='app.admin.error.maxname' defaultMessage='You can specify a maximum length of {number} characters for the name' values = {{ number: 40 }}/>})
     	return false
 	} else return true

@@ -10,7 +10,7 @@ import { Validator } from './vote/Validator'
 import { Ruler } from './admin/Ruler'
 import background from './images/background.png'
 import {Panel} from 'primereact/panel';
-import {getTabs, createTabs, colorTabs, removeTab, getVotingPaperById, addToList, isValid, updateSelections} from './Utilities'
+import {hasVoted, getTabs, createTabs, colorTabs, removeTab, getVotingPaperById, addToList, isValid, updateSelections} from './Utilities'
 import SockJsClient from './SockJsClient'
 import UserService from './services/UserService'
 import {ProgressSpinner} from 'primereact/progressspinner'
@@ -47,10 +47,19 @@ class App extends Component {
     }
 
 	componentDidUpdate() {
+		if (this.state.operation === 'created-tabs') {
+			const tabs = colorTabs(appContainer)
+			if (tabs && tabs[0])
+				tabs[0].click()
+			this.setState({operation: undefined})
+		}
 		if (this.state.operation === 'websocket') {
 			colorTabs(this)
 			this.setState({operation: undefined})
 		}
+		if (this.state.visible && config.state !== 'PREPARE' && hasVoted()) {
+    		this.setState({ visible: false })
+    	}
 	}
 
     render() {
@@ -69,6 +78,8 @@ class App extends Component {
     							});
 								msg.votingPapers = msg.votingPapers.filter(votingPaper => isValid(votingPaper, msg))
 								if (msg.state === config.state) {
+									let toRemove = config.votingPapers.filter(value => -1 === msg.votingPapers.map(e => e.id).indexOf(value.id))
+									toRemove.forEach(item => removeTab(item, this))
 									msg.votingPapers.forEach((votingPaper, i) => {
 										let currentItem = this.state.items[i]
 										if (this.state.items.filter(e => e.id === votingPaper.id).length === 0) {
@@ -81,6 +92,7 @@ class App extends Component {
 											let currentVotingPaper = config.votingPapers[i]
 											if (currentVotingPaper) {
 												currentVotingPaper.type = votingPaper.type
+												currentVotingPaper.dates = votingPaper.dates
 												currentVotingPaper.disjointed = votingPaper.disjointed
 												currentVotingPaper.color = votingPaper.color
 												currentVotingPaper.maxCandidates = votingPaper.maxCandidates
@@ -92,8 +104,6 @@ class App extends Component {
 											}
 										}
 									})
-									let toRemove = config.votingPapers.filter(value => -1 === msg.votingPapers.map(e => e.id).indexOf(value.id))
-									toRemove.forEach(item => removeTab(item, this))
 									const tabs = getTabs(this)
 									let index = this.state.items.map((e) => e.id).indexOf(this.state.activeItem.id)
 									if (index >= 0)
@@ -116,13 +126,18 @@ class App extends Component {
                 <div className='content-section implementation'>
                     <Validator ref='validator' />
 					{ruler}
-                    <TabMenu ref='tabMenu' className={this.state.visible ? '' : 'disabled'}  model={this.state.items} activeItem={this.state.activeItem} onTabChange={(e) => {
+                    <TabMenu ref='tabMenu' className={this.state.visible ? '' : 'disabled'}  model={this.state.items} activeIndex={this.state.activeItem} onTabChange={(e) => {
                     	if (config.state === 'PREPARE' && e.originalEvent.target.className.startsWith('p-menuitem-icon')) {
 							let currentVotingPaper = getVotingPaperById(e.value)
 							this.modalVotingPaper.current.setState({
 								votingPaper: e,
 								app: this,
 								operation: 'update',
+								dates: currentVotingPaper.dates.map((e) => {
+									e.startingDate = new Date(e.startingDate);
+									e.endingDate = new Date(e.endingDate);
+									return e;
+								}),
 								disjointed: currentVotingPaper.disjointed,
 								maxCandidates: currentVotingPaper.maxCandidates,
 								zone: currentVotingPaper.zone,

@@ -6,3 +6,5 @@ node_modules
 .externalToolBuilders
 .jshintrc
 .npmignore
+react-app-env.d.ts
+tsconfig.json

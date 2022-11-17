@@ -1,0 +1,38 @@
+.datatable-crud-dates .p-datatable .p-datatable-thead > tr > th {
+	border : 0px;
+	padding: 0.571rem 0.857rem;
+}
+
+.datatable-crud-dates .p-datatable .p-datatable-tbody > tr > td {
+	border : 0px;
+	padding: 0.371rem 0.157rem;
+}
+
+.datatable-crud-dates .p-datatable-tbody {
+    text-align: center;
+    align-self: center;
+}
+
+.datatable-crud-dates .p-datatable-tbody .p-calendar .p-inputtext {
+    flex: 1 1 auto;
+    font-size: smaller;
+}
+
+.datatable-crud-dates .p-toolbar {
+    background: none;
+    border: none;
+    padding: 0.857rem 1rem;
+    border-radius: 3px;
+    padding: 0rem 0.3rem;
+}
+
+.datatable-crud-dates .p-datatable-tbody .p-button .pi {
+    left: 27%;
+    top: 24%;
+    position: absolute;
+}
+
+.p-dialog-content .date-modal .p-calendar .p-inputtext {
+    flex: 1 1 auto;
+    font-size: smaller;
+}

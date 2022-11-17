@@ -10,17 +10,22 @@ import {ColorPicker} from 'primereact/colorpicker'
 import {ListBox} from 'primereact/listbox'
 import 'primeflex/primeflex.css'
 import { validateVotingPaper, validateDisjointed } from './Ruler'
+import { Dates } from './Dates'
 import { config } from '../App'
 import './ModalVotingPaper.css'
 import { TreeSelect } from 'primereact/treeselect'
 import { ZoneService } from '../services/ZoneService'
+import Moment from 'moment'
 
 const types = [
     {label: 'Bigger', value: 'bigger'},
     {label: 'Bigger party groups', value: 'bigger-partygroup'},
     {label: 'Little', value: 'little'},
-    {label: 'Little no groups', value: 'little-nogroup'}
+    {label: 'Little no groups', value: 'little-nogroup'},
+    {label: 'Referendum', value: 'referendum'}
 ];
+
+const DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 export class ModalVotingPaper extends Component {
 
@@ -30,14 +35,20 @@ export class ModalVotingPaper extends Component {
 			votingPaper: '',
 			app: '',
 			operation: '',
+			dates: [
+				{
+				}
+			],
 			disjointed: false,
 			maxCandidates: 0,
 			color: '',
 			type: '',
+			zone: null,
 			zones: null
         }
  		this.zone = React.createRef()
  		this.zoneSelect = React.createRef()
+    	this.datesRef = React.createRef()
         this.state.configurationHeader = <FormattedMessage
             id='app.configuration.header'
             defaultMessage='Configure your Voting Paper'
@@ -51,6 +62,16 @@ export class ModalVotingPaper extends Component {
         this.state.name = <FormattedMessage
             id='app.configuration.name'
             defaultMessage='Name'
+        />
+
+        this.state.startingDateLabel = <FormattedMessage
+            id='app.configuration.startingdate'
+            defaultMessage='Starting date'
+        />
+
+        this.state.endingDateLabel = <FormattedMessage
+            id='app.configuration.endingdate'
+            defaultMessage='Ending date'
         />
 
         this.state.disjointedLabel = <FormattedMessage
@@ -119,9 +140,15 @@ export class ModalVotingPaper extends Component {
 				config.votingPapers.forEach((votingPaper) => {
 					if (votingPaper.id === this.state.votingPaper.value.id) {
 						votingPaper.name = this.state.votingPaper.value.label
+						votingPaper.dates = this.datesRef.current.state.dates.map((e) => {
+							return {
+								startingDate: Moment(e.startingDate).format(DATE_FORMAT),
+								endingDate: Moment(e.endingDate).format(DATE_FORMAT)
+							}
+						})
 						votingPaper.disjointed = this.state.disjointed
 						votingPaper.maxCandidates = this.state.maxCandidates
-						if (this.state.type === 'little-nogroup' || this.state.type === 'little')
+						if (this.state.type === 'little-nogroup' || this.state.type === 'little' || this.state.type === 'referendum')
 							votingPaper.zone = null
 						else
 							votingPaper.zone = this.state.zone
@@ -145,13 +172,19 @@ export class ModalVotingPaper extends Component {
 				} else {
 					groupsAr = []
 				}
-				if (this.state.type === 'little-nogroup' || this.state.type === 'little')
+				if (this.state.type === 'little-nogroup' || this.state.type === 'little' || this.state.type === 'referendum')
 					zoneForPapers = null
 				config.votingPapers.push(
 					{ id: generatedId, 
 					  name: this.state.votingPaper.value.label, 
 					  groups: groupsAr,
 					  parties: partiesAr,
+					  dates: this.datesRef.current.state.dates.map((e) => {
+							return {
+								startingDate: Moment(e.startingDate).format(DATE_FORMAT),
+								endingDate: Moment(e.endingDate).format(DATE_FORMAT)
+							}
+					  }),
 					  disjointed: this.state.disjointed,
 					  maxCandidates: this.state.maxCandidates,
 					  zone: zoneForPapers,
@@ -189,19 +222,25 @@ export class ModalVotingPaper extends Component {
 	render() {
 		let votingPaperValue = this.state.votingPaper.value
 		let deleteButton = ''
-		let zoneClass = 'p-grid'
+		let zoneClass = 'grid'
+		let maxCandidatesClass = 'grid'
+		let disjointedClass = 'grid'
 		if (votingPaperValue && this.state.operation === 'update')
 			deleteButton = <FormattedMessage
                     id='app.delete'
                     defaultMessage='Delete'>
                     {(ok) => <Button label={ok[0]} icon='pi pi-check' onClick={this.delete} className='confirm' />}
                 </FormattedMessage>
-		if (this.state.type === 'little-nogroup' || this.state.type === 'little')
-			zoneClass = 'p-grid disabled'
+		if (this.state.type === 'little-nogroup' || this.state.type === 'little' || this.state.type === 'referendum')
+			zoneClass = 'grid disabled'
+		if (this.state.type === 'referendum') {
+			maxCandidatesClass = 'grid disabled'
+			disjointedClass = 'grid disabled'
+		}
 		const zoneField = (
 				<div className={zoneClass} ref={this.zone}>
-    				<div className='p-col'>{this.state.zoneLabel}</div>
-    				<div className='p-col'>
+    				<div className='col'>{this.state.zoneLabel}</div>
+    				<div className='col'>
     				<FormattedMessage
             				id='app.configuration.choose.zone'
             				defaultMessage='Choose zone'>
@@ -259,44 +298,45 @@ export class ModalVotingPaper extends Component {
 						}} />
         return (
             <Dialog contentStyle={{'maxHeight': '620px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-voting-paper'>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.name}</div>
-    				<div className='p-col'>{inputText}</div>
+				<div className='grid'>
+    				<div className='col'>{this.state.name}</div>
+    				<div className='col'>{inputText}</div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.disjointedLabel}</div>
-    				<div className='p-col'><Checkbox onChange={(e) => { 
+				<div className={disjointedClass}>
+    				<div className='col'>{this.state.disjointedLabel}</div>
+    				<div className='col'><Checkbox onChange={(e) => { 
 						if (validateDisjointed(votingPaperValue)) this.setState(
 						{
 							disjointed: e.checked
 						}) }} checked={this.state.disjointed}></Checkbox></div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.maxCandidatesLabel}</div>
-    				<div className='p-col'><InputNumber showButtons onValueChange={(e) => this.setState(
+				<div className={maxCandidatesClass}>
+    				<div className='col'>{this.state.maxCandidatesLabel}</div>
+    				<div className='col'><InputNumber showButtons onValueChange={(e) => this.setState(
 						{
 							maxCandidates: Number.isInteger(e.value) ? parseInt(e.value, 10) : 0
 						}) } value={this.state.maxCandidates} min={0} max={3}></InputNumber></div>
 				</div>
 				{ zoneField }
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.colorLabel}</div>
-    				<div className='p-col'><ColorPicker value={this.state.color} 
+				<div className='grid'>
+    				<div className='col'>{this.state.colorLabel}</div>
+    				<div className='col'><ColorPicker value={this.state.color} 
 						onChange={(e) => this.setState({color: e.value})} />
 					</div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>{this.state.templatesLabel}</div>
+    			<Dates ref={this.datesRef} dates={this.state.dates} />
+				<div className='grid'>
+    				<div className='col'>{this.state.templatesLabel}</div>
 				</div>
-				<div className='p-grid'>
-    				<div className='p-col'>
+				<div className='grid'>
+    				<div className='col'>
 							<ListBox value={this.state.type} filter={true} options={types} onChange={(e) => {
 								if (e.value) {
 									this.setState({type: e.value})
-									if (e.value === 'little-nogroup' || e.value === 'little')
-										this.zone.current.className = 'p-grid disabled'
+									if (e.value === 'little-nogroup' || e.value === 'little' || e.value === 'referendum')
+										this.zone.current.className = 'grid disabled'
 									else
-										this.zone.current.className = 'p-grid'
+										this.zone.current.className = 'grid'
 								}
 							}} itemTemplate={this.imgTemplate} 
                                     style={{width: '20.5em'}} listStyle={{maxHeight: '250px'}} />

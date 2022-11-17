@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Toast} from 'primereact/toast'
 import { FormattedMessage } from 'react-intl'
 import {getParent} from '../Utilities'
-import {party, group} from './Party'
+import {party, group, referendum} from './Party'
 import {candidate} from './Candidates'
 
 export const M = 'M'
@@ -29,11 +29,14 @@ export const validate = (e) => {
         let hasCandidates = selectionsInVotingPaper.filter(f => f.type === candidate && getParent(f) === e.value).length > 0
 
         if (e.value.selected || hasCandidates || (partiesInTheSameGroup.length < 1 &&
-            groupsInTheSameVotingPaper.length < 1 &&
-            (votingPaper.disjointed || selectionsInVotingPaper.filter(e => e === parent).length > 0 || selectionsInVotingPaper.length === 0)))
+            (e.value.votingPaper.type === referendum || groupsInTheSameVotingPaper.length < 1) &&
+            (e.value.votingPaper.type === referendum || votingPaper.disjointed || selectionsInVotingPaper.filter(e => e === parent).length > 0 || selectionsInVotingPaper.length === 0)))
             return true
         else {
-            errors({name: e.value.name, type: <FormattedMessage id='app.error.party' defaultMessage={'the '+ party}/>})
+			if (e.value.votingPaper.type === referendum)
+           		errors({name: e.value.name, type: <FormattedMessage id='app.error.referendum.vote' defaultMessage={'the vote'}/>})
+           	else
+           		errors({name: e.value.name, type: <FormattedMessage id='app.error.party' defaultMessage={'the '+ party}/>})
             return false
         }
     } else {

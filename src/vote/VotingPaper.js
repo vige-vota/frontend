@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Party } from './Party'
+import { FormattedMessage } from 'react-intl'
+import { Party, referendum } from './Party'
+import { config } from '../App'
 import 'primereact/resources/themes/nova/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
@@ -14,6 +16,16 @@ export class VotingPaper extends Component {
         super(data)
         this.jsonData = data
     }
+    
+    renderTitle() {
+		let title = ''
+		if (this.jsonData.config.type === referendum)
+			title = <div className='referendum-title'><FormattedMessage
+            			id='app.configuration.referendum'
+            			defaultMessage='POPULAR REFERENDUM'
+        			/></div>
+		return title
+	}
 
     renderPartiesByGroup(group) {
         return group.parties.map((party) => {
@@ -36,7 +48,6 @@ export class VotingPaper extends Component {
         buttonProps.party = party
         buttonProps.ref = buttonProps.key
         buttonProps.id = buttonProps.key
-		buttonProps.forwardRef = ''
 		buttonProps.votingpaper = this
         return (
             <Party {...buttonProps} onClick={(e) => {
@@ -64,23 +75,31 @@ export class VotingPaper extends Component {
             buttonProps.style = gridRow
             buttonProps.ref = buttonProps.key
             buttonProps.id = buttonProps.key
-			buttonProps.forwardRef = ''
 			buttonProps.votingpaper = this
-            return (
-                <Party {...buttonProps} onClick={(e) => {
-                    let button = this.refs[buttonProps.ref]
-                    button.putX(e)
-                }}>
-                </Party>
-            )
+            if (this.jsonData.config.type === referendum) {
+				if (config.state !== 'PREPARE')
+            		buttonProps.disabled = true
+            	return (
+                	<Party {...buttonProps} />
+            	)
+            } else
+            	return (
+                	<Party {...buttonProps} onClick={(e) => {
+                    	let button = this.refs[buttonProps.ref]
+                    	button.putX(e)
+                	}}>
+                	</Party>
+            	)
         }
     }
 
     render() {
         if (this.props.visible) {
+			let title = this.renderTitle()
         	if (this.jsonData.config.groups)
         		return (
         			<div className='page'>
+        				{title}
         				{this.jsonData.config.groups.map((group, j) => {
         					let party, candidate;
         					party = this.renderPartiesByGroup(group)

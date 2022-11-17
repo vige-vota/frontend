@@ -1,0 +1,83 @@
+body .referendum  .content-party {
+	max-width: inherit;
+}
+
+body .referendum .first-row {
+    font-size: 32px;
+    margin-bottom: 3% !important;
+    background-color: white;
+	max-width: 30em;
+    margin: auto;
+}
+
+body .referendum .second-row {
+    background-color: transparent;
+	min-width: 110px;
+    min-height: 105px;
+    border: none;
+    margin: auto;
+    margin-left: 28.5% !important;
+    float: left;
+}
+
+body .referendum .referendum-title {
+    background-color: white;
+    margin: auto;
+    margin-top: 2%;
+    width: fit-content;
+    margin-bottom: 2%;
+    font-size: 40px;
+}
+
+body .referendum .p-button-subtext {
+	font-size: 25px;
+    background-color: white;
+    max-width: 90%;
+    margin-left: 5%;
+}
+
+body .referendum .content-party .p-button {
+    height: 50%;
+    margin-top: 1%;
+}
+
+body .referendum .content-party .p-button.p-disabled {
+    opacity: inherit;
+}
+
+body .referendum .p-button.p-button-icon-only .p-button-icon-left, .p-button.p-button-icon-only .p-button-icon-right {
+    margin: 0;
+    width: 90%;
+}
+
+body .referendum .p-button .button-selected {
+    left: 10%;
+    position: absolute;
+}
+
+body .referendum .second-row .admin-buttons {
+	margin-left: 70%;
+    width: 100%;
+    margin-top: 130%;
+}
+
+body .referendum .second-row .admin-buttons .admin-button {
+    width: 100% !important;
+    background-color: transparent;
+}
+
+body .referendum .second-row .p-button-text {
+	display: none;
+}
+
+body .referendum .admin-buttons {
+    height: 25%;
+}
+
+body .referendum .admin-buttons .p-button {
+    background-color: white;
+}
+
+body .referendum .second-row.p-button.p-button-secondary:not(a):not(.p-disabled):hover {
+    background-color: transparent !important;
+}
