@@ -28,8 +28,8 @@ self.__precacheManifest = [
     "url": "/static/media/background.75de7822.png"
   },
   {
-    "revision": "943c3597cd33be56d53df0d1982fa8ff",
-    "url": "/static/media/primeicons.943c3597.woff"
+    "revision": "e01fd4133bac49cd2ea07ad6f7c45695",
+    "url": "/static/media/primeicons.e01fd413.eot"
   },
   {
     "revision": "b29a888ff7f07091c7e08eb0d991e221",
@@ -40,8 +40,8 @@ self.__precacheManifest = [
     "url": "/static/media/primeicons.64b5d470.svg"
   },
   {
-    "revision": "e01fd4133bac49cd2ea07ad6f7c45695",
-    "url": "/static/media/primeicons.e01fd413.eot"
+    "revision": "943c3597cd33be56d53df0d1982fa8ff",
+    "url": "/static/media/primeicons.943c3597.woff"
   },
   {
     "revision": "b2727fdb40c04be6590b3324163462d5",
