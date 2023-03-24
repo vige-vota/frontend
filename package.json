@@ -1,12 +1,12 @@
 {
   "name": "frontend",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "dependencies": {
     "axios": "^0.27.2",
     "classnames": "^2.3.1",
     "json-stringify-safe": "^5.0.1",
-    "keycloak-js": "^15.1.1",
+    "keycloak-js": "^20.0.2",
     "moment": "^2.29.3",
     "net": "^1.0.2",
     "nodeclipse": "^0.17.2",
