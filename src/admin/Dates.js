@@ -253,7 +253,7 @@ export class Dates extends Component {
                 	</FormattedMessage>
                 </div>
 
-                <Dialog visible={this.state.dateDialog} header={this.state.dateDetailsLabel} modal className='p-fluid' footer={dateDialogFooter} onHide={this.hideDialog}>
+                <Dialog resizable={false} visible={this.state.dateDialog} header={this.state.dateDetailsLabel} modal className='p-fluid' footer={dateDialogFooter} onHide={this.hideDialog}>
                 	<div className='grid'>
     					<div className='col'>{this.state.startingDateLabel}</div>
                     	<div className='col date-modal'><Calendar locale={ LOCALE } dateFormat={INTERNAL_DATE_FORMAT} showTime hourFormat='24' value={this.state.date.startingDate} 

@@ -83,7 +83,7 @@ export class ConfirmCreate extends Component {
             </div>
         )
         return (
-            <Dialog contentStyle={{'maxHeight': '500px'}} header={this.state.confirmHeader} visible={this.state.visible} footer={footer} onHide={this.onHide}>
+            <Dialog resizable={false} contentStyle={{'maxHeight': '500px'}} header={this.state.confirmHeader} visible={this.state.visible} footer={footer} onHide={this.onHide}>
         		{this.state.confirmBody}<br/><br/>
             </Dialog>)
     }

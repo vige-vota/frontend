@@ -134,7 +134,7 @@ export class ModalCandidates extends Component {
 					</div>
 				</div>
         return (
-            <Dialog ref={this.candidatesDialog} contentStyle={{'maxHeight': '700px', 'width':'360px'}} header={this.state.configurationHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-candidates'>
+            <Dialog ref={this.candidatesDialog} contentStyle={{'maxHeight': '700px', 'width':'360px'}} header={this.state.configurationHeader} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-candidates' resizable={false}>
 				<div className='grid'>
     				<div className='col'>{this.state.namesurnameLabel}</div>
     				<div className='col'><InputText ref={this.nameInputText} 

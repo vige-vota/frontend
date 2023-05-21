@@ -297,7 +297,7 @@ export class ModalVotingPaper extends Component {
 								this.confirm()
 						}} />
         return (
-            <Dialog contentStyle={{'maxHeight': '620px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-voting-paper'>
+            <Dialog contentStyle={{'maxHeight': '620px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-voting-paper' resizable={false}>
 				<div className='grid'>
     				<div className='col'>{this.state.name}</div>
     				<div className='col'>{inputText}</div>
@@ -339,7 +339,7 @@ export class ModalVotingPaper extends Component {
 										this.zone.current.className = 'grid'
 								}
 							}} itemTemplate={this.imgTemplate} 
-                                    style={{width: '20.5em'}} listStyle={{maxHeight: '250px'}} />
+                                    style={{width: '20.5em'}} listStyle={{maxHeight: '150px'}} />
 					</div>
 				</div>
             </Dialog>)

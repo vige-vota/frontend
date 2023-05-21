@@ -222,7 +222,7 @@ export class ModalParty extends Component {
 								this.confirm()
 						}} />
         return (
-            <Dialog contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-party'>
+            <Dialog resizable={false} contentStyle={{'maxHeight': '600px', 'width':'360px'}} header={header} visible={this.state.visible} footer={footer} onHide={this.onHide} className='modal-party'>
 				<div className='grid'>
     				<div className='col'>{this.state.name}</div>
     				<div className='col'>{inputText}</div>

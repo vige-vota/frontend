@@ -123,7 +123,7 @@ export class Party extends React.Component {
 
         return (
 			<>
-            	<div ref={(el) => this.element = el} {...buttonProps} className={className}>
+            	<div ref={(el) => this.element = el} {...buttonProps} className={className} onClick={this.props.onClick}>
 					<AdminButtons party={this.props.party} partyComponent={this} votingPaper={this.props.votingpaper} ref={this.adminButtons}/>
 					{icon}
                 	{label}
