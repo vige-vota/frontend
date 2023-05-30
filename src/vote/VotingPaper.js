@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Party, referendum } from './Party'
+import { Party, referendum, biggerpartygroup } from './Party'
 import { config } from '../App'
 import 'primereact/resources/themes/nova/theme.css'
 import 'primereact/resources/primereact.min.css'
@@ -96,6 +96,7 @@ export class VotingPaper extends Component {
     render() {
         if (this.props.visible) {
 			let title = this.renderTitle()
+			let type = this.jsonData.config.type
         	if (this.jsonData.config.groups)
         		return (
         			<div className='page'>
@@ -104,9 +105,14 @@ export class VotingPaper extends Component {
         					let party, candidate;
         					party = this.renderPartiesByGroup(group)
         					candidate = this.renderGroup(group)
+        					let blockParties = <>{candidate}
+        										 {party}
+                        			  			</>
+                        	if (type === biggerpartygroup)
+                        		blockParties = <><span>{party}</span>
+                        			  			{candidate}</>
         					return <div key={'parties-' + j} className={'content-party resize-'+(j%2)}>
-                        			  {candidate}
-                        			  {party}
+                        			  {blockParties}
                         		   </div>
         				})}
         				<AdminButtons party={{ votingPaper: this.props.config}} votingPaper={this} ref='vt-admin-buttons' />

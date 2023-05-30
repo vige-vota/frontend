@@ -12,6 +12,7 @@ import { ObjectUtils } from 'primereact/utils';
 export const group = 'group'
 export const party = 'party'
 export const referendum = 'referendum'
+export const biggerpartygroup = 'bigger-partygroup'
 
 export class Party extends React.Component {
 
